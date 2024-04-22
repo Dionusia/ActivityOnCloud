@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+/src/test/java/gr/knowledge/internship/activityoncloud/ActivityoncloudApplicationTests.java
+/.mvn/wrapper/maven-wrapper.jar
+/.mvn/wrapper/maven-wrapper.properties
+/mvnw
+/mvnw.cmd
+/src/main/resources/application.properties

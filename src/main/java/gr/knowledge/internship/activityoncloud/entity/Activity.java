@@ -1,0 +1,37 @@
+package gr.knowledge.internship.activityoncloud.entity;
+
+import java.io.Serializable;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "activity")
+public class Activity implements Serializable {
+	@Id
+	@Column(name = "id")
+	@NotNull
+	@GeneratedValue(generator = "admin_seq", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "admin_seq", sequenceName = "admin_seq")
+	private long id;
+	@JoinColumn(name = "admin_id")
+	@NotNull
+	@ManyToOne
+	private Admin admin;
+}
