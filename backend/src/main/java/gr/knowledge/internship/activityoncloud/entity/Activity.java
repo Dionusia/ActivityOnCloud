@@ -2,6 +2,8 @@ package gr.knowledge.internship.activityoncloud.entity;
 
 import java.io.Serializable;
 
+import org.postgresql.util.PGInterval;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,4 +36,6 @@ public class Activity implements Serializable {
 	@NotNull
 	@ManyToOne
 	private ActivityAdmin activityAdmin;
+	@Column(name = "duration")
+	private PGInterval duration;
 }

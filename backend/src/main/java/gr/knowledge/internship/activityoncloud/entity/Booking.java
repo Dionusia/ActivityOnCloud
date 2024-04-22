@@ -1,6 +1,7 @@
 package gr.knowledge.internship.activityoncloud.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import jakarta.persistence.Column;
@@ -45,4 +46,10 @@ public class Booking implements Serializable {
 	@Column(name = "end_time")
 	@NotNull
 	private Timestamp endTime;
+	@Column(name = "persons")
+	@NotNull
+	private int persons;
+	@Column(name = "price_total")
+	@NotNull
+	private BigDecimal priceTotal;
 }
