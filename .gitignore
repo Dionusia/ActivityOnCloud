@@ -1,8 +1,8 @@
 HELP.md
-target/
+/backend/target/
 !.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+!**/backend/src/main/**/target/
+!**/backend/src/test/**/target/
 
 ### STS ###
 .apt_generated
@@ -25,15 +25,18 @@ target/
 /dist/
 /nbdist/
 /.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
+/backend/build/
+!**/backend/src/main/**/build/
+!**/backend/src/test/**/build/
 
 ### VS Code ###
 .vscode/
-/src/test/java/gr/knowledge/internship/activityoncloud/ActivityoncloudApplicationTests.java
+/backend/src/test/java/gr/knowledge/internship/activityoncloud/ActivityoncloudApplicationTests.java
 /.mvn/wrapper/maven-wrapper.jar
 /.mvn/wrapper/maven-wrapper.properties
 /mvnw
 /mvnw.cmd
-/src/main/resources/application.properties
+/backend/src/main/resources/application.properties
+
+### FrontEnd ###
+/frontend/node_modules
