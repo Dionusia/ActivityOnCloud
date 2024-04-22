@@ -11,6 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class AdminDTO implements Serializable {
+public class ActivityAdminDTO implements Serializable {
 	private long id;
 }
