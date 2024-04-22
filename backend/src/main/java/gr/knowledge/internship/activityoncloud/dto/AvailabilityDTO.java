@@ -15,7 +15,6 @@ import java.time.Duration;
 @Setter
 public class AvailabilityDTO implements Serializable {
     private Long id;
-    private Long activityId;
     private String dayOfWeek;
     private Duration openTime;
     private Duration closeTime;

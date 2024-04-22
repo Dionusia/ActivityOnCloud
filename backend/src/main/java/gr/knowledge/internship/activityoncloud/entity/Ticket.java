@@ -34,5 +34,6 @@ public class Ticket implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "activity_id")
+    @NotNull
     private Activity activity;
 }

@@ -25,10 +25,6 @@ public class Availability implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "activity_id")
-    private Long activityId;
-
-    @NotNull
     @Column(name = "day_of_week")
     private String dayOfWeek;
 
@@ -46,5 +42,6 @@ public class Availability implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "activity_id")
+    @NotNull
     private Activity activity;
 }
