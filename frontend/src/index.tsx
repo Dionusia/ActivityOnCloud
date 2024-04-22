@@ -1,16 +1,16 @@
-import React from "react";
-import BookingsList from "./Components/BookingsList";
+import React, { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import App from './App';
 
-const dummyBooking = [{
-  activityDescription: "This is a dummy activity",
-  activityName: "Dummy Activity",
-  imageUrl: "https://example.com/dummy-image.jpg",
-  timeframe: "2022-01-01T00:00:00Z",
-  payment: "Paid",
-  paymentDateTime: "2022-01-01T00:00:00Z",
-}];
+const rootElement = document.getElementById("root");
 
-<div>
-  <h1>Bookings</h1>
-  <BookingsList booking={dummyBooking} />
-</div> 
+if (!rootElement) {
+  throw new Error("No element with id 'root' found");
+}
+
+const root = createRoot(rootElement);
+root.render(
+  <StrictMode>
+    <App />
+  </StrictMode>
+);
