@@ -1,7 +1,5 @@
 package gr.knowledge.internship.activityoncloud.controller;
 
-import gr.knowledge.internship.activityoncloud.dto.ActivityDTO;
-import gr.knowledge.internship.activityoncloud.entity.Availability;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +17,7 @@ public class AvailabilityController {
 
     @GetMapping
     public List<AvailabilityDTO> getAllAvailability() {
-        return availabilityService.getAllAvailability();
+        return availabilityService.getAllAvailabilities();
     }
 
     @GetMapping("/{id}")
@@ -41,5 +39,4 @@ public class AvailabilityController {
     public void deleteAvailability(@RequestBody AvailabilityDTO availability) {
         availabilityService.deleteAvailability(availability);
     }
-}
 }
