@@ -31,10 +31,10 @@ public class Booking implements Serializable {
 	@GeneratedValue(generator = "booking_seq", strategy = GenerationType.SEQUENCE)
 	@SequenceGenerator(name = "booking_seq", sequenceName = "booking_seq")
 	private long id;
-	@JoinColumn(name = "admin_id")
+	@JoinColumn(name = "activity_admin_id")
 	@ManyToOne
 	@NotNull
-	private Admin admin;
+	private ActivityAdmin activityAdmin;
 	@JoinColumn(name = "activity_id")
 	@ManyToOne
 	@NotNull

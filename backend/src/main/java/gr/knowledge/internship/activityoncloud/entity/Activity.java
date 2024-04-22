@@ -27,11 +27,11 @@ public class Activity implements Serializable {
 	@Id
 	@Column(name = "id")
 	@NotNull
-	@GeneratedValue(generator = "admin_seq", strategy = GenerationType.SEQUENCE)
-	@SequenceGenerator(name = "admin_seq", sequenceName = "admin_seq")
+	@GeneratedValue(generator = "activity_seq", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "activity_seq", sequenceName = "activity_seq")
 	private long id;
-	@JoinColumn(name = "admin_id")
+	@JoinColumn(name = "activity_admin_id")
 	@NotNull
 	@ManyToOne
-	private Admin admin;
+	private ActivityAdmin activityAdmin;
 }

@@ -20,8 +20,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "admin")
-public class Admin implements Serializable {
+@Table(name = "activity_admin")
+public class ActivityAdmin implements Serializable {
 	@Id
 	@Column(name = "id")
 	@NotNull

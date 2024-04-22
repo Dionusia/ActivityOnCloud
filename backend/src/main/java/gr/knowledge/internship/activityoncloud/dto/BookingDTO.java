@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 public class BookingDTO implements Serializable {
 	private long id;
-	private AdminDTO admin;
+	private ActivityAdminDTO activityAdmin;
 	private ActivityDTO activity;
 	private Timestamp startTime;
 	private Timestamp endTime;
