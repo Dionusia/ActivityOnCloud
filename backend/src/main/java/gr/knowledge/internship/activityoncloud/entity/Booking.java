@@ -2,22 +2,19 @@ package gr.knowledge.internship.activityoncloud.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Date;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.cglib.core.Local;
 
 @Entity
 @Getter
@@ -42,10 +39,12 @@ public class Booking implements Serializable {
 	private Activity activity;
 	@Column(name = "start_time")
 	@NotNull
-	private Timestamp startTime;
+	@Temporal(TemporalType.TIMESTAMP)
+	private LocalDateTime startTime;
 	@Column(name = "end_time")
 	@NotNull
-	private Timestamp endTime;
+	@Temporal(TemporalType.TIMESTAMP)
+	private LocalDateTime endTime;
 	@Column(name = "persons")
 	@NotNull
 	private int persons;

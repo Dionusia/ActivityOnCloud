@@ -16,5 +16,7 @@ import lombok.Setter;
 public class ActivityDTO implements Serializable {
 	private long id;
 	private ActivityAdminDTO activityAdmin;
-	private PGInterval duration;
+	private Long durationDays;
+	private Long durationHours;
+	private Long durationMinutes;
 }

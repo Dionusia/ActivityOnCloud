@@ -32,10 +32,21 @@ public class Activity implements Serializable {
 	@GeneratedValue(generator = "activity_seq", strategy = GenerationType.SEQUENCE)
 	@SequenceGenerator(name = "activity_seq", sequenceName = "activity_seq")
 	private long id;
+
 	@JoinColumn(name = "activity_admin_id")
 	@NotNull
 	@ManyToOne
 	private ActivityAdmin activityAdmin;
-	@Column(name = "duration")
-	private PGInterval duration;
+
+	@Column(name = "duration_days")
+	@NotNull
+	private Long durationDays;
+
+	@Column(name = "duration_hours")
+	@NotNull
+	private Long durationHours;
+
+	@Column(name = "duration_minutes")
+	@NotNull
+	private Long durationMinutes;
 }
