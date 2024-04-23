@@ -1,11 +1,6 @@
 package gr.knowledge.internship.activityoncloud.entity;
 
 import java.io.Serializable;
-import java.time.Duration;
-
-import org.hibernate.annotations.Type;
-
-import com.vladmihalcea.hibernate.type.interval.PostgreSQLIntervalType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -2,13 +2,9 @@ package gr.knowledge.internship.activityoncloud.service;
 
 import java.util.List;
 
-import gr.knowledge.internship.activityoncloud.dto.ActivityDTO;
 import gr.knowledge.internship.activityoncloud.dto.AvailabilityDTO;
-import gr.knowledge.internship.activityoncloud.entity.Activity;
 import gr.knowledge.internship.activityoncloud.entity.Availability;
-import gr.knowledge.internship.activityoncloud.mapper.ActivityMapper;
 import gr.knowledge.internship.activityoncloud.mapper.AvailabilityMapper;
-import gr.knowledge.internship.activityoncloud.repository.ActivityRepository;
 import gr.knowledge.internship.activityoncloud.repository.AvailabilityRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

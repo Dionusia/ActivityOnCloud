@@ -1,9 +1,6 @@
 package gr.knowledge.internship.activityoncloud.dto;
 
 import java.io.Serializable;
-import java.time.Duration;
-
-import org.postgresql.util.PGInterval;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

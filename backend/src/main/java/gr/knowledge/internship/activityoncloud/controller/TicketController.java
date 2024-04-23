@@ -1,6 +1,5 @@
 package gr.knowledge.internship.activityoncloud.controller;
 
-import gr.knowledge.internship.activityoncloud.dto.ActivityDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

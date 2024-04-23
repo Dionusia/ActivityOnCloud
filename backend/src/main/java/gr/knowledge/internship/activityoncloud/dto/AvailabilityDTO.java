@@ -1,6 +1,5 @@
 package gr.knowledge.internship.activityoncloud.dto;
 
-import gr.knowledge.internship.activityoncloud.entity.Activity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
