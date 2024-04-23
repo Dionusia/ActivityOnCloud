@@ -58,4 +58,10 @@ public class TicketService {
                 .orElseThrow(EntityNotFoundException::new);
         return ticketInDatabase;
     }
+
+    @Transactional(readOnly = true)
+	public List<TicketDTO> getTicketsOfActivity(Long id) {
+    	List<Ticket> ticketsOfActivity = ticketRepository.findByActivityId(id);
+    	return ticketMapper.toDTOList(ticketsOfActivity);
+    }
 }

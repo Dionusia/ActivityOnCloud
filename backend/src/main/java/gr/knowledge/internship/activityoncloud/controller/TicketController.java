@@ -25,6 +25,11 @@ public class TicketController {
         return ticketService.getTicketById(id);
     }
 
+    @GetMapping("/of-activity/{id}")
+    public List<TicketDTO> getTicketsOfActivity(@PathVariable Long id) {
+    	return ticketService.getTicketsOfActivity(id);
+    }
+    
     @PostMapping("/save")
     public TicketDTO saveTicket(@RequestBody TicketDTO ticket) {
         return ticketService.saveTicket(ticket);
