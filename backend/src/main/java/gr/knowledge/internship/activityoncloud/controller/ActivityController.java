@@ -23,9 +23,6 @@ public class ActivityController {
 	@Autowired
 	private ActivityService activityService;
 
-	@Autowired
-	private AvailabilityService availabilityService;
-
 	@GetMapping
 	public List<ActivityDTO> getAllActivities() {
 		return activityService.getAllActivities();
@@ -51,22 +48,5 @@ public class ActivityController {
 		activityService.deleteActivity(activity);
 	}
 
-	@GetMapping("/available")
-	public ResponseEntity<?> getAvailableActivitiesWithSlots(
-			@RequestParam("date") LocalDate date,
-			@RequestParam("people") int people
-	) {
-		log.info("Received request for available activities on date: {}, with people count: {}", date, people);
-
-		List<Map<String, Object>> availableActivitiesWithSlots = availabilityService.findAvailableActivitiesWithSlots(date, people);
-
-		if (availableActivitiesWithSlots.isEmpty()) {
-			log.warn("No available activities or time slots found for date: {} and people count: {}", date, people);
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No available activities or time slots found for the given date and people count.");
-		}
-
-		log.info("Found {} activities with time slots for date: {} and people count: {}", availableActivitiesWithSlots.size(), date, people);
-		return ResponseEntity.ok(availableActivitiesWithSlots);
-	}
 }
 
