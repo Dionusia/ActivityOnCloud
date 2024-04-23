@@ -1,12 +1,15 @@
 import React from 'react';
 import Dashboard from './Components/Dashboard';
+import { Datepicker } from "flowbite-react";
+import { Component } from './Components/DatePicker';
 
 const App: React.FC = () => {
 
 
   return (
     <div>
-      <Dashboard /> {/*Ειναι το page του dashboard και εχει μεσα τον πινακα που θελουμε (λογικα το θελουμε στο routing και οχι κατευθειαν στο App)*/}
+      <Datepicker/>
+      {/*<Dashboard /> Ειναι το page του dashboard και εχει μεσα τον πινακα που θελουμε (λογικα το θελουμε στο routing και οχι κατευθειαν στο App)*/}
     </div> 
   );
 }
