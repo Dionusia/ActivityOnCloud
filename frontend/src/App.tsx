@@ -1,21 +1,28 @@
 import React from 'react';
-import BookingsList from './Components/BookingsList';
+import Dashboard from './Components/Dashboard';
 
 const App: React.FC = () => {
 
-  const dummyBooking = [{
-    activityDescription: "This is a activity",
-    activityName: "Dummy Activity",
-    imageUrl: "https://example.com/dummy-image.jpg",
-    timeframe: "2022-01-01T00:00:00Z",
-    payment: "Paid",
-    paymentDateTime: "2022-01-01T00:00:00Z",
-  }];
+  const dummyBooking = [
+    {
+    customerName: 'John Doe',
+    activityName: 'Hiking',
+    participantsNum: '2',
+    timeframe: '2022-01-01 10:00',
+    pricePayed: '$100'
+    },
+    {
+      customerName: 'Jane Doe',
+    activityName: 'Camping',
+    participantsNum: '4',
+    timeframe: '2022-01-02 12:00',
+    pricePayed: '$200'
+    },
+  ];
 
   return (
     <div>
-      <h1>Bookings</h1>
-      <BookingsList booking={dummyBooking} />
+      <Dashboard /> //Ειναι το page του dashboard και εχει μεσα τον πινακα που θελουμε (λογικα το θελουμε στο routing και οχι κατευθειαν στο App)
     </div> 
   );
 }
