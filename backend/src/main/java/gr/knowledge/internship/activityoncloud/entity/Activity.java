@@ -12,6 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,12 @@ public class Activity implements Serializable {
 	@NotNull
 	@ManyToOne
 	private ActivityAdmin activityAdmin;
+	@Column(name = "name")
+	@Size(max = 100)
+	private String name;
+	@Column(name = "description")
+	@Size(max = 1024)
+	private String description;
 	@Column(name = "duration_days")
 	private int durationDays;
 	@Column(name = "duration_hours")

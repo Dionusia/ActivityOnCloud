@@ -14,6 +14,8 @@ import lombok.Setter;
 public class ActivityDTO implements Serializable {
 	private long id;
 	private ActivityAdminDTO activityAdmin;
+	private String name;
+	private String description;
 	private int durationDays;
 	private int durationHours;
 	private int durationMinutes;
