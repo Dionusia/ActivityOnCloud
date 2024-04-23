@@ -16,6 +16,10 @@ module.exports = {
         exclude: /node_modules/,
         use: ['babel-loader'],
       },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
     ],
   },
   devServer: {
@@ -26,12 +30,12 @@ module.exports = {
     port:5000,
     open: {
       app: {
-        name: 'firefox',
+        name: 'Google Chrome',
       },
     },
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: ['.tsx', '.ts', '.js','.css'],
   },
   plugins: [
     new HtmlWebpackPlugin({

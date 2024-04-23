@@ -1,6 +1,7 @@
 package gr.knowledge.internship.activityoncloud.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import jakarta.persistence.Column;
@@ -31,10 +32,10 @@ public class Booking implements Serializable {
 	@GeneratedValue(generator = "booking_seq", strategy = GenerationType.SEQUENCE)
 	@SequenceGenerator(name = "booking_seq", sequenceName = "booking_seq")
 	private long id;
-	@JoinColumn(name = "admin_id")
+	@JoinColumn(name = "activity_admin_id")
 	@ManyToOne
 	@NotNull
-	private Admin admin;
+	private ActivityAdmin activityAdmin;
 	@JoinColumn(name = "activity_id")
 	@ManyToOne
 	@NotNull
@@ -45,4 +46,10 @@ public class Booking implements Serializable {
 	@Column(name = "end_time")
 	@NotNull
 	private Timestamp endTime;
+	@Column(name = "persons")
+	@NotNull
+	private int persons;
+	@Column(name = "price_total")
+	@NotNull
+	private BigDecimal priceTotal;
 }
