@@ -4,13 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.cglib.core.Local;
-
 import java.io.Serializable;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @AllArgsConstructor

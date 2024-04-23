@@ -1,23 +1,27 @@
 package gr.knowledge.internship.activityoncloud.service;
 
-import java.time.*;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
-import java.util.stream.Collectors;
-
 import gr.knowledge.internship.activityoncloud.dto.AvailabilityDTO;
+import gr.knowledge.internship.activityoncloud.entity.Activity;
 import gr.knowledge.internship.activityoncloud.entity.Availability;
 import gr.knowledge.internship.activityoncloud.mapper.AvailabilityMapper;
 import gr.knowledge.internship.activityoncloud.repository.AvailabilityRepository;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.extern.log4j.Log4j2;
+
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-@Log4j2
 public class AvailabilityService {
     @Autowired
     private AvailabilityRepository availabilityRepository;
