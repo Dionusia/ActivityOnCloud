@@ -1,17 +1,15 @@
-import React from 'react';
-import Dashboard from './Components/Dashboard';
+import React, { useState } from "react";
+import Dashboard from "./Components/Dashboard";
 import { Datepicker } from "flowbite-react";
-import { Component } from './Components/DatePicker';
-
+import DatePick from "./Components/DatePick";
+import PersonPicker from "./Components/PersonPicker";
 const App: React.FC = () => {
-
-
   return (
     <div>
-      <Datepicker/>
-      {/*<Dashboard /> Ειναι το page του dashboard και εχει μεσα τον πινακα που θελουμε (λογικα το θελουμε στο routing και οχι κατευθειαν στο App)*/}
-    </div> 
+      <DatePick />
+      <PersonPicker />
+    </div>
   );
-}
+};
 
 export default App;
