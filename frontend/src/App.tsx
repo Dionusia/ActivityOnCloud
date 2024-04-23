@@ -3,22 +3,6 @@ import Dashboard from './Components/Dashboard';
 
 const App: React.FC = () => {
 
-  const dummyBooking = [
-    {
-    customerName: 'John Doe',
-    activityName: 'Hiking',
-    participantsNum: '2',
-    timeframe: '2022-01-01 10:00',
-    pricePayed: '$100'
-    },
-    {
-      customerName: 'Jane Doe',
-    activityName: 'Camping',
-    participantsNum: '4',
-    timeframe: '2022-01-02 12:00',
-    pricePayed: '$200'
-    },
-  ];
 
   return (
     <div>
