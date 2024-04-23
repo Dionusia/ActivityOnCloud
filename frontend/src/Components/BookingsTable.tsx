@@ -16,7 +16,7 @@ const BookingsTable: React.FC<Props> = ({booking}) => {
   return (
     <div className="relative p-6 bg-white">
       <table className=" mx-auto table-auto overflow-hidden text-sm text-left rtl:text-right text-gray-500  md:rounded-lg shadow-md ">
-        <thead className="shadow-md text-xs text-gray-700 uppercase bg-gray-200 ">
+        <thead className=" text-xs text-gray-700 uppercase bg-gray-200 ">
           <tr>
             <th scope="col" className="px-6 py-3">Customer</th>
             <th scope="col" className="px-6 py-3">Activity</th>

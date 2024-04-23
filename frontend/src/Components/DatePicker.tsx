@@ -3,9 +3,13 @@
 
 import { Datepicker } from "flowbite-react";
 
-export function Component() {
-  return( 
-  <div>
-    <Datepicker />
-  </div>
-  );}
+
+const DatePicker = () => {
+  return (
+    <div>
+      <Datepicker />
+    </div>
+  );
+}
+
+export default DatePicker;

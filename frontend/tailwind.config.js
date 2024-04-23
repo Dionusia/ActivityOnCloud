@@ -13,9 +13,6 @@ module.exports = {
     require('flowbite/plugin')
   ],
 
-  corePlugins: {
-    preflight: false,
-  },
-  //darkMode: 'media',
+  darkMode: 'media',
 }
 
