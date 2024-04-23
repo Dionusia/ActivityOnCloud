@@ -1,8 +1,11 @@
 package gr.knowledge.internship.activityoncloud.entity;
 
 import java.io.Serializable;
+import java.time.Duration;
 
-import org.postgresql.util.PGInterval;
+import org.hibernate.annotations.Type;
+
+import com.vladmihalcea.hibernate.type.interval.PostgreSQLIntervalType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,6 +39,10 @@ public class Activity implements Serializable {
 	@NotNull
 	@ManyToOne
 	private ActivityAdmin activityAdmin;
-	@Column(name = "duration")
-	private PGInterval duration;
+	@Column(name = "duration_days")
+	private int durationDays;
+	@Column(name = "duration_hours")
+	private int durationHours;
+	@Column(name = "duration_minutes")
+	private int durationMinutes;
 }

@@ -1,6 +1,7 @@
 package gr.knowledge.internship.activityoncloud.dto;
 
 import java.io.Serializable;
+import java.time.Duration;
 
 import org.postgresql.util.PGInterval;
 
@@ -16,5 +17,7 @@ import lombok.Setter;
 public class ActivityDTO implements Serializable {
 	private long id;
 	private ActivityAdminDTO activityAdmin;
-	private PGInterval duration;
+	private int durationDays;
+	private int durationHours;
+	private int durationMinutes;
 }
