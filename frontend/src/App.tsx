@@ -4,7 +4,7 @@ import BookingsList from './Components/BookingsList';
 const App: React.FC = () => {
 
   const dummyBooking = [{
-    activityDescription: "This is a dummy activity",
+    activityDescription: "This is a activity",
     activityName: "Dummy Activity",
     imageUrl: "https://example.com/dummy-image.jpg",
     timeframe: "2022-01-01T00:00:00Z",

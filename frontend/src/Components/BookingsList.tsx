@@ -29,7 +29,7 @@ const BookingsList: React.FC<Props> = ({ booking }) => (
           <p className="text-sm leading-6 text-gray-900">{booking.timeframe}</p>
           {booking.payment ? (
             <p className="mt-1 text-xs leading-5 text-gray-500">
-              Last seen <time dateTime={booking.paymentDateTime}>{booking.payment}</time>
+              $30 <time dateTime={booking.paymentDateTime}>{booking.payment}</time>
             </p>
           ) : (
             <div className="mt-1 flex items-center gap-x-1.5">
