@@ -16,7 +16,7 @@ import gr.knowledge.internship.activityoncloud.dto.BookingDTO;
 import gr.knowledge.internship.activityoncloud.service.BookingService;
 
 @RestController
-@RequestMapping(value = "booking")
+@RequestMapping(value = "/booking")
 public class BookingController {
 	@Autowired
 	private BookingService bookingService;

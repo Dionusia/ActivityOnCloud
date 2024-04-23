@@ -1,25 +1,30 @@
 package gr.knowledge.internship.activityoncloud.controller;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 
+import gr.knowledge.internship.activityoncloud.entity.Activity;
+import gr.knowledge.internship.activityoncloud.service.AvailabilityService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import gr.knowledge.internship.activityoncloud.dto.ActivityDTO;
 import gr.knowledge.internship.activityoncloud.service.ActivityService;
 
 @RestController
 @RequestMapping(value = "/activity")
+@Log4j2
 public class ActivityController {
 	@Autowired
 	private ActivityService activityService;
+
+	@Autowired
+	private AvailabilityService availabilityService;
 
 	@GetMapping
 	public List<ActivityDTO> getAllActivities() {
@@ -45,4 +50,23 @@ public class ActivityController {
 	public void deleteActivity(@RequestBody ActivityDTO activity) {
 		activityService.deleteActivity(activity);
 	}
+
+	@GetMapping("/available")
+	public ResponseEntity<?> getAvailableActivitiesWithSlots(
+			@RequestParam("date") LocalDate date,
+			@RequestParam("people") int people
+	) {
+		log.info("Received request for available activities on date: {}, with people count: {}", date, people);
+
+		List<Map<String, Object>> availableActivitiesWithSlots = availabilityService.findAvailableActivitiesWithSlots(date, people);
+
+		if (availableActivitiesWithSlots.isEmpty()) {
+			log.warn("No available activities or time slots found for date: {} and people count: {}", date, people);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No available activities or time slots found for the given date and people count.");
+		}
+
+		log.info("Found {} activities with time slots for date: {} and people count: {}", availableActivitiesWithSlots.size(), date, people);
+		return ResponseEntity.ok(availableActivitiesWithSlots);
+	}
 }
+

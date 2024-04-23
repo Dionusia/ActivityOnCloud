@@ -8,7 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Getter
@@ -30,11 +31,11 @@ public class Availability implements Serializable {
 
     @NotNull
     @Column(name = "open_time")
-    private Duration openTime;
+    private LocalTime openTime;
 
     @NotNull
     @Column(name = "close_time")
-    private Duration closeTime;
+    private LocalTime closeTime;
 
     @NotNull
     @Column(name = "persons_capacity")

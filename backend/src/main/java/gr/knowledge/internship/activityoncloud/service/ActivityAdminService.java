@@ -1,7 +1,14 @@
 package gr.knowledge.internship.activityoncloud.service;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import gr.knowledge.internship.activityoncloud.entity.Activity;
+import gr.knowledge.internship.activityoncloud.entity.Availability;
+import gr.knowledge.internship.activityoncloud.repository.AvailabilityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +26,9 @@ public class ActivityAdminService {
 	private ActivityAdminRepository activityAdminRepository;
 	@Autowired
 	private ActivityAdminMapper activityAdminMapper;
+
+	@Autowired
+	private AvailabilityRepository availabilityRepository;
 
 	@Transactional(readOnly = true)
 	public ActivityAdminDTO getActivityAdminById(Long id) {
