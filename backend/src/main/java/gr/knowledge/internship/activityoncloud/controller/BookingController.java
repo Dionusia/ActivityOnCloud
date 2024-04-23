@@ -31,6 +31,16 @@ public class BookingController {
 		return bookingService.getBookingById(id);
 	}
 
+	@GetMapping("/of-admin/{id}")
+	public List<BookingDTO> getBookingsOfAdmin(@PathVariable Long id) {
+		return bookingService.getBookingsOfAdmin(id);
+	}
+	
+	@GetMapping("/of-activity/{id}")
+	public List<BookingDTO> getBookingsOfActivity(@PathVariable Long id) {
+		return bookingService.getBookingsOfActivity(id);
+	}
+	
 	@PostMapping("/save")
 	public BookingDTO saveBooking(@RequestBody BookingDTO booking) {
 		return bookingService.saveBooking(booking);
