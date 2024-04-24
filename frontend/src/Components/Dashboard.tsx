@@ -23,9 +23,9 @@ const Dashboard: React.FC = () => {
   const [bookingsList, setBookingsList] = useState([]);
 
   useEffect(() => {
-    instance.get('/bookings').then((response) => {
+    instance.get('/booking').then((response) => {
       console.log(response.data);
-      setBookingsList(response.data);
+      //setBookingsList(response.data);
     }).catch((error) => {
       console.log(error + ': Get bookings error');
     })
