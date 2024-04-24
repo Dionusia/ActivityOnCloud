@@ -1,9 +1,10 @@
 package gr.knowledge.internship.activityoncloud.repository;
 
-import gr.knowledge.internship.activityoncloud.entity.Availability;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+import gr.knowledge.internship.activityoncloud.entity.Availability;
 
 public interface AvailabilityRepository extends JpaRepository<Availability, Long> {
     List<Availability> findByDayOfWeek(String dayOfWeek);
