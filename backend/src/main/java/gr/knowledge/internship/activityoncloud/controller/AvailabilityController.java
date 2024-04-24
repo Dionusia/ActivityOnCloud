@@ -1,15 +1,22 @@
 package gr.knowledge.internship.activityoncloud.controller;
 
+import gr.knowledge.internship.activityoncloud.dto.TimeSlotDTO;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import gr.knowledge.internship.activityoncloud.dto.AvailabilityDTO;
 import gr.knowledge.internship.activityoncloud.service.AvailabilityService;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/availability")
+@Log4j2
 public class AvailabilityController {
 
     @Autowired
@@ -38,5 +45,13 @@ public class AvailabilityController {
     @DeleteMapping("/delete")
     public void deleteAvailability(@RequestBody AvailabilityDTO availability) {
         availabilityService.deleteAvailability(availability);
+    }
+
+    @GetMapping("/available")
+    public List<Map<String, List<TimeSlotDTO>>> getAvailableActivitiesWithSlots(
+            @RequestParam("date") LocalDate date,
+            @RequestParam("people") int people
+    ) {
+        return availabilityService.findAvailableActivitiesWithSlots(date, people);
     }
 }
