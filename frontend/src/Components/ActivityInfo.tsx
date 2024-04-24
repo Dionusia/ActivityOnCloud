@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import '../index.css';
 
+//#region interfaces and types 
 interface StringProp {
     text: string;
 }
@@ -13,11 +14,20 @@ interface ButtonProps {
     text: string;
 }
 
-interface ActivityInfoParentProps {
-    timeList: string[];
-
+type TimeSlot = {
+    start: string;
+    end: string;
 }
 
+interface ActivityInfoParentProps {
+    title: string;
+    description: string;
+    price: string;
+    timeSlot: TimeSlot[];
+}
+//#endregion
+
+//#region child components
 const Button: React.FC<ButtonProps> = ({ text}) => {
     return (
         <button 
@@ -94,9 +104,10 @@ const TimePicker: React.FC<TimePickerProp> = ({ timeList }) => {
         </div>
     )
 }
+//#endregion
 
-const ActivityInfoParent: React.FC<ActivityInfoParentProps> = ({timeList}) => {
-    const description = "Lorem ipsum dolor sit amet, consectetur adipiscingfwewfewe fwgwefewgewgwegwegewgwgwrgwgwrggwrwgwrg elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+const ActivityInfoParent: React.FC<ActivityInfoParentProps> = ({title, description, price, timeSlot }) => {
+    const timeList = timeSlot.map(timeSlot => timeSlot.start.slice(0, -3));
     return (
         <div className="items-center 
                         space-y-4 
@@ -106,10 +117,10 @@ const ActivityInfoParent: React.FC<ActivityInfoParentProps> = ({timeList}) => {
                         overflow-visible">
             <div className={'flex items-center space-x-2'}>
                 <div className={'flex flex-col space-y-2'}>
-                    <ActivityTitle text="Title" />
+                    <ActivityTitle text={title} />
                     <ActivityDescription text= {description} />
                 </div>
-                <ActivityDescription text="Price: 125$" />
+                <ActivityDescription text={`${price}€ `} />
             </div>
             <div>
                 <h1 className=" text-15 font-medium">Available Times</h1>
@@ -118,7 +129,6 @@ const ActivityInfoParent: React.FC<ActivityInfoParentProps> = ({timeList}) => {
                     <Button text="Book Now" />
                 </div>
             </div>
-            {/* <Button text="2:00AM" isPressed={isPressed} handleClick={handleClick}/> */}
         </div>
     )
 }
