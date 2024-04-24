@@ -1,6 +1,7 @@
 package gr.knowledge.internship.activityoncloud.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -20,4 +21,5 @@ public class ActivityDTO implements Serializable {
 	private int durationDays;
 	private int durationHours;
 	private int durationMinutes;
+	private BigDecimal pricePerPerson;
 }
