@@ -1,10 +1,7 @@
 package gr.knowledge.internship.activityoncloud.controller;
 
 import gr.knowledge.internship.activityoncloud.dto.TimeSlotDTO;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import gr.knowledge.internship.activityoncloud.dto.AvailabilityDTO;
@@ -15,8 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/availability")
-@Log4j2
+@RequestMapping(value = "/availability")
 public class AvailabilityController {
 
     @Autowired
