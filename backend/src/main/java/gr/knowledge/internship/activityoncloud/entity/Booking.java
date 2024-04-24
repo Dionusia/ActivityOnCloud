@@ -2,7 +2,7 @@ package gr.knowledge.internship.activityoncloud.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,7 +13,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,14 +45,20 @@ public class Booking implements Serializable {
 	private Activity activity;
 	@Column(name = "start_time")
 	@NotNull
-	private Timestamp startTime;
+	@Temporal(TemporalType.TIMESTAMP)
+	private LocalDateTime startTime;
 	@Column(name = "end_time")
 	@NotNull
-	private Timestamp endTime;
+	@Temporal(TemporalType.TIMESTAMP)
+	private LocalDateTime endTime;
 	@Column(name = "persons")
 	@NotNull
 	private int persons;
 	@Column(name = "price_total")
 	@NotNull
 	private BigDecimal priceTotal;
+	@Column(name = "customer_name")
+	@Size(max = 64)
+	@NotNull
+	private String customerName;
 }
