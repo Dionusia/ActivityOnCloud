@@ -47,20 +47,10 @@ public class AvailabilityController {
     }
 
     @GetMapping("/available")
-    public ResponseEntity<?> getAvailableActivitiesWithSlots(
+    public List<Map<String, List<Object>>> getAvailableActivitiesWithSlots(
             @RequestParam("date") LocalDate date,
             @RequestParam("people") int people
     ) {
-        log.info("Received request for available activities on date: {}, with people count: {}", date, people);
-
-        List<Map<String, Object>> availableActivitiesWithSlots = availabilityService.findAvailableActivitiesWithSlots(date, people);
-
-        if (availableActivitiesWithSlots.isEmpty()) {
-            log.warn("No available activities or time slots found for date: {} and people count: {}", date, people);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No available activities or time slots found for the given date and people count.");
-        }
-
-        log.info("Found {} activities with time slots for date: {} and people count: {}", availableActivitiesWithSlots.size(), date, people);
-        return ResponseEntity.ok(availableActivitiesWithSlots);
+        return availabilityService.findAvailableActivitiesWithSlots(date, people);
     }
 }

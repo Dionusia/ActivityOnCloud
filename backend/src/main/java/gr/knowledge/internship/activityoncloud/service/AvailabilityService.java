@@ -116,21 +116,26 @@ public class AvailabilityService {
         return timeSlots;
     }
 
-    public List<Map<String, Object>> findAvailableActivitiesWithSlots(LocalDate date, int people) {
+    public List<Map<String, List<Object>>> findAvailableActivitiesWithSlots(LocalDate date, int people) {
+        // Get suitable availabilities for the given date and people count
         List<Availability> suitableAvailabilities = findSuitableAvailabilities(date, people);
         if (suitableAvailabilities.isEmpty()) {
             return Collections.emptyList();
         }
 
-        List<Map<String, Object>> results = new ArrayList<>();
+        // List of maps where each map holds an activityId key with a list of time slot objects
+        List<Map<String, List<Object>>> results = new ArrayList<>();
 
+        // Iterate over each suitable availability
         for (Availability availability : suitableAvailabilities) {
+            // Generate time slots for this availability
             List<Map<String, Object>> timeSlots = generateTimeSlots(availability);
 
-            Map<String, Object> result = new HashMap<>();
-            result.put("activityId", availability.getActivity().getId());
-            result.put("timeSlots", timeSlots);
+            // Create a map with the activityId key and the timeSlots list as the value
+            Map<String, List<Object>> result = new HashMap<>();
+            result.put(String.valueOf(availability.getActivity().getId()), new ArrayList<>(timeSlots));
 
+            // Add this map to the results list
             results.add(result);
         }
 
