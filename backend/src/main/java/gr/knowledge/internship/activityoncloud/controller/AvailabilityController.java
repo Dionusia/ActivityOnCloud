@@ -1,5 +1,6 @@
 package gr.knowledge.internship.activityoncloud.controller;
 
+import gr.knowledge.internship.activityoncloud.dto.TimeSlotDTO;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,7 +48,7 @@ public class AvailabilityController {
     }
 
     @GetMapping("/available")
-    public List<Map<String, List<Object>>> getAvailableActivitiesWithSlots(
+    public List<Map<String, List<TimeSlotDTO>>> getAvailableActivitiesWithSlots(
             @RequestParam("date") LocalDate date,
             @RequestParam("people") int people
     ) {

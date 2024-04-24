@@ -1,6 +1,7 @@
 package gr.knowledge.internship.activityoncloud.service;
 
 import gr.knowledge.internship.activityoncloud.dto.AvailabilityDTO;
+import gr.knowledge.internship.activityoncloud.dto.TimeSlotDTO;
 import gr.knowledge.internship.activityoncloud.entity.Activity;
 import gr.knowledge.internship.activityoncloud.entity.Availability;
 import gr.knowledge.internship.activityoncloud.mapper.AvailabilityMapper;
@@ -87,7 +88,7 @@ public class AvailabilityService {
     /**
      * Generate time slots for a given activity based on its open and close times and duration.
      */
-    public List<Map<String, Object>> generateTimeSlots(Availability availability) {
+    public List<TimeSlotDTO> generateTimeSlots(Availability availability) {
         Activity activity = availability.getActivity();
         LocalTime openTime = availability.getOpenTime();
         LocalTime closeTime = availability.getCloseTime();
@@ -97,16 +98,17 @@ public class AvailabilityService {
                 .plusHours(activity.getDurationHours())
                 .plusMinutes(activity.getDurationMinutes());
 
-        List<Map<String, Object>> timeSlots = new ArrayList<>();
+        List<TimeSlotDTO> timeSlots = new ArrayList<>();
         LocalTime currentStart = openTime;
 
         while (currentStart.plus(activityDuration).isBefore(closeTime) ||
                 currentStart.plus(activityDuration).equals(closeTime)) {
             LocalTime endTime = currentStart.plus(activityDuration);
 
-            Map<String, Object> timeSlot = new HashMap<>();
-            timeSlot.put("start", currentStart);
-            timeSlot.put("end", endTime);
+            TimeSlotDTO timeSlot = new TimeSlotDTO();
+            timeSlot.setStart(currentStart);
+            timeSlot.setEnd(endTime);
+
             timeSlots.add(timeSlot);
 
             // Move to the next slot
@@ -116,29 +118,25 @@ public class AvailabilityService {
         return timeSlots;
     }
 
-    public List<Map<String, List<Object>>> findAvailableActivitiesWithSlots(LocalDate date, int people) {
-        // Get suitable availabilities for the given date and people count
+
+    public List<Map<String, List<TimeSlotDTO>>> findAvailableActivitiesWithSlots(LocalDate date, int people) {
         List<Availability> suitableAvailabilities = findSuitableAvailabilities(date, people);
         if (suitableAvailabilities.isEmpty()) {
             return Collections.emptyList();
         }
 
-        // List of maps where each map holds an activityId key with a list of time slot objects
-        List<Map<String, List<Object>>> results = new ArrayList<>();
+        List<Map<String, List<TimeSlotDTO>>> results = new ArrayList<>();
 
-        // Iterate over each suitable availability
         for (Availability availability : suitableAvailabilities) {
-            // Generate time slots for this availability
-            List<Map<String, Object>> timeSlots = generateTimeSlots(availability);
+            List<TimeSlotDTO> timeSlots = generateTimeSlots(availability);
 
-            // Create a map with the activityId key and the timeSlots list as the value
-            Map<String, List<Object>> result = new HashMap<>();
-            result.put(String.valueOf(availability.getActivity().getId()), new ArrayList<>(timeSlots));
+            Map<String, List<TimeSlotDTO>> result = new HashMap<>();
+            result.put(String.valueOf(availability.getActivity().getId()), timeSlots);
 
-            // Add this map to the results list
             results.add(result);
         }
 
         return results;
     }
+
 }
