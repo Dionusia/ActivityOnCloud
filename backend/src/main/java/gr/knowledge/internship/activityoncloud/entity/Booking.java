@@ -16,6 +16,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -56,4 +57,8 @@ public class Booking implements Serializable {
 	@Column(name = "price_total")
 	@NotNull
 	private BigDecimal priceTotal;
+	@Column(name = "customer_name")
+	@Size(max = 64)
+	@NotNull
+	private String customerName;
 }

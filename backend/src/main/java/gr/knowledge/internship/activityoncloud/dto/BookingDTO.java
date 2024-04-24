@@ -22,4 +22,5 @@ public class BookingDTO implements Serializable {
 	private LocalDateTime endTime;
 	private int persons;
 	private BigDecimal priceTotal;
+	private String customerName;
 }
