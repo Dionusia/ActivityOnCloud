@@ -135,8 +135,8 @@ const ActivityInfoParent: React.FC<ActivityInfoParentProps> = ({title, descripti
     return (
         <div className="items-center 
                         space-y-4 
-                        border-2 border-black 
-                        bg-blue-200  p-4 
+                        border-2 border-gray-700
+                        bg-white p-4 
                         rounded-lg inline-block
                         overflow-visible">
             <div className={'flex items-center space-x-2'}>
