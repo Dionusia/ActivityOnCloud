@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import BookingsTable from './BookingsTable';
-import instance from '../axioConfig';
+import instance from '../AxiosConfig';
 
 const Dashboard: React.FC = () => {
   const bookingsListDummy = [
@@ -26,8 +26,10 @@ const Dashboard: React.FC = () => {
     instance.get('/bookings').then((response) => {
       console.log(response.data);
       setBookingsList(response.data);
-    });
-  }, []);
+    }).catch((error) => {
+      console.log(error + ': Get bookings error');
+    })
+  });
 
   return (
     <div>
