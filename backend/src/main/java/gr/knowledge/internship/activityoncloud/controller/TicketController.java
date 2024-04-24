@@ -1,6 +1,5 @@
 package gr.knowledge.internship.activityoncloud.controller;
 
-import gr.knowledge.internship.activityoncloud.dto.ActivityDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +25,11 @@ public class TicketController {
         return ticketService.getTicketById(id);
     }
 
+    @GetMapping("/of-activity/{id}")
+    public List<TicketDTO> getTicketsOfActivity(@PathVariable Long id) {
+    	return ticketService.getTicketsOfActivity(id);
+    }
+    
     @PostMapping("/save")
     public TicketDTO saveTicket(@RequestBody TicketDTO ticket) {
         return ticketService.saveTicket(ticket);
