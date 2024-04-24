@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import BookingsTable from './BookingsTable';
+import instance from '../axioConfig';
 
 const Dashboard: React.FC = () => {
-  const dummyBooking = [
+  const bookingsListDummy = [
     {
       customerName: 'John Doe',
       activityName: 'Hiking',
@@ -19,11 +20,20 @@ const Dashboard: React.FC = () => {
     },
   ];
 
+  const [bookingsList, setBookingsList] = useState([]);
+
+  useEffect(() => {
+    instance.get('/bookings').then((response) => {
+      console.log(response.data);
+      setBookingsList(response.data);
+    });
+  }, []);
+
   return (
     <div>
       <h1 className='text-center my-6 py-2 px-4 shadow-md rounded'>Dashboard</h1>
       <div className='text-center'> Bookings
-        <BookingsTable booking={dummyBooking} />
+        <BookingsTable booking={bookingsList} />
       </div>
     </div> 
   );
