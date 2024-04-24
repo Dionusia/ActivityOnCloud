@@ -6,6 +6,12 @@ interface StringProp {
     text: string;
 }
 
+interface ActivityDescriptionProp {
+    text: string;
+    duration: Duration;
+    price: string;
+}
+
 interface TimePickerProp{
     timeList: string[];
 }
@@ -50,11 +56,26 @@ const ActivityTitle: React.FC<StringProp> = ({ text }) => {
     )
 }
 
-const ActivityDescription: React.FC<StringProp> = ({ text, duration }) => {
+const ActivityDescription: React.FC<ActivityDescriptionProp> = ({ text, duration, price }) => {
+    //check if any of the duration values are not 0 and add them to the string
+    const durationString = `${duration.durationDays ? `${duration.durationDays}d ` : ''}
+                            ${duration.durationHours ? `${duration.durationHours}h ` : ''}
+                            ${duration.durationMinutes ? `${duration.durationMinutes}m` : ''}`;
     return (
-        <p className={'text-black text-lg max-w-sm max-h-40 overflow-auto break-words'}>
-            {text}
-        </p>
+        <div>
+            <p className={'text-black text-lg max-w-sm max-h-40 break-words overflow-auto'}>
+                {text}
+            </p>
+            <br/>
+            <div className={'text-black text-15 '}>
+                <p>
+                    {`Activity Duration: ${durationString}`}
+                </p>
+                <p>
+                    {`Price: ${price}€`}
+                </p>
+            </div>
+        </div>
     )
 }
 
@@ -109,7 +130,7 @@ const TimePicker: React.FC<TimePickerProp> = ({ timeList }) => {
 }
 //#endregion
 
-const ActivityInfoParent: React.FC<ActivityInfoParentProps> = ({title, description, price, timeSlot }) => {
+const ActivityInfoParent: React.FC<ActivityInfoParentProps> = ({title, description, price, timeSlot, duration }) => {
     const timeList = timeSlot.map(timeSlot => timeSlot.start.slice(0, -3));
     return (
         <div className="items-center 
@@ -121,9 +142,8 @@ const ActivityInfoParent: React.FC<ActivityInfoParentProps> = ({title, descripti
             <div className={'flex items-center space-x-2'}>
                 <div className={'flex flex-col space-y-2'}>
                     <ActivityTitle text={title} />
-                    <ActivityDescription text= {description} />
+                    <ActivityDescription text= {description} duration={duration} price={price} />
                 </div>
-                <ActivityDescription text={`${price}€ `} />
             </div>
             <div>
                 <h1 className=" text-15 font-medium">Available Times</h1>
