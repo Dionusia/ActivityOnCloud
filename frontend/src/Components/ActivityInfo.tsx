@@ -10,13 +10,15 @@ interface TimePickerProp{
     timeList: string[];
 }
 
-interface ButtonProps {
-    text: string;
-}
-
 type TimeSlot = {
     start: string;
     end: string;
+}
+
+type Duration = {
+    durationDays: number;
+    durationHours: number;
+    durationMinutes: number;
 }
 
 interface ActivityInfoParentProps {
@@ -24,11 +26,12 @@ interface ActivityInfoParentProps {
     description: string;
     price: string;
     timeSlot: TimeSlot[];
+    duration: Duration;
 }
 //#endregion
 
 //#region child components
-const Button: React.FC<ButtonProps> = ({ text}) => {
+const Button: React.FC<StringProp> = ({ text}) => {
     return (
         <button 
             // onClick={}
@@ -47,7 +50,7 @@ const ActivityTitle: React.FC<StringProp> = ({ text }) => {
     )
 }
 
-const ActivityDescription: React.FC<StringProp> = ({ text }) => {
+const ActivityDescription: React.FC<StringProp> = ({ text, duration }) => {
     return (
         <p className={'text-black text-lg max-w-sm max-h-40 overflow-auto break-words'}>
             {text}
