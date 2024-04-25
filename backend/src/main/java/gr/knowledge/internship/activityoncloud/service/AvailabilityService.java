@@ -67,9 +67,6 @@ public class AvailabilityService {
 
 	public Map<String, List<TimeSlotDTO>> findAvailableActivitiesWithSlots(LocalDate date, int people) {
 		List<AvailabilityDTO> suitableAvailabilities = this.findSuitableAvailabilities(date, people);
-		if (suitableAvailabilities.isEmpty()) {
-			return  new HashMap<>();
-		}
 		Map<String, List<TimeSlotDTO>> result = new HashMap<>();
 		for (AvailabilityDTO availability : suitableAvailabilities) {
 			List<TimeSlotDTO> timeSlots = this.generateTimeSlots(availability, date, people);
