@@ -65,19 +65,17 @@ public class AvailabilityService {
 		availabilityRepository.delete(availability);
 	}
 
-	public List<Map<String, List<TimeSlotDTO>>> findAvailableActivitiesWithSlots(LocalDate date, int people) {
+	public Map<String, List<TimeSlotDTO>> findAvailableActivitiesWithSlots(LocalDate date, int people) {
 		List<AvailabilityDTO> suitableAvailabilities = this.findSuitableAvailabilities(date, people);
 		if (suitableAvailabilities.isEmpty()) {
-			return Collections.emptyList();
+			return  new HashMap<>();
 		}
-		List<Map<String, List<TimeSlotDTO>>> results = new ArrayList<>();
+		Map<String, List<TimeSlotDTO>> result = new HashMap<>();
 		for (AvailabilityDTO availability : suitableAvailabilities) {
 			List<TimeSlotDTO> timeSlots = this.generateTimeSlots(availability, date, people);
-			Map<String, List<TimeSlotDTO>> result = new HashMap<>();
 			result.put(String.valueOf(availability.getActivity().getId()), timeSlots);
-			results.add(result);
 		}
-		return results;
+		return result;
 	}
 
 	private Availability existsInDatabase(AvailabilityDTO availabilityDTO) {
