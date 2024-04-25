@@ -1,61 +1,9 @@
 import React, { useEffect, useState } from "react";
-import ActivityInfoParent, {type TimeSlot} from "../Components/ActivityInfo";
+import ActivityInfoParent from "../Components/ActivityInfo";
 import FilterComponents from "../Components/FilterCriteria";
-import instance from "../../config/AxiosConfig";
+import instance from "../AxiosConfig";
 
 const BookingEngine: React.FC = () => {
-    // const timeSlots = [
-    //     {
-    //         "start": "10:00:00",
-    //         "end": "12:30:00"
-    //     },
-    //     {
-    //         "start": "12:30:00",
-    //         "end": "15:00:00"
-    //     },
-    //     {
-    //         "start": "15:00:00",
-    //         "end": "17:30:00"
-    //     }
-    // ]
-    // const activitiesList = [
-    //     {
-    //         "id": 1,
-    //         "activityAdmin": {
-    //             "id": 1
-    //         },
-    //         "name": "Title",
-    //         "description": "Lorem ipsus vwgwrbrwbrebrebrreberb rtbtrbtrbtrbtrbtrbtrb brtbrtbtrbtrbrtb brtbrtb bb rt",
-    //         "durationDays": 0,
-    //         "durationHours": 2,
-    //         "durationMinutes": 30,
-    //         "pricePerPerson": 100
-    //     },
-    //     {
-    //         "id": 51,
-    //         "activityAdmin": {
-    //             "id": 1
-    //         },
-    //         "name": "Title",
-    //         "description": "Lorem ipsus vwgwrbrwbrebrebrreberb rtbtrbtrbtrbtrbtrbtrb brtbrtbtrbtrbrtb brtbrtb bb rt",
-    //         "durationDays": 0,
-    //         "durationHours": 3,
-    //         "durationMinutes": 0,
-    //         "pricePerPerson": 200
-    //     },
-    //     {
-    //         "id": 101,
-    //         "activityAdmin": {
-    //             "id": 51
-    //         },
-    //         "name": "Title",
-    //         "description": "Lorem ipsus vwgwrbrwbrebrebrreberb rtbtrbtrbtrbtrbtrbtrb brtbrtbtrbtrbrtb brtbrtb bb rt",
-    //         "durationDays": 1,
-    //         "durationHours": 0,
-    //         "durationMinutes": 0,
-    //         "pricePerPerson": 300
-    //     }
-    // ]
     interface ActivityAdmin {
         id: number;
     }
@@ -91,7 +39,7 @@ const BookingEngine: React.FC = () => {
                             title={activity.name} 
                             description={activity.description} 
                             price={activity.pricePerPerson * 2} //TODO multiply by the number of people from filter component
-                            timeSlot={timeSlots} 
+                            timeSlot= 
                             duration={
                                 {
                                     durationDays: activity.durationDays,
