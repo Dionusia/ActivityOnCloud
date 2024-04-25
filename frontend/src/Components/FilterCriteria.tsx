@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import DatePicker from "./DatePick";
 import PersonPicker from "./PersonPicker";
 import SearchButton from "./SearchButton";
+import instance from "../AxiosConfig";
 
 const FilterComponents: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -21,6 +22,15 @@ const FilterComponents: React.FC = () => {
       console.log("Please select date and enter number of people");
     }
   };
+
+  instance.get("/activity").then((response)=>{
+
+
+
+    
+  }).catch((error)=>{
+    console.log(error+"Values dont found");
+  })
   return (
     <form className="flex flex-col items-center justify-center mt-8">
       <div className="flex space-x-4 mr-3 ml-3">
