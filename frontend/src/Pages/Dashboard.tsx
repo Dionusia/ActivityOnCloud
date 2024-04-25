@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import BookingsTable, {Booking}  from './BookingsTable';
+import BookingsTable, {Booking}  from '../Components/BookingsTable';
 import instance from '../AxiosConfig';
 
 

@@ -38,6 +38,7 @@ const FilterComponents: React.FC = () => {
       })
       .then((response) => {
         console.log(response.data);
+        //const availableActivities = response.data;
       })
       .catch((error) => {
         console.log(error + ": Get bookings error");
