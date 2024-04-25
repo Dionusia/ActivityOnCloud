@@ -16,7 +16,7 @@ const BookingsTable: React.FC<Props> = ({booking}) => {
   return (
     <div className="relative p-6 bg-white">
       <table className=" mx-auto table-auto overflow-hidden text-sm text-left rtl:text-right text-gray-500  md:rounded-lg shadow-md ">
-        <thead className="shadow-md text-xs text-gray-700 uppercase bg-gray-200 ">
+        <thead className=" text-xs text-gray-200 uppercase bg-gray-700 ">
           <tr>
             <th scope="col" className="px-6 py-3">Customer</th>
             <th scope="col" className="px-6 py-3">Activity</th>
@@ -32,7 +32,7 @@ const BookingsTable: React.FC<Props> = ({booking}) => {
               <td className="px-6 py-4">{bookingItem.activityName}</td>
               <td className="px-6 py-4">{bookingItem.participantsNum}</td>
               <td className="px-6 py-4">{bookingItem.timeframe}</td>
-              <td className="px-6 py-4">{bookingItem.pricePayed}</td>
+              <td className="px-6 py-4">{ "$" + bookingItem.pricePayed}</td>
             </tr>
           ))}
         </tbody>
@@ -42,3 +42,4 @@ const BookingsTable: React.FC<Props> = ({booking}) => {
 };
 
 export default BookingsTable;
+export type {Booking};
