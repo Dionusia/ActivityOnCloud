@@ -41,7 +41,7 @@ const Button: React.FC<StringProp> = ({ text}) => {
     return (
         <button 
             // onClick={}
-            className={"px-6 py-2.5 text-15 text-white rounded-lg font-medium bg-gray-700 hover:bg-gray-600"}
+            className={"px-6 py-2.5 text-15 text-white rounded-lg font-medium bg-blue-700 hover:bg-blue-800"}
         >
             {text}
         </button>
@@ -94,8 +94,8 @@ const TimePicker: React.FC<TimePickerProp> = ({ timeList }) => {
         <div>
             <button id="dropdownDefaultButton" onClick={toggleDropdown} data-dropdown-toggle="dropdown" 
                 className="text-white 
-                        bg-gray-700 
-                        hover:bg-gray-600 
+                        bg-blue-700 
+                        hover:bg-blue-800 
                         focus:ring-0       
                         focus:outline-none 
                         focus:ring-blue-300 
@@ -135,8 +135,7 @@ const ActivityInfoParent: React.FC<ActivityInfoParentProps> = ({title, descripti
     return (
         <div className="items-center 
                         space-y-4 
-                        border-2 border-gray-700
-                        bg-white p-4 
+                        bg-gray-100 p-4 
                         rounded-lg inline-block">
             <div className={'flex items-center space-x-2'}>
                 <div className={'flex flex-col space-y-2'}>

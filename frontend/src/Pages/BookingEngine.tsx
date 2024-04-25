@@ -71,7 +71,9 @@ const BookingEngine: React.FC = () => {
                                     durationDays: activity.durationDays,
                                     durationHours: activity.durationHours,
                                     durationMinutes: activity.durationMinutes
-                                }} />
+                                }
+                            } 
+                        />
                     </div>
                 ))}
             </div>
