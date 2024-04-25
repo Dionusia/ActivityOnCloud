@@ -1,10 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { prototype } = require('events');
-const { postcss } = require('tailwindcss');
 
 module.exports = {
-  entry: './src/index.tsx',
+  entry: './index.tsx',
   mode: 'development',
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -31,7 +29,7 @@ module.exports = {
     port:5000,
     open: {
       app: {
-        name: 'Google Chrome',
+        name: 'firefox',
       },
     },
   },
@@ -40,7 +38,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './public/index.html',
+      template: '../public/index.html',
     }),
   ],
 };
