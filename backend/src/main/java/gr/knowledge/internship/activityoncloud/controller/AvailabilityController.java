@@ -52,7 +52,7 @@ public class AvailabilityController {
     }
 
     @GetMapping("/available")
-    public List<Map<String, List<TimeSlotDTO>>> getAvailableActivitiesWithSlots(
+    public Map<String, List<TimeSlotDTO>> getAvailableActivitiesWithSlots(
             @RequestParam("date") LocalDate date,
             @RequestParam("people") int people
     ) {
