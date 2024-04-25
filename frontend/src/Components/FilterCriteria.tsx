@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DatePicker from "./DatePick";
 import PersonPicker from "./PersonPicker";
 import SearchButton from "./SearchButton";
@@ -21,16 +21,23 @@ const FilterComponents: React.FC = () => {
     } else {
       console.log("Please select date and enter number of people");
     }
+    useEffect(() => {
+      instance
+        .get("/booking", {
+          params: {
+            date: selectedDate,
+            people: selectedPerson,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error + ": Get bookings error");
+        });
+    }, []);
   };
 
-  instance.get("/activity").then((response)=>{
-
-
-
-    
-  }).catch((error)=>{
-    console.log(error+"Values dont found");
-  })
   return (
     <form className="flex flex-col items-center justify-center mt-8">
       <div className="flex space-x-4 mr-3 ml-3">
