@@ -1,14 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import BookingsTable  from './BookingsTable';
+import BookingsTable, {Booking}  from './BookingsTable';
 import instance from '../AxiosConfig';
 
-type Booking = {
-  customerName: string;
-  activityName: string;
-  participantsNum: string;
-  timeframe: string;
-  pricePayed: string;
-};
 
 const Dashboard: React.FC = () => {
 
@@ -27,7 +20,7 @@ const Dashboard: React.FC = () => {
           customerName: response.data[i].customerName,
           activityName: response.data[i].activity.name,
           participantsNum: response.data[i].persons,
-          timeframe: response.data[i].startTime,
+          timeframe: `Date: ${new Date(response.data[i].startTime).toLocaleDateString('en-GB')} Time: ${new Date(response.data[i].startTime).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}`,
           pricePayed: response.data[i].priceTotal
         };
         responseList.push(booking);
