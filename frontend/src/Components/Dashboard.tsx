@@ -1,35 +1,43 @@
 import React, { useEffect, useState } from 'react';
-import BookingsTable from './BookingsTable';
+import BookingsTable  from './BookingsTable';
 import instance from '../AxiosConfig';
 
-const Dashboard: React.FC = () => {
-  const bookingsListDummy = [
-    {
-      customerName: 'John Doe',
-      activityName: 'Hiking',
-      participantsNum: '2',
-      timeframe: '2022-01-01 10:00',
-      pricePayed: '$100'
-    },
-    {
-      customerName: 'Jane Doe',
-      activityName: 'Camping',
-      participantsNum: '4',
-      timeframe: '2022-01-02 12:00',
-      pricePayed: '$200'
-    },
-  ];
+type Booking = {
+  customerName: string;
+  activityName: string;
+  participantsNum: string;
+  timeframe: string;
+  pricePayed: string;
+};
 
-  const [bookingsList, setBookingsList] = useState([]);
+const Dashboard: React.FC = () => {
+
+
+  const [bookingsList, setBookingsList] = useState<Booking[]>([]);
 
   useEffect(() => {
     instance.get('/booking').then((response) => {
-      console.log(response.data);
-      //setBookingsList(response.data);
+
+      const responseList: Booking[] = []; 
+
+      //μπορει να υπαρχει πιο αποδοτικος τροπος για να γινει αυτο
+      for (let i = 0; i < response.data.length; i++) {
+        console.log(response.data[i]);
+        let booking = {
+          customerName: response.data[i].customerName,
+          activityName: response.data[i].activity.name,
+          participantsNum: response.data[i].persons,
+          timeframe: response.data[i].startTime,
+          pricePayed: response.data[i].priceTotal
+        };
+        responseList.push(booking);
+      } 
+      setBookingsList(responseList); 
+      
     }).catch((error) => {
       console.log(error + ': Get bookings error');
     })
-  });
+  }, []);
 
   return (
     <div>
