@@ -1,13 +1,5 @@
 package gr.knowledge.internship.activityoncloud.service;
 
-import gr.knowledge.internship.activityoncloud.dto.AvailabilityDTO;
-import gr.knowledge.internship.activityoncloud.dto.TimeSlotDTO;
-import gr.knowledge.internship.activityoncloud.entity.Activity;
-import gr.knowledge.internship.activityoncloud.entity.Availability;
-import gr.knowledge.internship.activityoncloud.mapper.AvailabilityMapper;
-import gr.knowledge.internship.activityoncloud.repository.AvailabilityRepository;
-import jakarta.persistence.EntityNotFoundException;
-
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -20,6 +12,14 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import gr.knowledge.internship.activityoncloud.dto.AvailabilityDTO;
+import gr.knowledge.internship.activityoncloud.dto.TimeSlotDTO;
+import gr.knowledge.internship.activityoncloud.entity.Activity;
+import gr.knowledge.internship.activityoncloud.entity.Availability;
+import gr.knowledge.internship.activityoncloud.mapper.AvailabilityMapper;
+import gr.knowledge.internship.activityoncloud.repository.AvailabilityRepository;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 @Transactional
