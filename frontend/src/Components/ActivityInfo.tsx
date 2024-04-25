@@ -9,7 +9,7 @@ interface StringProp {
 interface ActivityDescriptionProp {
     text: string;
     duration: Duration;
-    price: string;
+    price: number;
 }
 
 interface TimePickerProp{
@@ -30,7 +30,7 @@ type Duration = {
 interface ActivityInfoParentProps {
     title: string;
     description: string;
-    price: string;
+    price: number;
     timeSlot: TimeSlot[];
     duration: Duration;
 }
@@ -41,7 +41,7 @@ const Button: React.FC<StringProp> = ({ text}) => {
     return (
         <button 
             // onClick={}
-            className={"px-6 py-2.5 text-15 text-white rounded-lg font-medium dark:bg-gray-700 hover:bg-gray-600"}
+            className={"px-6 py-2.5 text-15 text-white rounded-lg font-medium bg-gray-700 hover:bg-gray-600"}
         >
             {text}
         </button>
@@ -94,7 +94,7 @@ const TimePicker: React.FC<TimePickerProp> = ({ timeList }) => {
         <div>
             <button id="dropdownDefaultButton" onClick={toggleDropdown} data-dropdown-toggle="dropdown" 
                 className="text-white 
-                        dark:bg-gray-700 
+                        bg-gray-700 
                         hover:bg-gray-600 
                         focus:ring-0       
                         focus:outline-none 
@@ -108,7 +108,7 @@ const TimePicker: React.FC<TimePickerProp> = ({ timeList }) => {
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                 </svg>
             </button>
-            <div id="dropdown" className={`z-10 ${isOpen? '' : 'hidden'} bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700`}>
+            <div id="dropdown" className={` ${isOpen? '' : 'hidden'} bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700`}>
                 <ul className="py-2 text-gray-700 dark:text-white text-15" aria-labelledby="dropdownDefaultButton">
                     {
                         timeList.map((time, index) => (
@@ -137,8 +137,7 @@ const ActivityInfoParent: React.FC<ActivityInfoParentProps> = ({title, descripti
                         space-y-4 
                         border-2 border-gray-700
                         bg-white p-4 
-                        rounded-lg inline-block
-                        overflow-visible">
+                        rounded-lg inline-block">
             <div className={'flex items-center space-x-2'}>
                 <div className={'flex flex-col space-y-2'}>
                     <ActivityTitle text={title} />
