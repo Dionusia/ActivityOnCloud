@@ -34,6 +34,8 @@ const BookingEngine: React.FC = () => {
     const [timeSlots, setTimeSlots] = useState<TimeSlots>({});
     const [renderKey, setRenderKey] = useState(0);
     const [selectedPerson, setSelectedPerson] = useState<number | null>(null);
+    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+    let formattedDate = "";
     useEffect(() => {
         instance.get('/activity')
             .then(response => {
@@ -48,42 +50,36 @@ const BookingEngine: React.FC = () => {
         setRenderKey(prevKey => prevKey + 1);
     }, [timeSlots]);
 
-    const createActivityInfoComponent = (activitiesList: Activity[], renderKey: number, selectedPerson: number) => {
+    const createActivityInfoComponent = (activitiesList: Activity[], renderKey: number, selectedPerson: number, formattedDate: string) => {
         return activitiesList.map((activity, index) => {
             const availableActivity = activitiesList.find(a => a.id === parseInt(Object.keys(timeSlots)[index]));
             console.log(availableActivity);
             
-            if(!availableActivity) {
+            if (!availableActivity) {
                 return null;
             }
             return (
-                <div key={`${index}-${renderKey}`} >
+                <div key={`${index}-${renderKey}`}>
                     {Object.keys(timeSlots).length > 0 &&
-                        <ActivityInfoParent 
-                            title={availableActivity.name} 
-                            description={availableActivity.description} 
-                            price={availableActivity.pricePerPerson * selectedPerson} //TODO multiply by the number of people from filter component
+                        <ActivityInfoParent
+                            activity={availableActivity}
                             timeSlot={timeSlots[Object.keys(timeSlots)[index]]}
-                            duration={
-                                {
-                                    durationDays: availableActivity.durationDays,
-                                    durationHours: availableActivity.durationHours,
-                                    durationMinutes: availableActivity.durationMinutes
-                                }
-                            } 
+                            selectedPerson={selectedPerson}
+                            selectedDate={formattedDate} // Fix: Cast selectedDate to Date
                         />
                     }
-                </div>)
+                </div>
+            )
             })
     }
 
     return (
         <div className="flex flex-col space-y-4 items-center">
-            <FilterComponents setTimeSlots={setTimeSlots} selectedPerson={selectedPerson} setSelectedPerson={setSelectedPerson}/>
+            <FilterComponents setTimeSlots={setTimeSlots} selectedPerson={selectedPerson} setSelectedPerson={setSelectedPerson} formattedDate={formattedDate}  />
             
             <div className="flex flex-col items-center space-y-4">
                 {   
-                    createActivityInfoComponent(activitiesList, renderKey, selectedPerson as number)        
+                    createActivityInfoComponent(activitiesList, renderKey, selectedPerson as number, formattedDate)        
                 }
             </div>
         </div>
@@ -91,4 +87,4 @@ const BookingEngine: React.FC = () => {
 }
 
 export default BookingEngine;
-export type {TimeSlot,TimeSlots};
+export type {TimeSlot,TimeSlots, Activity};

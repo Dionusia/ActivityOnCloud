@@ -2,6 +2,7 @@ package gr.knowledge.internship.activityoncloud.controller;
 
 import java.util.List;
 
+import gr.knowledge.internship.activityoncloud.dto.BookingConstructorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,5 +55,10 @@ public class BookingController {
 	@DeleteMapping("/delete")
 	public void deleteBooking(@RequestBody BookingDTO booking) {
 		bookingService.deleteBooking(booking);
+	}
+
+	@PostMapping("/new-booking")
+	public BookingDTO newBooking(@RequestBody BookingConstructorDTO bookingConstructor) {
+		return bookingService.newBooking(bookingConstructor);
 	}
 }

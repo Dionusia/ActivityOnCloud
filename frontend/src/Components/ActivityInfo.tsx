@@ -1,12 +1,23 @@
 import React, { useState } from "react";
 import '../index.css';
-import { TimeSlot } from "../Pages/BookingEngine";
+import { TimeSlot, Activity } from "../Pages/BookingEngine";
 import instance from "../AxiosConfig";
 
 //#region interfaces and types 
-interface StringProp {
+interface ButtonProp {
     text: string;
-    onClick?: () => void;
+    onClick: (selectedTime: string, activity: Activity, price: number, selectedPerson: number, selectedDate: string) => void;
+    selectedTime: string;
+    activity: Activity;
+    price: number;
+    selectedPerson: number;
+    selectedDate: string;
+    
+}
+
+interface ActivityTitleProp {
+    text: string;
+
 }
 
 interface ActivityDescriptionProp {
@@ -17,6 +28,8 @@ interface ActivityDescriptionProp {
 
 interface TimePickerProp{
     timeList: string[];
+    selectedTime: string;
+    setSelectedTime: (time: string) => void;
 }
 
 type Duration = {
@@ -26,47 +39,26 @@ type Duration = {
 }
 
 interface ActivityInfoParentProps {
-    title: string;
-    description: string;
-    price: number;
-    timeSlot: TimeSlot[];
-    duration: Duration;
+   activity: Activity;
+   timeSlot: TimeSlot[];
+   selectedPerson: number;
+   selectedDate: string;
 }
 //#endregion
 
-//#region child components
-const Button: React.FC<StringProp> = ({ text, onClick}) => {
-    return (
-        <button 
-            onClick={onClick}
-            className={"px-6 py-2.5 text-15 text-white rounded-lg font-medium bg-blue-700 hover:bg-blue-800"}
-        >
-            {text}
-        </button>
-    )
-}
-
-const ActivityTitle: React.FC<StringProp> = ({ text }) => {
-    return (
-        <h1 className={'text-2xl font-bold text-black'}>
-            {text}
-        </h1>
-    )
-}
-
-const handleBookClick = () => {
+const handleBookClick = (selectedTime: string, activity: Activity, price:number, selectedPerson:number, selectedDate: string) => {
     //πρεπει να ειναι σε αυτη την μορφη για να γινει το post
-    const activity = {
-        id: 1,
-    }
 
-    instance.post('/booking/save', {
-        activity: activity,
-        startTime: '2022-12-12T00:00:00',
-        endTime: '2022-12-12T00:00:00',
-        persons: 2,
-        priceTotal: 200,
-        customerName: 'Manos Loukakis',
+    console.log("paos"+ selectedTime, price, selectedPerson, selectedDate);
+
+
+    instance.post('/booking/new-booking', {
+        activityId: activity.id,
+        date: selectedDate,
+        startTime: selectedTime,
+        persons: selectedPerson,
+        priceTotal: price,
+        customerName: 'George Zaro',
     })
     .then(response => {
         console.log(response.data);
@@ -74,6 +66,26 @@ const handleBookClick = () => {
     .catch(error => {
         console.error('Error:', error);
     });
+}
+
+//#region child components
+const Button: React.FC<ButtonProp> = ({ text, onClick, selectedTime, activity, price, selectedPerson, selectedDate}) => {
+    return (
+        <button 
+            onClick={() => onClick(selectedTime, activity, price, selectedPerson, selectedDate)}
+            className={"px-6 py-2.5 text-15 text-white rounded-lg font-medium bg-blue-700 hover:bg-blue-800"}
+        >
+            {text}
+        </button>
+    )
+}
+
+const ActivityTitle: React.FC<ActivityTitleProp> = ({ text }) => {
+    return (
+        <h1 className={'text-2xl font-bold text-black'}>
+            {text}
+        </h1>
+    )
 }
 
 const ActivityDescription: React.FC<ActivityDescriptionProp> = ({ text, duration, price }) => {
@@ -99,13 +111,8 @@ const ActivityDescription: React.FC<ActivityDescriptionProp> = ({ text, duration
     )
 }
 
-const TimePicker: React.FC<TimePickerProp> = ({ timeList }) => {
-    const [selectedTime, setSelectedTime] = useState(timeList[0]);
+const TimePicker: React.FC<TimePickerProp> = ({ timeList, selectedTime, setSelectedTime }) => {
     const [isOpen, setIsOpen] = useState(false);
-
-    const handleTimeSelect = (time: string) => {
-        setSelectedTime(time);
-    }
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
@@ -133,7 +140,7 @@ const TimePicker: React.FC<TimePickerProp> = ({ timeList }) => {
                     {
                         timeList.map((time, index) => (
                             <li key={index} onClick={toggleDropdown}>
-                                <a href="#" onClick={() => handleTimeSelect(time)} 
+                                <a href="#" onClick={() => setSelectedTime(selectedTime)} 
                                 className="block px-4 py-2 
                                             hover:bg-gray-100 
                                             dark:hover:bg-gray-600 
@@ -150,8 +157,10 @@ const TimePicker: React.FC<TimePickerProp> = ({ timeList }) => {
 }
 //#endregion
 
-const ActivityInfoParent: React.FC<ActivityInfoParentProps> = ({title, description, price, timeSlot, duration }) => {
+const ActivityInfoParent: React.FC<ActivityInfoParentProps> = ({activity, timeSlot, selectedPerson, selectedDate }) => {
     const timeList = timeSlot.map(timeSlot => timeSlot.start.slice(0, -3));
+    const [selectedTime, setSelectedTime] = useState(timeList[0]);
+    const price = activity.pricePerPerson * selectedPerson;
     return (
         <div className="items-center 
                         space-y-4 
@@ -159,15 +168,27 @@ const ActivityInfoParent: React.FC<ActivityInfoParentProps> = ({title, descripti
                         rounded-lg inline-block">
             <div className={'flex items-center space-x-2'}>
                 <div className={'flex flex-col space-y-2'}>
-                    <ActivityTitle text={title} />
-                    <ActivityDescription text= {description} duration={duration} price={price} />
+                    <ActivityTitle text={activity.name} />
+                    <ActivityDescription text= {activity.description} duration={
+                                {
+                                    durationDays: activity.durationDays,
+                                    durationHours: activity.durationHours,
+                                    durationMinutes: activity.durationMinutes
+                                } } price={price} />
                 </div>
             </div>
             <div>
                 <h1 className=" text-15 font-medium">Available Times</h1>
                 <div className={'flex items-center justify-between ml-0 space-x-4'}>
-                    <TimePicker timeList={timeList} />
-                    <Button text="Book Now" onClick={handleBookClick}/>
+                    <TimePicker timeList={timeList} selectedTime={selectedTime} setSelectedTime={setSelectedTime} />
+                    <Button text="Book Now" 
+                    onClick={handleBookClick} 
+                    selectedTime={selectedTime} 
+                    activity={activity} 
+                    price={price} 
+                    selectedPerson={selectedPerson} 
+                    selectedDate={selectedDate}
+                    />
                 </div>
             </div>
         </div>

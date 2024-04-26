@@ -1,9 +1,11 @@
 package gr.knowledge.internship.activityoncloud.service;
 
+import java.math.BigDecimal;
+import java.time.Duration;
 import java.util.List;
 
 import gr.knowledge.internship.activityoncloud.dto.ActivityDTO;
-import gr.knowledge.internship.activityoncloud.mapper.ActivityMapper;
+import gr.knowledge.internship.activityoncloud.dto.BookingConstructorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,9 +39,6 @@ public class BookingService {
 	}
 
 	public BookingDTO saveBooking(BookingDTO bookingDTO) {
-		ActivityDTO activityInDatabase = activityService.getActivityById(bookingDTO.getActivity().getId());
-		bookingDTO.setActivity(activityInDatabase);
-		bookingDTO.setActivityAdmin(activityInDatabase.getActivityAdmin());
 		Booking booking = bookingMapper.toEntity(bookingDTO);
 		bookingRepository.save(booking);
 		return bookingMapper.toDTO(booking);
@@ -71,5 +70,21 @@ public class BookingService {
 	public List<BookingDTO> getBookingsOfActivity(Long id) {
 		List<Booking> bookingsOfActivity = bookingRepository.getBookingByActivityId(id);
 		return bookingMapper.toDTOList(bookingsOfActivity);
+	}
+
+	public BookingDTO newBooking(BookingConstructorDTO bookingConstructor) {
+		ActivityDTO activityInDatabase = activityService.getActivityById(bookingConstructor.getActivityId());
+		BookingDTO bookingDTO = bookingConstructor.toBookingDTO();
+		bookingDTO.setActivity(activityInDatabase);
+		bookingDTO.setActivityAdmin(activityInDatabase.getActivityAdmin());
+		Booking booking = bookingMapper.toEntity(bookingDTO);
+		Duration activityDuration = Duration.ofDays(activityInDatabase.getDurationDays())
+				.plusHours(activityInDatabase.getDurationHours())
+				.plusMinutes(activityInDatabase.getDurationMinutes());
+		bookingDTO.setEndTime(bookingDTO.getStartTime().plus(activityDuration));
+
+		bookingDTO.setPriceTotal(activityInDatabase.getPricePerPerson().multiply(BigDecimal.valueOf(bookingDTO.getPersons())));
+		bookingRepository.save(bookingMapper.toEntity(bookingDTO));
+		return bookingDTO;
 	}
 }
