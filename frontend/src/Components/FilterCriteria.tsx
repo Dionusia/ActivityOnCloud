@@ -3,12 +3,17 @@ import DatePicker from "./DatePick";
 import PersonPicker from "./PersonPicker";
 import SearchButton from "./SearchButton";
 import instance from "../AxiosConfig";
+import { TimeSlot, TimeSlots } from "../Pages/BookingEngine";
 
-const FilterComponents: React.FC = () => {
+interface FilterComponentsProps {
+  setTimeSlots: React.Dispatch<React.SetStateAction<TimeSlots>>;
+  selectedPerson: number | null;
+  setSelectedPerson: React.Dispatch<React.SetStateAction<number | null>>;
+}
+
+const FilterComponents: React.FC<FilterComponentsProps> = ({setTimeSlots, selectedPerson ,setSelectedPerson}) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [selectedPerson, setSelectedPerson] = useState<number | null>(null);
   let formattedDate: string = "";
-
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
   };
@@ -16,6 +21,7 @@ const FilterComponents: React.FC = () => {
     setSelectedPerson(num);
   };
   const handleSearch = () => {
+    
     if (selectedDate && selectedPerson) {
       console.log("Selected Date:", selectedDate);
       console.log("Number of People:", selectedPerson);
@@ -39,11 +45,20 @@ const FilterComponents: React.FC = () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
-        const availableActivities = response.data;
+        console.log("Time slots:", response.data); 
+        const modifiedResponseData = Object.keys(response.data).reduce((acc, key) => {
+          acc[key] = response.data[key].map((timeSlot: TimeSlot) => ({
+            ...timeSlot,
+            start: timeSlot.start.split('T')[1],
+            end: timeSlot.end.split('T')[1],
+          }));
+          return acc;
+        }, {} as TimeSlots);
+      
+        setTimeSlots(modifiedResponseData);        
       })
       .catch((error) => {
-        console.log(error + ": Get bookings error");
+        console.log(error + ": Get time slots error");
       });
   };
   return (
@@ -53,6 +68,7 @@ const FilterComponents: React.FC = () => {
           selectedDate={selectedDate}
           onDateChange={handleDateChange}
         />
+        {/* TODO check remaining persons whenever the no of people is incremented through the person picker */}
         <PersonPicker
           onPersonChange={handlePersonChange}
           selectedPerson={selectedPerson} // Pass numberOfPeople instead of selectedPerson

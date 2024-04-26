@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import "../index.css";
+import '../index.css';
+import { TimeSlot } from "../Pages/BookingEngine";
 
 //#region interfaces and types
 interface StringProp {
@@ -15,11 +16,6 @@ interface ActivityDescriptionProp {
 interface TimePickerProp {
   timeList: string[];
 }
-
-type TimeSlot = {
-  start: string;
-  end: string;
-};
 
 type Duration = {
   durationDays: number;
@@ -183,27 +179,23 @@ const ActivityInfoParent: React.FC<ActivityInfoParentProps> = ({
       className="items-center 
                         space-y-4 
                         bg-gray-100 p-4 
-                        rounded-lg inline-block"
-    >
-      <div className={"flex items-center space-x-2"}>
-        <div className={"flex flex-col space-y-2"}>
-          <ActivityTitle text={title} />
-          <ActivityDescription
-            text={description}
-            duration={duration}
-            price={price}
-          />
+                        rounded-lg inline-block">
+            <div className={'flex items-center space-x-2'}>
+                <div className={'flex flex-col space-y-2'}>
+                    <ActivityTitle text={title} />
+                    <ActivityDescription text= {description} duration={duration} price={price} />
+                </div>
+            </div>
+            <div>
+                <h1 className=" text-15 font-medium">Available Times</h1>
+                <div className={'flex items-center justify-between ml-0 space-x-4'}>
+                    <TimePicker timeList={timeList} />
+                    <Button text="Book Now" />
+                </div>
+            </div>
         </div>
-      </div>
-      <div>
-        <h1 className=" text-15 font-medium">Available Times</h1>
-        <div className={"flex items-center justify-between ml-0"}>
-          <TimePicker timeList={timeList} />
-          <Button text="Book Now" />
-        </div>
-      </div>
-    </div>
-  );
-};
+    )
+}
 
 export default ActivityInfoParent;
+export type {TimeSlot};
