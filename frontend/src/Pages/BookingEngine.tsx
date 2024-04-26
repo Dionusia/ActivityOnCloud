@@ -33,6 +33,7 @@ const BookingEngine: React.FC = () => {
     const [activitiesList, setAvailableActivitiesList] = useState<Activity[]>([]);
     const [timeSlots, setTimeSlots] = useState<TimeSlots>({});
     const [renderKey, setRenderKey] = useState(0);
+    const [selectedPerson, setSelectedPerson] = useState<number | null>(null);
     useEffect(() => {
         instance.get('/activity')
             .then(response => {
@@ -47,7 +48,7 @@ const BookingEngine: React.FC = () => {
         setRenderKey(prevKey => prevKey + 1);
     }, [timeSlots]);
 
-    const createActivityInfoComponent = (activitiesList: Activity[], renderKey: number) => {
+    const createActivityInfoComponent = (activitiesList: Activity[], renderKey: number, selectedPerson: number) => {
         return activitiesList.map((activity, index) => {
             const availableActivity = activitiesList.find(a => a.id === parseInt(Object.keys(timeSlots)[index]));
             console.log(availableActivity);
@@ -61,7 +62,7 @@ const BookingEngine: React.FC = () => {
                         <ActivityInfoParent 
                             title={availableActivity.name} 
                             description={availableActivity.description} 
-                            price={availableActivity.pricePerPerson * 2} //TODO multiply by the number of people from filter component
+                            price={availableActivity.pricePerPerson * selectedPerson} //TODO multiply by the number of people from filter component
                             timeSlot={timeSlots[Object.keys(timeSlots)[index]]}
                             duration={
                                 {
@@ -78,11 +79,11 @@ const BookingEngine: React.FC = () => {
 
     return (
         <div className="flex flex-col space-y-4 items-center">
-            <FilterComponents setTimeSlots={setTimeSlots}/>
+            <FilterComponents setTimeSlots={setTimeSlots} selectedPerson={selectedPerson} setSelectedPerson={setSelectedPerson}/>
             
             <div className="flex flex-col items-center space-y-4">
-                {    
-                    createActivityInfoComponent(activitiesList, renderKey)        
+                {   
+                    createActivityInfoComponent(activitiesList, renderKey, selectedPerson as number)        
                 }
             </div>
         </div>

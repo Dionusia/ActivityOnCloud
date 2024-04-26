@@ -7,11 +7,12 @@ import { TimeSlot, TimeSlots } from "../Pages/BookingEngine";
 
 interface FilterComponentsProps {
   setTimeSlots: React.Dispatch<React.SetStateAction<TimeSlots>>;
+  selectedPerson: number | null;
+  setSelectedPerson: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
-const FilterComponents: React.FC<FilterComponentsProps> = ({setTimeSlots}) => {
+const FilterComponents: React.FC<FilterComponentsProps> = ({setTimeSlots, selectedPerson ,setSelectedPerson}) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [selectedPerson, setSelectedPerson] = useState<number | null>(null);
   let formattedDate: string = "";
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
@@ -66,6 +67,7 @@ const FilterComponents: React.FC<FilterComponentsProps> = ({setTimeSlots}) => {
           selectedDate={selectedDate}
           onDateChange={handleDateChange}
         />
+        {/* TODO check remaining persons whenever the no of people is incremented through the person picker */}
         <PersonPicker
           onPersonChange={handlePersonChange}
           selectedPerson={selectedPerson} // Pass numberOfPeople instead of selectedPerson
