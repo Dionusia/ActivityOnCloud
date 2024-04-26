@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import '../index.css';
+import { TimeSlot } from "../Pages/BookingEngine";
 
 //#region interfaces and types 
 interface StringProp {
@@ -14,11 +15,6 @@ interface ActivityDescriptionProp {
 
 interface TimePickerProp{
     timeList: string[];
-}
-
-type TimeSlot = {
-    start: string;
-    end: string;
 }
 
 type Duration = {
@@ -145,7 +141,7 @@ const ActivityInfoParent: React.FC<ActivityInfoParentProps> = ({title, descripti
             </div>
             <div>
                 <h1 className=" text-15 font-medium">Available Times</h1>
-                <div className={'flex items-center justify-between ml-0'}>
+                <div className={'flex items-center justify-between ml-0 space-x-4'}>
                     <TimePicker timeList={timeList} />
                     <Button text="Book Now" />
                 </div>
@@ -155,3 +151,4 @@ const ActivityInfoParent: React.FC<ActivityInfoParentProps> = ({title, descripti
 }
 
 export default ActivityInfoParent;
+export type {TimeSlot};
