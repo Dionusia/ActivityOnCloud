@@ -22,11 +22,14 @@ const FilterComponents: React.FC = () => {
     } else {
       console.log("Please select date and enter number of people");
     }
-    if (selectedDate === null || selectedPerson === null) {
-      console.log("Please select date and enter number of people");
-      return;
-    } else {
-      formattedDate = selectedDate.toISOString().split("T")[0];
+    if( selectedDate === null || selectedPerson === null){ 
+      console.log("Please select date and enter number of people"); return;
+    }
+    else{
+      let offset = selectedDate.getTimezoneOffset();
+      let adjustedDate = new Date(selectedDate.getTime() - (offset*60*1000));
+      formattedDate = adjustedDate.toISOString().split('T')[0];
+      console.log("Formatted Date:", formattedDate);
     }
     instance
       .get("/availability/available", {
