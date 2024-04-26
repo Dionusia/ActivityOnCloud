@@ -1,14 +1,23 @@
-import React from "react"; 
-import { useState } from "react";
-import FilterComponents from "./Components/FilterCriteria";
-import BookingEngine from "./Pages/BookingEngine";
-import Dashboard from "./Pages/Dashboard";
+import React from 'react';
+import Dashboard from './Pages/Dashboard';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import BookingEngine from './Pages/BookingEngine';
+
+
 const App: React.FC = () => {
   return (
     <div>
-      <Dashboard />
-      {/*<BookingEngine />*/}
-    </div>
+      <Router>
+      <Routes>
+        <Route path="/dashboard" element ={<Dashboard />}>
+        </Route>
+        
+        <Route path="/booking-engine" element ={<BookingEngine />}>
+        </Route>
+      </Routes>
+    </Router>
+
+    </div> 
   );
 };
 
