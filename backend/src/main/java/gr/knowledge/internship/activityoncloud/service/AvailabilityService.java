@@ -102,23 +102,27 @@ public class AvailabilityService {
 	 * Generate time slots for a given activity based on its open and close times
 	 * and duration.
 	 */
-	private List<TimeSlotDTO> generateTimeSlots(AvailabilityDTO availability, LocalDate date, int people) {
+	public List<TimeSlotDTO> generateTimeSlots(AvailabilityDTO availability, LocalDate date, int people) {
 		ActivityDTO activity = availability.getActivity();
-		LocalTime openTime = availability.getOpenTime();
-		LocalTime closeTime = availability.getCloseTime();
-		Duration activityDuration = Duration.ofDays(activity.getDurationDays()).plusHours(activity.getDurationHours())
+		LocalDateTime openTime = LocalDateTime.of(date, availability.getOpenTime());
+		LocalDateTime closeTime = LocalDateTime.of(date, availability.getCloseTime());
+
+		Duration activityDuration = Duration.ofDays(activity.getDurationDays())
+				.plusHours(activity.getDurationHours())
 				.plusMinutes(activity.getDurationMinutes());
+
 		List<TimeSlotDTO> timeSlots = new ArrayList<>();
-		LocalTime currentStart = openTime;
+		LocalDateTime currentStart = openTime;
+
 		List<BookingDTO> activityBookings = bookingService.getBookingsOfActivity(activity.getId());
-		while (currentStart.plus(activityDuration).isBefore(closeTime)
-				|| currentStart.plus(activityDuration).equals(closeTime)) {
-			LocalTime endTime = currentStart.plus(activityDuration);
+
+		while (currentStart.isBefore(closeTime)) {
+			LocalDateTime endTime = currentStart.plus(activityDuration);
 			TimeSlotDTO timeSlot = new TimeSlotDTO();
-			timeSlot.setStart(LocalDateTime.of(date, currentStart));
-			timeSlot.setEnd(LocalDateTime.of(date, closeTime));
+			timeSlot.setStart(currentStart);
+			timeSlot.setEnd(endTime);
 			List<BookingDTO> currentTimeSlotBookings = activityBookings.stream()
-					.filter(booking -> booking.getStartTime().isEqual(timeSlot.getStart()))
+					.filter(booking -> booking.getStartTime().equals(timeSlot.getStart()))
 					.collect(Collectors.toList());
 			timeSlot.generateCapacity(currentTimeSlotBookings, availability.getPersonsCapacity());
 			if (timeSlot.getRemainingCapacity() >= people) {
@@ -127,6 +131,7 @@ public class AvailabilityService {
 			// Move to the next slot
 			currentStart = endTime;
 		}
+
 		return timeSlots;
 	}
 }

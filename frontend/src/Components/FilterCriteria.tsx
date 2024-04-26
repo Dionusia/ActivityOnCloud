@@ -31,7 +31,10 @@ const FilterComponents: React.FC<FilterComponentsProps> = ({setTimeSlots}) => {
       console.log("Please select date and enter number of people"); return;
     }
     else{
-       formattedDate = selectedDate.toISOString().split('T')[0];
+      let offset = selectedDate.getTimezoneOffset();
+      let adjustedDate = new Date(selectedDate.getTime() - (offset*60*1000));
+      formattedDate = adjustedDate.toISOString().split('T')[0];
+      console.log("Formatted Date:", formattedDate);
     }
     instance.get("/availability/available", {
         params: {
