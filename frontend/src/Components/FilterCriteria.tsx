@@ -16,21 +16,20 @@ const FilterComponents: React.FC = () => {
     setSelectedPerson(num);
   };
   const handleSearch = () => {
-    
-
     if (selectedDate && selectedPerson) {
       console.log("Selected Date:", selectedDate);
       console.log("Number of People:", selectedPerson);
     } else {
       console.log("Please select date and enter number of people");
     }
-    if( selectedDate === null || selectedPerson === null){ 
-      console.log("Please select date and enter number of people"); return;
+    if (selectedDate === null || selectedPerson === null) {
+      console.log("Please select date and enter number of people");
+      return;
+    } else {
+      formattedDate = selectedDate.toISOString().split("T")[0];
     }
-    else{
-       formattedDate = selectedDate.toISOString().split('T')[0];
-    }
-    instance.get("/availability/available", {
+    instance
+      .get("/availability/available", {
         params: {
           date: formattedDate,
           people: selectedPerson,
@@ -38,7 +37,7 @@ const FilterComponents: React.FC = () => {
       })
       .then((response) => {
         console.log(response.data);
-        //const availableActivities = response.data;
+        const availableActivities = response.data;
       })
       .catch((error) => {
         console.log(error + ": Get bookings error");

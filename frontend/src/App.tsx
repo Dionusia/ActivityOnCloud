@@ -1,12 +1,10 @@
-import React, { useState } from "react";
-import Dashboard from "./Components/Dashboard";
-import FilterComponents from "./Components/FilterCriteria";
+import React from "react";
 import BookingEngine from "./Pages/BookingEngine";
+import Dashboard from "./Pages/Dashboard";
 const App: React.FC = () => {
   return (
     <div>
-      
-      <BookingEngine />
+      <Dashboard />
     </div>
   );
 };
