@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import '../index.css';
+import instance from "../AxiosConfig";
 
 //#region interfaces and types 
 interface StringProp {
     text: string;
+    onClick?: () => void;
 }
 
 interface ActivityDescriptionProp {
@@ -37,10 +39,10 @@ interface ActivityInfoParentProps {
 //#endregion
 
 //#region child components
-const Button: React.FC<StringProp> = ({ text}) => {
+const Button: React.FC<StringProp> = ({ text, onClick}) => {
     return (
         <button 
-            // onClick={}
+            onClick={onClick}
             className={"px-6 py-2.5 text-15 text-white rounded-lg font-medium bg-blue-700 hover:bg-blue-800"}
         >
             {text}
@@ -54,6 +56,28 @@ const ActivityTitle: React.FC<StringProp> = ({ text }) => {
             {text}
         </h1>
     )
+}
+
+const handleBookClick = () => {
+    //πρεπει να ειναι σε αυτη την μορφη για να γινει το post
+    const activity = {
+        id: 1,
+    }
+
+    instance.post('/booking/save', {
+        activity: activity,
+        startTime: '2022-12-12T00:00:00',
+        endTime: '2022-12-12T00:00:00',
+        persons: 2,
+        priceTotal: 200,
+        customerName: 'Manos Loukakis',
+    })
+    .then(response => {
+        console.log(response.data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }
 
 const ActivityDescription: React.FC<ActivityDescriptionProp> = ({ text, duration, price }) => {
@@ -147,7 +171,7 @@ const ActivityInfoParent: React.FC<ActivityInfoParentProps> = ({title, descripti
                 <h1 className=" text-15 font-medium">Available Times</h1>
                 <div className={'flex items-center justify-between ml-0'}>
                     <TimePicker timeList={timeList} />
-                    <Button text="Book Now" />
+                    <Button text="Book Now" onClick={handleBookClick}/>
                 </div>
             </div>
         </div>

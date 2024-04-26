@@ -2,6 +2,8 @@ package gr.knowledge.internship.activityoncloud.service;
 
 import java.util.List;
 
+import gr.knowledge.internship.activityoncloud.dto.ActivityDTO;
+import gr.knowledge.internship.activityoncloud.mapper.ActivityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,8 @@ public class BookingService {
 	@Autowired
 	private BookingRepository bookingRepository;
 	@Autowired
+	private ActivityService activityService;
+	@Autowired
 	private BookingMapper bookingMapper;
 
 	@Transactional(readOnly = true)
@@ -33,6 +37,9 @@ public class BookingService {
 	}
 
 	public BookingDTO saveBooking(BookingDTO bookingDTO) {
+		ActivityDTO activityInDatabase = activityService.getActivityById(bookingDTO.getActivity().getId());
+		bookingDTO.setActivity(activityInDatabase);
+		bookingDTO.setActivityAdmin(activityInDatabase.getActivityAdmin());
 		Booking booking = bookingMapper.toEntity(bookingDTO);
 		bookingRepository.save(booking);
 		return bookingMapper.toDTO(booking);
