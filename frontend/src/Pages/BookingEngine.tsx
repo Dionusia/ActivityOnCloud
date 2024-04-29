@@ -38,7 +38,8 @@ const BookingEngine: React.FC = () => {
     const [timeSlots, setTimeSlots] = useState<TimeSlots>({});
     const [renderKey, setRenderKey] = useState(0);
     const [selectedPerson, setSelectedPerson] = useState<number | null>(null);
-    let formattedDate = "";
+    const [formattedDate, setFormattedDate] = useState<string>("");
+    //let formattedDate = "test";
     useEffect(() => {
         instance.get('/activity')
             .then(response => {
@@ -62,6 +63,7 @@ const BookingEngine: React.FC = () => {
                 selectedPerson: selectedPerson,
                 selectedDate: formattedDate,
             };
+            console.log("Date in component is: "+formattedDate);
             
             if (!availableActivity) {
                 return null;
@@ -82,7 +84,7 @@ const BookingEngine: React.FC = () => {
 
     return (
         <div className="flex flex-col space-y-4 items-center">
-            <FilterComponents setTimeSlots={setTimeSlots} selectedPerson={selectedPerson} setSelectedPerson={setSelectedPerson} formattedDate={formattedDate}  />
+            <FilterComponents setTimeSlots={setTimeSlots} selectedPerson={selectedPerson} setSelectedPerson={setSelectedPerson} setFormattedDate={setFormattedDate} />
             
             <div className="flex flex-col items-center space-y-4">
                 {   

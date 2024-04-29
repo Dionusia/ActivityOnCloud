@@ -139,12 +139,11 @@ const TimePicker: React.FC<TimePickerProp> = ({ timeList, selectedTime, setSelec
                     {
                         timeList.map((time, index) => (
                             <li key={index} onClick={toggleDropdown}>
-                                <a href="#" onClick={() => setSelectedTime(selectedTime)} 
+                                <a href="#" onClick={() => setSelectedTime(time)} 
                                 className="block px-4 py-2 
-                                            hover:bg-gray-100 
-                                            dark:hover:bg-gray-600 
-                                            dark:hover:text-white 
                                             font-medium
+                                            hover:bg-gray-400
+                                            hover:text-white
                                             text-center text-15">{time}</a>
                             </li>
                         ))
