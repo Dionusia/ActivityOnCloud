@@ -31,23 +31,18 @@ public class Availability implements Serializable {
     @GeneratedValue(generator = "availability_seq", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "availability_seq", sequenceName = "availability_seq")
     private Long id;
-
     @NotNull
     @Column(name = "day_of_week")
     private String dayOfWeek;
-
     @NotNull
     @Column(name = "open_time")
     private LocalTime openTime;
-
     @NotNull
     @Column(name = "close_time")
     private LocalTime closeTime;
-
     @NotNull
     @Column(name = "persons_capacity")
     private Integer personsCapacity;
-
     @ManyToOne
     @JoinColumn(name = "activity_id")
     @NotNull

@@ -41,3 +41,5 @@ HELP.md
 
 ### FrontEnd ###
 /frontend/node_modules
+/frontend/src/node_modules
+*.txt
