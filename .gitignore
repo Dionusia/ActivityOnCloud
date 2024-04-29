@@ -50,4 +50,4 @@ HELP.md
 # Custom ignores
 frontend/src/webpack.config.js
 *.txt
-
+frontend/package-lock.json
