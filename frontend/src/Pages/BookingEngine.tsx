@@ -18,6 +18,10 @@ interface Activity {
     pricePerPerson: number;
 }
 
+interface UserInputArgs {
+    selectedPerson: number;
+    selectedDate: string;
+}
 
 type TimeSlot = {
     start: string;
@@ -34,7 +38,6 @@ const BookingEngine: React.FC = () => {
     const [timeSlots, setTimeSlots] = useState<TimeSlots>({});
     const [renderKey, setRenderKey] = useState(0);
     const [selectedPerson, setSelectedPerson] = useState<number | null>(null);
-    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     let formattedDate = "";
     useEffect(() => {
         instance.get('/activity')
@@ -54,6 +57,11 @@ const BookingEngine: React.FC = () => {
         return activitiesList.map((activity, index) => {
             const availableActivity = activitiesList.find(a => a.id === parseInt(Object.keys(timeSlots)[index]));
             console.log(availableActivity);
+
+            const UserInputArgs: UserInputArgs = {
+                selectedPerson: selectedPerson,
+                selectedDate: formattedDate,
+            };
             
             if (!availableActivity) {
                 return null;
@@ -64,8 +72,7 @@ const BookingEngine: React.FC = () => {
                         <ActivityInfoParent
                             activity={availableActivity}
                             timeSlot={timeSlots[Object.keys(timeSlots)[index]]}
-                            selectedPerson={selectedPerson}
-                            selectedDate={formattedDate} // Fix: Cast selectedDate to Date
+                            userInputArgs={UserInputArgs}
                         />
                     }
                 </div>
@@ -87,4 +94,4 @@ const BookingEngine: React.FC = () => {
 }
 
 export default BookingEngine;
-export type {TimeSlot,TimeSlots, Activity};
+export type {TimeSlot,TimeSlots, Activity, UserInputArgs};
