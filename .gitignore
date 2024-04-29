@@ -41,3 +41,12 @@ HELP.md
 
 ### FrontEnd ###
 /frontend/src/node_modules
+
+# Mac OSX
+######################
+.DS_Store
+.svn
+
+# Custom ignores
+frontend/src/webpack.config.js
+
