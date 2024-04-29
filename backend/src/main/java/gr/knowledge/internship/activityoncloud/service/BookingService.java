@@ -77,7 +77,6 @@ public class BookingService {
 		BookingDTO bookingDTO = bookingConstructor.toBookingDTO();
 		bookingDTO.setActivity(activityInDatabase);
 		bookingDTO.setActivityAdmin(activityInDatabase.getActivityAdmin());
-		Booking booking = bookingMapper.toEntity(bookingDTO);
 		Duration activityDuration = Duration.ofDays(activityInDatabase.getDurationDays())
 				.plusHours(activityInDatabase.getDurationHours())
 				.plusMinutes(activityInDatabase.getDurationMinutes());
