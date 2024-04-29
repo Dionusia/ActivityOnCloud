@@ -9,11 +9,13 @@ interface FilterComponentsProps {
   setTimeSlots: React.Dispatch<React.SetStateAction<TimeSlots>>;
   selectedPerson: number | null;
   setSelectedPerson: React.Dispatch<React.SetStateAction<number | null>>;
+  formattedDate: string | null;
 }
 
-const FilterComponents: React.FC<FilterComponentsProps> = ({setTimeSlots, selectedPerson ,setSelectedPerson}) => {
+
+const FilterComponents: React.FC<FilterComponentsProps> = ({setTimeSlots, selectedPerson ,setSelectedPerson, formattedDate }) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  let formattedDate: string = "";
+  //let selectedDate: string = "";
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
   };

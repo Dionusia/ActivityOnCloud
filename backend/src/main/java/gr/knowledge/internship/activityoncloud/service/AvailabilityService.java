@@ -3,7 +3,6 @@ package gr.knowledge.internship.activityoncloud.service;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -21,7 +20,6 @@ import gr.knowledge.internship.activityoncloud.dto.BookingDTO;
 import gr.knowledge.internship.activityoncloud.dto.TimeSlotDTO;
 import gr.knowledge.internship.activityoncloud.entity.Availability;
 import gr.knowledge.internship.activityoncloud.mapper.AvailabilityMapper;
-import gr.knowledge.internship.activityoncloud.mapper.BookingMapper;
 import gr.knowledge.internship.activityoncloud.repository.AvailabilityRepository;
 import jakarta.persistence.EntityNotFoundException;
 
@@ -34,31 +32,6 @@ public class AvailabilityService {
 	private BookingService bookingService;
 	@Autowired
 	private AvailabilityMapper availabilityMapper;
-
-	@Transactional(readOnly = true)
-	public AvailabilityDTO getAvailabilityById(Long id) {
-		Availability availability = availabilityRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-		return availabilityMapper.toDTO(availability);
-	}
-
-	@Transactional(readOnly = true)
-	public List<AvailabilityDTO> getAllAvailabilities() {
-		List<Availability> allAvailabilities = availabilityRepository.findAll();
-		return availabilityMapper.toDTOList(allAvailabilities);
-	}
-
-	public AvailabilityDTO saveAvailability(AvailabilityDTO availabilityDTO) {
-		Availability availability = availabilityMapper.toEntity(availabilityDTO);
-		availabilityRepository.save(availability);
-		return availabilityMapper.toDTO(availability);
-	}
-
-	public AvailabilityDTO updateAvailability(AvailabilityDTO availabilityDTO) {
-		Availability availability = this.existsInDatabase(availabilityDTO);
-		availability = availabilityMapper.toEntity(availabilityDTO);
-		availabilityRepository.save(availability);
-		return availabilityDTO;
-	}
 
 	public void deleteAvailability(AvailabilityDTO availabilityDTO) {
 		Availability availability = availabilityMapper.toEntity(availabilityDTO);
@@ -75,16 +48,37 @@ public class AvailabilityService {
 		return result;
 	}
 
+	@Transactional(readOnly = true)
+	public List<AvailabilityDTO> getAllAvailabilities() {
+		List<Availability> allAvailabilities = availabilityRepository.findAll();
+		return availabilityMapper.toDTOList(allAvailabilities);
+	}
+
+	@Transactional(readOnly = true)
+	public AvailabilityDTO getAvailabilityById(Long id) {
+		Availability availability = availabilityRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+		return availabilityMapper.toDTO(availability);
+	}
+
+	public AvailabilityDTO saveAvailability(AvailabilityDTO availabilityDTO) {
+		Availability availability = availabilityMapper.toEntity(availabilityDTO);
+		availabilityRepository.save(availability);
+		return availabilityMapper.toDTO(availability);
+	}
+
+	public AvailabilityDTO updateAvailability(AvailabilityDTO availabilityDTO) {
+		Availability availability = this.existsInDatabase(availabilityDTO);
+		availability = availabilityMapper.toEntity(availabilityDTO);
+		availabilityRepository.save(availability);
+		return availabilityDTO;
+	}
+
 	private Availability existsInDatabase(AvailabilityDTO availabilityDTO) {
 		Availability availabilityInDatabase = availabilityRepository.findById(availabilityDTO.getId())
 				.orElseThrow(EntityNotFoundException::new);
 		return availabilityInDatabase;
 	}
-
-	/**
-	 * Find availabilities that match the given day and have capacity for at least
-	 * the specified number of people.
-	 */
+	
 	private List<AvailabilityDTO> findSuitableAvailabilities(LocalDate date, int people) {
 		// Get the day of the week in proper format
 		String dayOfWeekName = date.getDayOfWeek().name();
@@ -97,25 +91,17 @@ public class AvailabilityService {
 		// Filter availabilities to meet or exceed the required capacity
 		return availabilities.stream().filter(avail -> avail.getPersonsCapacity() >= people).toList();
 	}
-
-	/**
-	 * Generate time slots for a given activity based on its open and close times
-	 * and duration.
-	 */
-	public List<TimeSlotDTO> generateTimeSlots(AvailabilityDTO availability, LocalDate date, int people) {
+	
+	private List<TimeSlotDTO> generateTimeSlots(AvailabilityDTO availability, LocalDate date, int people) {
 		ActivityDTO activity = availability.getActivity();
 		LocalDateTime openTime = LocalDateTime.of(date, availability.getOpenTime());
 		LocalDateTime closeTime = LocalDateTime.of(date, availability.getCloseTime());
-
+		LocalDateTime currentStart = openTime;
 		Duration activityDuration = Duration.ofDays(activity.getDurationDays())
 				.plusHours(activity.getDurationHours())
 				.plusMinutes(activity.getDurationMinutes());
-
 		List<TimeSlotDTO> timeSlots = new ArrayList<>();
-		LocalDateTime currentStart = openTime;
-
 		List<BookingDTO> activityBookings = bookingService.getBookingsOfActivity(activity.getId());
-
 		while (currentStart.isBefore(closeTime)) {
 			LocalDateTime endTime = currentStart.plus(activityDuration);
 			TimeSlotDTO timeSlot = new TimeSlotDTO();
@@ -131,7 +117,6 @@ public class AvailabilityService {
 			// Move to the next slot
 			currentStart = endTime;
 		}
-
 		return timeSlots;
 	}
 }
