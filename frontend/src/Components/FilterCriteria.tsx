@@ -66,7 +66,7 @@ const FilterComponents: React.FC<FilterComponentsProps> = ({setTimeSlots, select
   };
   return (
     <form className="flex flex-col items-center justify-center mt-8">
-      <div className="flex space-x-4 mr-3 ml-3">
+      <div className="flex space-x-4 items-center mx-5">
         <DatePicker
           selectedDate={selectedDate}
           onDateChange={handleDateChange}

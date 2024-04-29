@@ -26,7 +26,7 @@ const PersonPicker: React.FC<PersonPickerProps> = ({
         value={selectedPerson || ""}
         onChange={handleChange}
       />
-      <div className="absolute inset-y-0 left-3 top-1/2 transform -translate-y-1/2 w-6 h-6">
+      <div className="absolute inset-y-0 left-3 top-1/2 transform -translate-y-1/2 ">
         <FaUser color="blue" />
       </div>
     </div>

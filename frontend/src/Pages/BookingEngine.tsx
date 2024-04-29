@@ -83,7 +83,7 @@ const BookingEngine: React.FC = () => {
     }
 
     return (
-        <div className="flex flex-col space-y-4 items-center">
+        <div className=" flex flex-col space-y-4 items-center">
             <FilterComponents setTimeSlots={setTimeSlots} selectedPerson={selectedPerson} setSelectedPerson={setSelectedPerson} setFormattedDate={setFormattedDate} />
             
             <div className="flex flex-col items-center space-y-4">
