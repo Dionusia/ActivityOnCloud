@@ -32,7 +32,7 @@ const BookingsTable: React.FC<Props> = ({booking}) => {
               <td className="px-6 py-4">{bookingItem.activityName}</td>
               <td className="px-6 py-4">{bookingItem.participantsNum}</td>
               <td className="px-6 py-4">{bookingItem.timeframe}</td>
-              <td className="px-6 py-4">{ "$" + bookingItem.pricePayed}</td>
+              <td className="px-6 py-4">{bookingItem.pricePayed + "€"}</td>
             </tr>
           ))}
         </tbody>

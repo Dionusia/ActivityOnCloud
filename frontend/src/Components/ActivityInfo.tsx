@@ -1,25 +1,22 @@
 import React, { useState } from "react";
 import '../index.css';
-import { TimeSlot, Activity } from "../Pages/BookingEngine";
+import { TimeSlot, Activity, UserInputArgs } from "../Pages/BookingEngine";
 import instance from "../AxiosConfig";
 
 //#region interfaces and types 
 interface ButtonProp {
     text: string;
-    onClick: (selectedTime: string, activity: Activity, price: number, selectedPerson: number, selectedDate: string) => void;
-    selectedTime: string;
+    onClick: (activity: Activity, userInputArgs: ExtendedUserInputArgs) => void;
     activity: Activity;
-    price: number;
-    selectedPerson: number;
-    selectedDate: string;
+    userInputArgs: ExtendedUserInputArgs;
     
 }
-
+// μπορει να μπορουν να γινουν 1 interface (1)
 interface ActivityTitleProp {
     text: string;
 
 }
-
+// μπορει να μπορουν να γινουν 1 interface (2)
 interface ActivityDescriptionProp {
     text: string;
     duration: Duration;
@@ -38,27 +35,29 @@ type Duration = {
     durationMinutes: number;
 }
 
+interface ExtendedUserInputArgs extends UserInputArgs {
+    selectedTime: string;
+    price: number;
+}
+
 interface ActivityInfoParentProps {
    activity: Activity;
    timeSlot: TimeSlot[];
-   selectedPerson: number;
-   selectedDate: string;
+    userInputArgs: UserInputArgs;
 }
 //#endregion
 
-const handleBookClick = (selectedTime: string, activity: Activity, price:number, selectedPerson:number, selectedDate: string) => {
-    //πρεπει να ειναι σε αυτη την μορφη για να γινει το post
+const handleBookClick = (activity: Activity,selectedInfoFinal: ExtendedUserInputArgs) => {
 
-    console.log("paos"+ selectedTime, price, selectedPerson, selectedDate);
-
+    console.log("Info: "+ selectedInfoFinal.selectedTime, selectedInfoFinal.price, selectedInfoFinal.selectedPerson, selectedInfoFinal.selectedDate);
 
     instance.post('/booking/new-booking', {
         activityId: activity.id,
-        date: selectedDate,
-        startTime: selectedTime,
-        persons: selectedPerson,
-        priceTotal: price,
-        customerName: 'George Zaro',
+        date: selectedInfoFinal.selectedDate,
+        startTime: selectedInfoFinal.selectedTime,
+        persons: selectedInfoFinal.selectedPerson,
+        priceTotal: selectedInfoFinal.price,
+        customerName: 'Mike Mpallas',
     })
     .then(response => {
         console.log(response.data);
@@ -69,10 +68,10 @@ const handleBookClick = (selectedTime: string, activity: Activity, price:number,
 }
 
 //#region child components
-const Button: React.FC<ButtonProp> = ({ text, onClick, selectedTime, activity, price, selectedPerson, selectedDate}) => {
+const Button: React.FC<ButtonProp> = ({ text, onClick, activity, userInputArgs }) => {
     return (
         <button 
-            onClick={() => onClick(selectedTime, activity, price, selectedPerson, selectedDate)}
+            onClick={() => onClick(activity, userInputArgs)}
             className={"px-6 py-2.5 text-15 text-white rounded-lg font-medium bg-blue-700 hover:bg-blue-800"}
         >
             {text}
@@ -157,10 +156,17 @@ const TimePicker: React.FC<TimePickerProp> = ({ timeList, selectedTime, setSelec
 }
 //#endregion
 
-const ActivityInfoParent: React.FC<ActivityInfoParentProps> = ({activity, timeSlot, selectedPerson, selectedDate }) => {
+const ActivityInfoParent: React.FC<ActivityInfoParentProps> = ({activity, timeSlot, userInputArgs }) => {
     const timeList = timeSlot.map(timeSlot => timeSlot.start.slice(0, -3));
     const [selectedTime, setSelectedTime] = useState(timeList[0]);
-    const price = activity.pricePerPerson * selectedPerson;
+
+    const selectedInfoFinal: ExtendedUserInputArgs = {
+        selectedPerson: userInputArgs.selectedPerson,
+        selectedDate: userInputArgs.selectedDate,
+        selectedTime: selectedTime,
+        price: activity.pricePerPerson * userInputArgs.selectedPerson,
+    };
+
     return (
         <div className="items-center 
                         space-y-4 
@@ -174,7 +180,7 @@ const ActivityInfoParent: React.FC<ActivityInfoParentProps> = ({activity, timeSl
                                     durationDays: activity.durationDays,
                                     durationHours: activity.durationHours,
                                     durationMinutes: activity.durationMinutes
-                                } } price={price} />
+                                } } price={selectedInfoFinal.price} />
                 </div>
             </div>
             <div>
@@ -182,12 +188,9 @@ const ActivityInfoParent: React.FC<ActivityInfoParentProps> = ({activity, timeSl
                 <div className={'flex items-center justify-between ml-0 space-x-4'}>
                     <TimePicker timeList={timeList} selectedTime={selectedTime} setSelectedTime={setSelectedTime} />
                     <Button text="Book Now" 
-                    onClick={handleBookClick} 
-                    selectedTime={selectedTime} 
+                    onClick={handleBookClick}  
                     activity={activity} 
-                    price={price} 
-                    selectedPerson={selectedPerson} 
-                    selectedDate={selectedDate}
+                    userInputArgs={selectedInfoFinal}
                     />
                 </div>
             </div>

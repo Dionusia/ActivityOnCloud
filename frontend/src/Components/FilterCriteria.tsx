@@ -12,6 +12,7 @@ interface FilterComponentsProps {
   formattedDate: string | null;
 }
 
+
 const FilterComponents: React.FC<FilterComponentsProps> = ({setTimeSlots, selectedPerson ,setSelectedPerson, formattedDate }) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   //let selectedDate: string = "";
@@ -40,7 +41,7 @@ const FilterComponents: React.FC<FilterComponentsProps> = ({setTimeSlots, select
     }
     instance.get("/availability/available", {
         params: {
-          date: selectedDate,
+          date: formattedDate,
           people: selectedPerson,
         },
       })
