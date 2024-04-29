@@ -43,3 +43,4 @@ HELP.md
 /frontend/node_modules
 /frontend/src/node_modules
 *.txt
+frontend/package-lock.json
