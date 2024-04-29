@@ -23,39 +23,37 @@ import gr.knowledge.internship.activityoncloud.service.AvailabilityService;
 @RequestMapping(value = "/availability")
 public class AvailabilityController {
 
-    @Autowired
-    private AvailabilityService availabilityService;
+	@Autowired
+	private AvailabilityService availabilityService;
 
-    @GetMapping
-    public List<AvailabilityDTO> getAllAvailability() {
-        return availabilityService.getAllAvailabilities();
-    }
+	@GetMapping
+	public List<AvailabilityDTO> getAllAvailability() {
+		return availabilityService.getAllAvailabilities();
+	}
 
-    @GetMapping("/{id}")
-    public AvailabilityDTO getAvailabilityById(@PathVariable Long id) {
-        return availabilityService.getAvailabilityById(id);
-    }
+	@GetMapping("/{id}")
+	public AvailabilityDTO getAvailabilityById(@PathVariable Long id) {
+		return availabilityService.getAvailabilityById(id);
+	}
 
-    @PostMapping("/save")
-    public AvailabilityDTO saveAvailability(@RequestBody AvailabilityDTO availability) {
-        return availabilityService.saveAvailability(availability);
-    }
+	@PostMapping("/save")
+	public AvailabilityDTO saveAvailability(@RequestBody AvailabilityDTO availability) {
+		return availabilityService.saveAvailability(availability);
+	}
 
-    @PutMapping("/update")
-    public AvailabilityDTO updateAvailability(@RequestBody AvailabilityDTO availability) {
-        return availabilityService.updateAvailability(availability);
-    }
+	@PutMapping("/update")
+	public AvailabilityDTO updateAvailability(@RequestBody AvailabilityDTO availability) {
+		return availabilityService.updateAvailability(availability);
+	}
 
-    @DeleteMapping("/delete")
-    public void deleteAvailability(@RequestBody AvailabilityDTO availability) {
-        availabilityService.deleteAvailability(availability);
-    }
+	@DeleteMapping("/delete")
+	public void deleteAvailability(@RequestBody AvailabilityDTO availability) {
+		availabilityService.deleteAvailability(availability);
+	}
 
-    @GetMapping("/available")
-    public Map<String, List<TimeSlotDTO>> getAvailableActivitiesWithSlots(
-            @RequestParam("date") LocalDate date,
-            @RequestParam("people") int people
-    ) {
-        return availabilityService.findAvailableActivitiesWithSlots(date, people);
-    }
+	@GetMapping("/available")
+	public Map<String, List<TimeSlotDTO>> getAvailableActivitiesWithSlots(@RequestParam("date") LocalDate date,
+			@RequestParam("people") int people) {
+		return availabilityService.findAvailableActivitiesWithSlots(date, people);
+	}
 }

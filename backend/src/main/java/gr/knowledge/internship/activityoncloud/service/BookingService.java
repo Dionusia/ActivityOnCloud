@@ -82,7 +82,6 @@ public class BookingService {
 				.plusHours(activityInDatabase.getDurationHours())
 				.plusMinutes(activityInDatabase.getDurationMinutes());
 		bookingDTO.setEndTime(bookingDTO.getStartTime().plus(activityDuration));
-
 		bookingDTO.setPriceTotal(activityInDatabase.getPricePerPerson().multiply(BigDecimal.valueOf(bookingDTO.getPersons())));
 		bookingRepository.save(bookingMapper.toEntity(bookingDTO));
 		return bookingDTO;
