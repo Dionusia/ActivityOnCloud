@@ -57,13 +57,13 @@ const BookingEngine: React.FC = () => {
     const createActivityInfoComponent = (activitiesList: Activity[], renderKey: number, selectedPerson: number, formattedDate: string) => {
         return activitiesList.map((activity, index) => {
             const availableActivity = activitiesList.find(a => a.id === parseInt(Object.keys(timeSlots)[index]));
-            console.log(availableActivity);
+            //console.log(availableActivity);
 
             const UserInputArgs: UserInputArgs = {
                 selectedPerson: selectedPerson,
                 selectedDate: formattedDate,
             };
-            console.log("Date in component is: "+formattedDate);
+            //console.log("Date in component is: "+formattedDate);
             
             if (!availableActivity) {
                 return null;

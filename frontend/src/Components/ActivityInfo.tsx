@@ -131,7 +131,7 @@ const TimePicker: React.FC<TimePickerProp> = ({ timeList, selectedTime, setSelec
                         w-44" type="button">
                 <div className="flex-grow text-center ">{selectedTime}</div>
                 <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4"/>
                 </svg>
             </button>
             <div id="dropdown" className={` ${isOpen? '' : 'hidden'} bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700`}>
@@ -167,10 +167,7 @@ const ActivityInfoParent: React.FC<ActivityInfoParentProps> = ({activity, timeSl
     };
 
     return (
-        <div className="items-center 
-                        space-y-4 
-                        bg-gray-100 p-4 
-                        rounded-lg inline-block">
+        <div className="items-center space-y-4 bg-gray-100 p-4 rounded-lg inline-block ">
             <div className={'flex items-center space-x-2'}>
                 <div className={'flex flex-col space-y-2'}>
                     <ActivityTitle text={activity.name} />
