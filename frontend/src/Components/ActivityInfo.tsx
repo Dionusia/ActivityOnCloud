@@ -72,7 +72,7 @@ const Button: React.FC<ButtonProp> = ({ text, onClick, activity, userInputArgs }
     return (
         <button 
             onClick={() => onClick(activity, userInputArgs)}
-            className={"px-6 py-2.5 text-15 text-white rounded-lg font-medium bg-blue-700 hover:bg-blue-800"}
+            className={"px-6 py-2.5 text-15 text-white rounded-lg font-medium bg-customGreen hover:bg-customHoverGreen"}
         >
             {text}
         </button>
@@ -93,8 +93,8 @@ const ActivityDescription: React.FC<ActivityDescriptionProp> = ({ text, duration
                             ${duration.durationHours ? `${duration.durationHours}h ` : ''}
                             ${duration.durationMinutes ? `${duration.durationMinutes}m` : ''}`;
     return (
-        <div>
-            <p className={'text-black text-lg max-w-sm max-h-40 break-words overflow-auto'}>
+        <div className="max-w-3/5">
+            <p className={'text-black text-lg  max-h-40 break-words overflow-auto'}>
                 {text}
             </p>
             <br/>
@@ -120,8 +120,8 @@ const TimePicker: React.FC<TimePickerProp> = ({ timeList, selectedTime, setSelec
         <div>
             <button id="dropdownDefaultButton" onClick={toggleDropdown} data-dropdown-toggle="dropdown" 
                 className="text-white 
-                        bg-blue-700 
-                        hover:bg-blue-800 
+                        bg-customGreen 
+                        hover:bg-customHoverGreen 
                         focus:ring-0       
                         focus:outline-none 
                         focus:ring-blue-300 

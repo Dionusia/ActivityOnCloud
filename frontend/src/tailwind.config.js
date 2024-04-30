@@ -7,7 +7,12 @@ module.exports = {
   ],
 
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'customGreen': '#04B1A7',
+        'customHoverGreen': '#03857D'
+      },
+    },
   },
 
   plugins: [require("flowbite/plugin")],
