@@ -33,8 +33,8 @@ const Dashboard: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      <h1 className='text-center my-6 py-2 px-4 shadow-md rounded'>Dashboard</h1>
+    <div className='flex flex-col '>
+      <h1 className='flex-grow text-center my-6 py-2 px-4 shadow-md rounded'>Dashboard</h1>
       <div className='text-center'> Bookings
         <BookingsTable booking={bookingsList} />
       </div>
