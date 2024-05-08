@@ -3,35 +3,7 @@ import ActivityInfoParent from "../Components/ActivityInfo";
 import FilterComponents from "../Components/FilterCriteria";
 import instance from "../AxiosConfig";
 //#region interfaces and types
-interface ActivityAdmin {
-    id: number;
-}
-  
-interface Activity {
-    id: number;
-    activityAdmin: ActivityAdmin;
-    name: string;
-    description: string;
-    durationDays: number;
-    durationHours: number;
-    durationMinutes: number;
-    pricePerPerson: number;
-}
-
-interface UserInputArgs {
-    selectedPerson: number;
-    selectedDate: string;
-}
-
-type TimeSlot = {
-    start: string;
-    end: string;
-    remainingCapacity: string;
-}
-
-interface TimeSlots {
-    [key: string]: TimeSlot[];
-}
+import { Activity, UserInputArgs, TimeSlots} from "../InterfacesAndTypes/Interfaces";
 //#endregion 
 const BookingEngine: React.FC = () => {
     const [activitiesList, setAvailableActivitiesList] = useState<Activity[]>([]);
@@ -57,13 +29,13 @@ const BookingEngine: React.FC = () => {
     const createActivityInfoComponent = (activitiesList: Activity[], renderKey: number, selectedPerson: number, formattedDate: string) => {
         return activitiesList.map((activity, index) => {
             const availableActivity = activitiesList.find(a => a.id === parseInt(Object.keys(timeSlots)[index]));
-            console.log(availableActivity);
+            //console.log(availableActivity);
 
             const UserInputArgs: UserInputArgs = {
                 selectedPerson: selectedPerson,
                 selectedDate: formattedDate,
             };
-            console.log("Date in component is: "+formattedDate);
+            //console.log("Date in component is: "+formattedDate);
             
             if (!availableActivity) {
                 return null;
@@ -83,7 +55,7 @@ const BookingEngine: React.FC = () => {
     }
 
     return (
-        <div className="flex flex-col space-y-4 items-center">
+        <div className=" flex flex-col space-y-4 items-center">
             <FilterComponents setTimeSlots={setTimeSlots} selectedPerson={selectedPerson} setSelectedPerson={setSelectedPerson} setFormattedDate={setFormattedDate} />
             
             <div className="flex flex-col items-center space-y-4">
@@ -96,4 +68,3 @@ const BookingEngine: React.FC = () => {
 }
 
 export default BookingEngine;
-export type {TimeSlot,TimeSlots, Activity, UserInputArgs};
