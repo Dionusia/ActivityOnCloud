@@ -18,5 +18,5 @@ public class RateDTO implements Serializable {
 	private ActivityOptionDTO option;
 	private BigDecimal rate;
 	private LocalDate startDate;
-	private LocalDate endDate;s
+	private LocalDate endDate;
 }
