@@ -12,7 +12,6 @@ import gr.knowledge.internship.activityoncloud.entity.Availability;
 
 @Component
 public class AvailabilityMapper {
-
     @Autowired
     private ModelMapper modelMapper;
 

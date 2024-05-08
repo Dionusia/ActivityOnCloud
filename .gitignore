@@ -40,5 +40,7 @@ HELP.md
 /backend/src/main/resources/application.properties
 
 ### FrontEnd ###
+/frontend/node_modules
 /frontend/src/node_modules
-/backend/logs/
+*.txt
+frontend/package-lock.json

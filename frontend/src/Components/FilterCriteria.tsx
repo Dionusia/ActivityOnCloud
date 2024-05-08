@@ -9,11 +9,14 @@ interface FilterComponentsProps {
   setTimeSlots: React.Dispatch<React.SetStateAction<TimeSlots>>;
   selectedPerson: number | null;
   setSelectedPerson: React.Dispatch<React.SetStateAction<number | null>>;
+  setFormattedDate: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const FilterComponents: React.FC<FilterComponentsProps> = ({setTimeSlots, selectedPerson ,setSelectedPerson}) => {
+
+const FilterComponents: React.FC<FilterComponentsProps> = ({setTimeSlots, selectedPerson ,setSelectedPerson, setFormattedDate}) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  let formattedDate: string = "";
+  let formattedTempDate = "test";
+
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
   };
@@ -34,12 +37,13 @@ const FilterComponents: React.FC<FilterComponentsProps> = ({setTimeSlots, select
     else{
       let offset = selectedDate.getTimezoneOffset();
       let adjustedDate = new Date(selectedDate.getTime() - (offset*60*1000));
-      formattedDate = adjustedDate.toISOString().split('T')[0];
-      console.log("Formatted Date:", formattedDate);
+      setFormattedDate(adjustedDate.toISOString().split('T')[0]);
+      formattedTempDate = adjustedDate.toISOString().split('T')[0];
+      console.log("Formatted Date:", formattedTempDate);
     }
     instance.get("/availability/available", {
         params: {
-          date: formattedDate,
+          date: formattedTempDate,
           people: selectedPerson,
         },
       })
@@ -62,7 +66,7 @@ const FilterComponents: React.FC<FilterComponentsProps> = ({setTimeSlots, select
   };
   return (
     <form className="flex flex-col items-center justify-center mt-8">
-      <div className="flex space-x-4 mr-3 ml-3">
+      <div className="flex space-x-4 items-center mx-5">
         <DatePicker
           selectedDate={selectedDate}
           onDateChange={handleDateChange}

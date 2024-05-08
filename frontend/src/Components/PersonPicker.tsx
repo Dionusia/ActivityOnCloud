@@ -21,13 +21,13 @@ const PersonPicker: React.FC<PersonPickerProps> = ({
         type="number"
         id="number-input"
         min="0"
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customGreen focus:border-customGreen block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         required
         value={selectedPerson || ""}
         onChange={handleChange}
       />
-      <div className="absolute inset-y-0 left-3 top-1/2 transform -translate-y-1/2 w-6 h-6">
-        <FaUser color="blue" />
+      <div className="absolute inset-y-0 left-3 top-1/2 transform -translate-y-1/2 ">
+        <FaUser color="#049bb1" />
       </div>
     </div>
   );
