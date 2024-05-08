@@ -3,35 +3,7 @@ import ActivityInfoParent from "../Components/ActivityInfo";
 import FilterComponents from "../Components/FilterCriteria";
 import instance from "../AxiosConfig";
 //#region interfaces and types
-interface ActivityAdmin {
-    id: number;
-}
-  
-interface Activity {
-    id: number;
-    activityAdmin: ActivityAdmin;
-    name: string;
-    description: string;
-    durationDays: number;
-    durationHours: number;
-    durationMinutes: number;
-    pricePerPerson: number;
-}
-
-interface UserInputArgs {
-    selectedPerson: number;
-    selectedDate: string;
-}
-
-type TimeSlot = {
-    start: string;
-    end: string;
-    remainingCapacity: string;
-}
-
-interface TimeSlots {
-    [key: string]: TimeSlot[];
-}
+import { Activity, UserInputArgs, TimeSlots} from "../InterfacesAndTypes/Interfaces";
 //#endregion 
 const BookingEngine: React.FC = () => {
     const [activitiesList, setAvailableActivitiesList] = useState<Activity[]>([]);
@@ -96,4 +68,3 @@ const BookingEngine: React.FC = () => {
 }
 
 export default BookingEngine;
-export type {TimeSlot,TimeSlots, Activity, UserInputArgs};
