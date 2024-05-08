@@ -1,8 +1,6 @@
 package gr.knowledge.internship.activityoncloud.dto;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,12 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ActivityDTO implements Serializable {
-	private long id;
-	private ActivityAdminDTO activityAdmin;
+	private Long id;
 	private String name;
-	private String description;
-	private int durationDays;
-	private int durationHours;
-	private int durationMinutes;
-	private BigDecimal pricePerPerson;
+	private ActivityAdminDTO activityAdmin;
 }

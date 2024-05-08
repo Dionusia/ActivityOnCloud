@@ -1,7 +1,6 @@
 package gr.knowledge.internship.activityoncloud.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,27 +30,15 @@ public class Activity implements Serializable {
 	@NotNull
 	@GeneratedValue(generator = "activity_seq", strategy = GenerationType.SEQUENCE)
 	@SequenceGenerator(name = "activity_seq", sequenceName = "activity_seq")
-	private long id;
+	private Long id;
+
+	@Column(name = "name")
+	@Size(max = 64)
+	@NotNull
+	private String name;
+
 	@JoinColumn(name = "activity_admin_id")
 	@NotNull
 	@ManyToOne
 	private ActivityAdmin activityAdmin;
-	@Column(name = "name")
-	@Size(max = 100)
-	private String name;
-	@Column(name = "description")
-	@Size(max = 1024)
-	private String description;
-	@NotNull
-	@Column(name = "duration_days")
-	private int durationDays;
-	@NotNull
-	@Column(name = "duration_hours")
-	private int durationHours;
-	@NotNull
-	@Column(name = "duration_minutes")
-	private int durationMinutes;
-	@NotNull
-	@Column(name = "price_per_person")
-	private BigDecimal pricePerPerson;
 }
