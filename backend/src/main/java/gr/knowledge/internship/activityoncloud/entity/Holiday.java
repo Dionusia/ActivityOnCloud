@@ -1,5 +1,6 @@
 package gr.knowledge.internship.activityoncloud.entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import jakarta.persistence.Column;
@@ -23,7 +24,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "holiday")
-public class Holiday {
+public class Holiday implements Serializable {
 	@Id
 	@NotNull
 	@Column(name = "id")
