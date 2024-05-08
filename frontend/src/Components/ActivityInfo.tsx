@@ -1,51 +1,15 @@
 import React, { useState } from "react";
 import '../index.css';
-import { TimeSlot, Activity, UserInputArgs } from "../Pages/BookingEngine";
 import instance from "../AxiosConfig";
+import {   
+        Activity, 
+        ExtendedUserInputArgs, 
+        ButtonProp, 
+        ActivityTitleProp, 
+        ActivityDescriptionProp, 
+        TimePickerProp,
+        ActivityInfoParentProps } from "../InterfacesAndTypes/Interfaces";
 
-//#region interfaces and types 
-interface ButtonProp {
-    text: string;
-    onClick: (activity: Activity, userInputArgs: ExtendedUserInputArgs) => void;
-    activity: Activity;
-    userInputArgs: ExtendedUserInputArgs;
-    
-}
-// μπορει να μπορουν να γινουν 1 interface (1)
-interface ActivityTitleProp {
-    text: string;
-
-}
-// μπορει να μπορουν να γινουν 1 interface (2)
-interface ActivityDescriptionProp {
-    text: string;
-    duration: Duration;
-    price: number;
-}
-
-interface TimePickerProp{
-    timeList: string[];
-    selectedTime: string;
-    setSelectedTime: (time: string) => void;
-}
-
-type Duration = {
-    durationDays: number;
-    durationHours: number;
-    durationMinutes: number;
-}
-
-interface ExtendedUserInputArgs extends UserInputArgs {
-    selectedTime: string;
-    price: number;
-}
-
-interface ActivityInfoParentProps {
-   activity: Activity;
-   timeSlot: TimeSlot[];
-    userInputArgs: UserInputArgs;
-}
-//#endregion
 
 const handleBookClick = (activity: Activity,selectedInfoFinal: ExtendedUserInputArgs) => {
 
@@ -195,4 +159,3 @@ const ActivityInfoParent: React.FC<ActivityInfoParentProps> = ({activity, timeSl
 }
 
 export default ActivityInfoParent;
-export type {TimeSlot};

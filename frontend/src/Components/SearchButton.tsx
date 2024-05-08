@@ -1,7 +1,5 @@
 import React from "react";
-interface SearchButtonProps {
-  onSearch: () => void;
-}
+import { SearchButtonProps } from "../InterfacesAndTypes/Interfaces";
 
 const SearchButton: React.FC<SearchButtonProps> = ({ onSearch }) => {
   const handleClick = () => {

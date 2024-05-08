@@ -1,10 +1,6 @@
 import React from "react";
 import { FaUser } from "react-icons/fa";
-
-interface PersonPickerProps {
-  onPersonChange: (num: number | null) => void;
-  selectedPerson: number | null;
-}
+import { PersonPickerProps } from "../InterfacesAndTypes/Interfaces";
 
 const PersonPicker: React.FC<PersonPickerProps> = ({
   onPersonChange,

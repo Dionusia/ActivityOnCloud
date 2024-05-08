@@ -1,16 +1,5 @@
 import React from 'react';
-
-type Booking = {
-    customerName: string;
-    activityName: string;
-    participantsNum: string;
-    timeframe: string;
-    pricePayed: string;
-  };
-  
-  type Props = {
-    booking: Booking[];
-  };
+import { Props } from '../InterfacesAndTypes/Types'; 
 
 const BookingsTable: React.FC<Props> = ({booking}) => {
   return (
@@ -42,4 +31,3 @@ const BookingsTable: React.FC<Props> = ({booking}) => {
 };
 
 export default BookingsTable;
-export type {Booking};
