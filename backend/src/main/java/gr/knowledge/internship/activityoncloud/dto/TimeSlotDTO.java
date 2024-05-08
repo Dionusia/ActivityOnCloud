@@ -17,7 +17,7 @@ public class TimeSlotDTO implements Serializable {
     private LocalDateTime start;
     private LocalDateTime end;
     private int remainingCapacity;
-    
+
 	public void generateCapacity(List<BookingDTO> bookings, Integer personsCapacity) {
 		this.setRemainingCapacity(personsCapacity);
 		for(BookingDTO booking : bookings) {

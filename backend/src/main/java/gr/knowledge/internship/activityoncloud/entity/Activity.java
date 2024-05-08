@@ -31,14 +31,12 @@ public class Activity implements Serializable {
 	@GeneratedValue(generator = "activity_seq", strategy = GenerationType.SEQUENCE)
 	@SequenceGenerator(name = "activity_seq", sequenceName = "activity_seq")
 	private Long id;
-
 	@Column(name = "name")
 	@Size(max = 64)
 	@NotNull
 	private String name;
-
-	@JoinColumn(name = "activity_admin_id")
+	@JoinColumn(name = "admin_id")
 	@NotNull
 	@ManyToOne
-	private ActivityAdmin activityAdmin;
+	private ActivityAdmin admin;
 }

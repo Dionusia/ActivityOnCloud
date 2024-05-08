@@ -1,7 +1,6 @@
 package gr.knowledge.internship.activityoncloud.dto;
 
 import java.io.Serializable;
-import java.time.Duration;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +14,7 @@ public class ActivityOptionDTO implements Serializable {
     private Long id;
     private String name;
     private String description;
-    private Duration duration;
+    private String duration;
     private Long capacity;
     private ActivityDTO activity;
 }
