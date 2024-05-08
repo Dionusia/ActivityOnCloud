@@ -31,16 +31,6 @@ public class RateController {
 		return rateService.getRateById(id);
 	}
 
-	@GetMapping("/of-admin/{id}")
-	public List<RateDTO> getRatesOfAdmin(@PathVariable Long id) {
-		return rateService.getRatesOfAdmin(id);
-	}
-
-	@GetMapping("/of-activity/{id}")
-	public List<RateDTO> getRatesOfActivity(@PathVariable Long id) {
-		return rateService.getRatesOfActivity(id);
-	}
-
 	@PostMapping("/save")
 	public RateDTO saveRate(@RequestBody RateDTO rate) {
 		return rateService.saveRate(rate);

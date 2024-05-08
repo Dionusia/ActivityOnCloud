@@ -38,14 +38,14 @@ public class RateService {
 		return rateMapper.toDTO(rate);
 	}
 
-	public RateDTO updateAdmin(RateDTO rateDTO) {
+	public RateDTO updateRate(RateDTO rateDTO) {
 		Rate rate = this.existsInDatabase(rateDTO);
 		rate = rateMapper.toEntity(rateDTO);
 		rateRepository.save(rate);
 		return rateDTO;
 	}
 
-	public void deleteAdmin(RateDTO rateDTO) {
+	public void deleteRate(RateDTO rateDTO) {
 		Rate rate = rateMapper.toEntity(rateDTO);
 		rateRepository.delete(rate);
 	}

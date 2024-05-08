@@ -31,16 +31,6 @@ public class HolidayController {
 		return holidayService.getHolidayById(id);
 	}
 
-	@GetMapping("/of-admin/{id}")
-	public List<HolidayDTO> getHolidaysOfAdmin(@PathVariable Long id) {
-		return holidayService.getHolidaysOfAdmin(id);
-	}
-
-	@GetMapping("/of-activity/{id}")
-	public List<HolidayDTO> getHolidaysOfActivity(@PathVariable Long id) {
-		return holidayService.getHolidaysOfActivity(id);
-	}
-
 	@PostMapping("/save")
 	public HolidayDTO saveHoliday(@RequestBody HolidayDTO holiday) {
 		return holidayService.saveHoliday(holiday);

@@ -38,14 +38,14 @@ public class HolidayService {
 		return holidayMapper.toDTO(holiday);
 	}
 
-	public HolidayDTO updateAdmin(HolidayDTO holidayDTO) {
+	public HolidayDTO updateHoliday(HolidayDTO holidayDTO) {
 		Holiday holiday = this.existsInDatabase(holidayDTO);
 		holiday = holidayMapper.toEntity(holidayDTO);
 		holidayRepository.save(holiday);
 		return holidayDTO;
 	}
 
-	public void deleteAdmin(HolidayDTO holidayDTO) {
+	public void deleteHoliday(HolidayDTO holidayDTO) {
 		Holiday holiday = holidayMapper.toEntity(holidayDTO);
 		holidayRepository.delete(holiday);
 	}
