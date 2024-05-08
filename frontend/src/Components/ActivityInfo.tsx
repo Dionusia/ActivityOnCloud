@@ -167,7 +167,7 @@ const ActivityInfoParent: React.FC<ActivityInfoParentProps> = ({activity, timeSl
     };
 
     return (
-        <div className="items-center space-y-4 bg-gray-100 p-4 rounded-lg inline-block ">
+        <div className="items-center space-y-4 bg-gray-200 p-4 rounded-lg inline-block ">
             <div className={'flex items-center space-x-2'}>
                 <div className={'flex flex-col space-y-2'}>
                     <ActivityTitle text={activity.name} />
