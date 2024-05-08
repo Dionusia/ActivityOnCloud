@@ -3,14 +3,10 @@ import DatePicker from "./DatePick";
 import PersonPicker from "./PersonPicker";
 import SearchButton from "./SearchButton";
 import instance from "../AxiosConfig";
-import { TimeSlot, TimeSlots } from "../Pages/BookingEngine";
+import { FilterComponentsProps } from "../InterfacesAndTypes/Interfaces";
+import { TimeSlots } from "../InterfacesAndTypes/Interfaces";
+import { TimeSlot } from "../InterfacesAndTypes/Types";
 
-interface FilterComponentsProps {
-  setTimeSlots: React.Dispatch<React.SetStateAction<TimeSlots>>;
-  selectedPerson: number | null;
-  setSelectedPerson: React.Dispatch<React.SetStateAction<number | null>>;
-  setFormattedDate: React.Dispatch<React.SetStateAction<string>>;
-}
 
 
 const FilterComponents: React.FC<FilterComponentsProps> = ({setTimeSlots, selectedPerson ,setSelectedPerson, setFormattedDate}) => {

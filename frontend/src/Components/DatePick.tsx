@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaCalendarAlt } from "react-icons/fa";
-
-interface DatePickProps {
-  onDateChange: (date: Date | null) => void;
-  selectedDate: Date | null;
-}
+import { DatePickProps } from "../InterfacesAndTypes/Interfaces";
 
 const DatePick: React.FC<DatePickProps> = ({ onDateChange, selectedDate }) => {
  

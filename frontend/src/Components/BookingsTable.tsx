@@ -1,21 +1,10 @@
 import React from 'react';
-
-type Booking = {
-    customerName: string;
-    activityName: string;
-    participantsNum: string;
-    timeframe: string;
-    pricePayed: string;
-  };
-  
-  type Props = {
-    booking: Booking[];
-  };
+import { Props } from '../InterfacesAndTypes/Types'; 
 
 const BookingsTable: React.FC<Props> = ({booking}) => {
   return (
-    <div className="relative p-6 bg-white">
-      <table className=" mx-auto table-auto overflow-hidden text-sm text-left rtl:text-right text-gray-500  md:rounded-lg shadow-md ">
+    <div className=" overflow-x-auto  relative p-6 bg-white ">
+      <table className="mx-auto table-auto overflow-hidden text-sm text-left rtl:text-right text-gray-500  rounded-lg shadow-md ">
         <thead className=" text-xs text-gray-200 uppercase bg-gray-700 ">
           <tr>
             <th scope="col" className="px-6 py-3">Customer</th>
@@ -42,4 +31,3 @@ const BookingsTable: React.FC<Props> = ({booking}) => {
 };
 
 export default BookingsTable;
-export type {Booking};
