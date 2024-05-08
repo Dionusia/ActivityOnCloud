@@ -55,3 +55,25 @@ export interface ActivityInfoParentProps {
 export interface TimeSlots {
     [key: string]: TimeSlot[];
 }
+
+export interface DatePickProps {
+    onDateChange: (date: Date | null) => void;
+    selectedDate: Date | null;
+}
+
+export interface FilterComponentsProps {
+    setTimeSlots: React.Dispatch<React.SetStateAction<TimeSlots>>;
+    selectedPerson: number | null;
+    setSelectedPerson: React.Dispatch<React.SetStateAction<number | null>>;
+    setFormattedDate: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export interface PersonPickerProps {
+    onPersonChange: (num: number | null) => void;
+    selectedPerson: number | null;
+}
+
+export interface SearchButtonProps {
+    onSearch: () => void;
+}
+  
