@@ -1,51 +1,15 @@
 import React, { useState } from "react";
 import '../index.css';
-import { TimeSlot, Activity, UserInputArgs } from "../Pages/BookingEngine";
 import instance from "../AxiosConfig";
+import {   
+        Activity, 
+        ExtendedUserInputArgs, 
+        ButtonProp, 
+        ActivityTitleProp, 
+        ActivityDescriptionProp, 
+        TimePickerProp,
+        ActivityInfoParentProps } from "../InterfacesAndTypes/Interfaces";
 
-//#region interfaces and types 
-interface ButtonProp {
-    text: string;
-    onClick: (activity: Activity, userInputArgs: ExtendedUserInputArgs) => void;
-    activity: Activity;
-    userInputArgs: ExtendedUserInputArgs;
-    
-}
-// μπορει να μπορουν να γινουν 1 interface (1)
-interface ActivityTitleProp {
-    text: string;
-
-}
-// μπορει να μπορουν να γινουν 1 interface (2)
-interface ActivityDescriptionProp {
-  text: string;
-  duration: Duration;
-  price: number;
-}
-
-interface TimePickerProp{
-    timeList: string[];
-    selectedTime: string;
-    setSelectedTime: (time: string) => void;
-}
-
-type Duration = {
-    durationDays: number;
-    durationHours: number;
-    durationMinutes: number;
-}
-
-interface ExtendedUserInputArgs extends UserInputArgs {
-    selectedTime: string;
-    price: number;
-}
-
-interface ActivityInfoParentProps {
-   activity: Activity;
-   timeSlot: TimeSlot[];
-    userInputArgs: UserInputArgs;
-}
-//#endregion
 
 const handleBookClick = (activity: Activity,selectedInfoFinal: ExtendedUserInputArgs) => {
 
@@ -72,7 +36,7 @@ const Button: React.FC<ButtonProp> = ({ text, onClick, activity, userInputArgs }
     return (
         <button 
             onClick={() => onClick(activity, userInputArgs)}
-            className={"px-6 py-2.5 text-15 text-white rounded-lg font-medium bg-blue-700 hover:bg-blue-800"}
+            className={"px-6 py-2.5 text-15 text-white rounded-lg font-medium bg-customGreen hover:bg-customHoverGreen"}
         >
             {text}
         </button>
@@ -87,58 +51,41 @@ const ActivityTitle: React.FC<ActivityTitleProp> = ({ text }) => {
     )
 }
 
-const ActivityDescription: React.FC<ActivityDescriptionProp> = ({
-  text,
-  duration,
-  price,
-}) => {
-  //check if any of the duration values are not 0 and add them to the string
-  const durationString = `${
-    duration.durationDays ? `${duration.durationDays}d ` : ""
-  }
-                            ${
-                              duration.durationHours
-                                ? `${duration.durationHours}h `
-                                : ""
-                            }
-                            ${
-                              duration.durationMinutes
-                                ? `${duration.durationMinutes}m`
-                                : ""
-                            }`;
-  return (
-    <div>
-      <p
-        className={
-          "text-black text-lg max-w-sm max-h-40 break-words overflow-auto"
-        }
-      >
-        {text}
-      </p>
-      <br />
-      <div className={"text-black text-15 "}>
-        <p>{`Activity Duration: ${durationString}`}</p>
-        <p>{`Price: ${price}€`}</p>
-      </div>
-    </div>
-  );
-};
+const ActivityDescription: React.FC<ActivityDescriptionProp> = ({ text, duration, price }) => {
+    //check if any of the duration values are not 0 and add them to the string
+    const durationString = `${duration.durationDays ? `${duration.durationDays}d ` : ''}
+                            ${duration.durationHours ? `${duration.durationHours}h ` : ''}
+                            ${duration.durationMinutes ? `${duration.durationMinutes}m` : ''}`;
+    return (
+        <div className="max-w-3/5">
+            <p className={'text-black text-lg  max-h-40 break-words overflow-auto'}>
+                {text}
+            </p>
+            <br/>
+            <div className={'text-black text-15 '}>
+                <p>
+                    {`Activity Duration: ${durationString}`}
+                </p>
+                <p>
+                    {`Price: ${price}€`}
+                </p>
+            </div>
+        </div>
+    )
+}
 
 const TimePicker: React.FC<TimePickerProp> = ({ timeList, selectedTime, setSelectedTime }) => {
     const [isOpen, setIsOpen] = useState(false);
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
-  return (
-    <div>
-      <button
-        id="dropdownDefaultButton"
-        onClick={toggleDropdown}
-        data-dropdown-toggle="dropdown"
-        className="text-white 
-                        bg-blue-700 
-                        hover:bg-blue-800 
+    const toggleDropdown = () => {
+        setIsOpen(!isOpen);
+    }
+    return(
+        <div>
+            <button id="dropdownDefaultButton" onClick={toggleDropdown} data-dropdown-toggle="dropdown" 
+                className="text-white 
+                        bg-customGreen 
+                        hover:bg-customHoverGreen 
                         focus:ring-0       
                         focus:outline-none 
                         focus:ring-blue-300 
@@ -148,7 +95,7 @@ const TimePicker: React.FC<TimePickerProp> = ({ timeList, selectedTime, setSelec
                         w-44" type="button">
                 <div className="flex-grow text-center ">{selectedTime}</div>
                 <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4"/>
                 </svg>
             </button>
             <div id="dropdown" className={` ${isOpen? '' : 'hidden'} bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700`}>
@@ -184,10 +131,7 @@ const ActivityInfoParent: React.FC<ActivityInfoParentProps> = ({activity, timeSl
     };
 
     return (
-        <div className="items-center 
-                        space-y-4 
-                        bg-gray-100 p-4 
-                        rounded-lg inline-block">
+        <div className="items-center space-y-4 bg-gray-200 p-4 rounded-lg inline-block ">
             <div className={'flex items-center space-x-2'}>
                 <div className={'flex flex-col space-y-2'}>
                     <ActivityTitle text={activity.name} />
@@ -215,4 +159,3 @@ const ActivityInfoParent: React.FC<ActivityInfoParentProps> = ({activity, timeSl
 }
 
 export default ActivityInfoParent;
-export type {TimeSlot};

@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
-import BookingsTable, { Booking } from "../Components/BookingsTable";
-import instance from "../AxiosConfig";
+import React, { useEffect, useState } from 'react';
+import BookingsTable from '../Components/BookingsTable';
+import { Booking } from '../InterfacesAndTypes/Types';
+import instance from '../AxiosConfig';
+
 
 const Dashboard: React.FC = () => {
   const [bookingsList, setBookingsList] = useState<Booking[]>([]);
@@ -37,13 +39,9 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1 className="text-center my-6 py-2 px-4 shadow-md rounded">
-        Dashboard
-      </h1>
-      <div className="text-center">
-        {" "}
-        Bookings
+    <div className='flex flex-col '>
+      <h1 className='flex-grow text-center my-6 py-2 px-4 shadow-md rounded'>Dashboard</h1>
+      <div className='text-center'> Bookings
         <BookingsTable booking={bookingsList} />
       </div>
     </div>
