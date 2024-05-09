@@ -58,7 +58,7 @@ const ActivityDescription: React.FC<ActivityDescriptionProp> = ({ text, duration
                             ${duration.durationHours ? `${duration.durationHours}h ` : ''}
                             ${duration.durationMinutes ? `${duration.durationMinutes}m` : ''}`;
     return (
-        <div className="max-w-3/5">
+        <div className="max-w-3/5 items-center ">
             <p className={'text-black text-lg  max-h-40 break-words overflow-auto'}>
                 {text}
             </p>
@@ -68,7 +68,7 @@ const ActivityDescription: React.FC<ActivityDescriptionProp> = ({ text, duration
                     {`Activity Duration: ${durationString}`}
                 </p>
                 <p>
-                    {`${numberOfPeople}adults x ${price}€`}
+                    {`${numberOfPeople} adults \u00D7 ${price}€` /*unicode for multiplication sign*/}   
                     <br/>
                     <p className="font-semibold">Total Price:  {price * numberOfPeople}€</p>
                 </p>
@@ -98,7 +98,11 @@ const TimePicker: React.FC<TimePickerProp> = ({ timeList, selectedTime, setSelec
             </button>
             <div className="flex space-x-2">
                 {timeList.slice(currentIndex, currentIndex + 3).map((time, index) => (
-                    <div key={index} className="p-1 border-2 border-black rounded-xl ">
+                    <div 
+                        key={index} 
+                        className={`p-1 border-2 border-black rounded-xl hover:cursor-pointer hover:bg-gray-300 ${time === selectedTime ? 'bg-gray-300' : ''}`}
+                        onClick={() => setSelectedTime(time)}
+                    >
                         {time}
                     </div>
                 ))} 
