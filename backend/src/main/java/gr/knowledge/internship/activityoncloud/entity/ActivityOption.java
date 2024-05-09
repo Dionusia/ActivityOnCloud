@@ -1,6 +1,7 @@
 package gr.knowledge.internship.activityoncloud.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -39,6 +40,9 @@ public class ActivityOption implements Serializable {
     @Size(max = 64)
     @NotNull
     private String name;
+    @NotNull
+    @Column(name="price_per_person")
+    private BigDecimal pricePerPerson;
     @Column(name = "description", length = 256)
     @Size(max = 256)
     private String description;
