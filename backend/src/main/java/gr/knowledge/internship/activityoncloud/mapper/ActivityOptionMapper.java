@@ -1,10 +1,11 @@
 package gr.knowledge.internship.activityoncloud.mapper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import java.util.ArrayList;
-import java.util.List;
 
 import gr.knowledge.internship.activityoncloud.dto.ActivityOptionDTO;
 import gr.knowledge.internship.activityoncloud.entity.ActivityOption;

@@ -3,7 +3,6 @@ package gr.knowledge.internship.activityoncloud.dto;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.UUID;
 
 import lombok.AllArgsConstructor;
@@ -22,7 +21,7 @@ public class BookingDTO implements Serializable {
 	private String surname;
 	private String phone;
 	private String email;
-	private LocalTime startTime;
+	private LocalDateTime startTime;
 	private Integer persons;
 	private BigDecimal totalPrice;
 	private ActivityOptionDTO activityOption;

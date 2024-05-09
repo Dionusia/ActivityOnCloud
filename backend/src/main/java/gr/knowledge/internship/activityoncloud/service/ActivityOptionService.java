@@ -34,10 +34,26 @@ public class ActivityOptionService {
         return activityOptionMapper.toDTOList(allOptions);
     }
 
-    public ActivityOptionDTO saveActivityOption(ActivityOptionDTO activityOptionDTO) {
-        ActivityOption activityOption = activityOptionMapper.toEntity(activityOptionDTO);
-        activityOptionRepository.save(activityOption);
-        return activityOptionMapper.toDTO(activityOption);
+    public ActivityOptionDTO saveActivityOption(ActivityOptionDTO dto) {
+        // Validate and log duration from DTO
+        if (dto.getDuration() == null) {
+            throw new IllegalArgumentException("DTO duration is null.");
+        }
+
+        System.out.println("DTO duration: " + dto.getDuration());
+
+        ActivityOption entity = activityOptionMapper.toEntity(dto);
+
+        // Check and log duration from entity
+        if (entity.getDuration() == null) {
+            throw new IllegalArgumentException("Entity duration is null.");
+        }
+
+        System.out.println("Entity duration: " + entity.getDuration());
+
+        activityOptionRepository.save(entity);
+
+        return activityOptionMapper.toDTO(entity);
     }
 
     public ActivityOptionDTO updateActivityOption(ActivityOptionDTO activityOptionDTO) {

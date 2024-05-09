@@ -2,45 +2,53 @@ import React, { useEffect, useState } from 'react';
 import BookingsTable from '../Components/BookingsTable';
 import { Booking } from '../InterfacesAndTypes/Types';
 import instance from '../AxiosConfig';
+import SearchByName from '../Components/SearchByName';
 
 
 const Dashboard: React.FC = () => {
-
-
   const [bookingsList, setBookingsList] = useState<Booking[]>([]);
 
   useEffect(() => {
-    instance.get('/booking').then((response) => {
-
-      const responseList: Booking[] = []; 
-
-      //μπορει να υπαρχει πιο αποδοτικος τροπος για να γινει αυτο
-      for (let i = 0; i < response.data.length; i++) {
-        console.log(response.data[i]);
-        let booking = {
-          customerName: response.data[i].customerName,
-          activityName: response.data[i].activity.name,
-          participantsNum: response.data[i].persons,
-          timeframe: `Date: ${new Date(response.data[i].startTime).toLocaleDateString('en-GB')} Time: ${new Date(response.data[i].startTime).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}`,
-          pricePayed: response.data[i].priceTotal
-        };
-        responseList.push(booking);
-      } 
-      setBookingsList(responseList); 
-      
-    }).catch((error) => {
-      console.log(error + ': Get bookings error');
-    })
+    instance
+      .get("/booking")
+      .then((response) => {
+        const formattedBookings: Booking[] = response.data.map(
+          (bookingData: any) => ({
+            id: bookingData.uuid,
+            customerName: bookingData.name +" "+ bookingData.surname,
+            contact: bookingData.email+" | "+bookingData.phone,
+            activityName: bookingData.activityOption.name,
+            participantsNum: bookingData.persons,
+            timeframe: bookingData.startTime,
+            pricePayed: bookingData.totalPrice,
+          })
+        );
+        setBookingsList(formattedBookings);
+      })
+      .catch((error) => {
+        console.error("Error fetching bookings:", error);
+      });
   }, []);
 
+  // Function to format date and time
+  const formatDateTime = (dateTimeString: string): string => {
+    const dateTime = new Date(dateTimeString);
+    const formattedDate = dateTime.toLocaleDateString("en-GB");
+    const formattedTime = dateTime.toLocaleTimeString("en-GB", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    return `Date: ${formattedDate} Time: ${formattedTime}`;
+  };
+
   return (
-    <div className='flex flex-col '>
+    <div className='flex-col '>
       <h1 className='flex-grow text-center my-6 py-2 px-4 shadow-md rounded'>Dashboard</h1>
-      <div className='text-center'> Bookings
-        <BookingsTable booking={bookingsList} />
+      <div className='text-center mb-4'> Bookings
+        <SearchByName booking={bookingsList} />
       </div>
-    </div> 
+    </div>
   );
-}
+};
 
 export default Dashboard;

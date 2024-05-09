@@ -1,7 +1,8 @@
 package gr.knowledge.internship.activityoncloud.dto;
 
 import java.io.Serializable;
-import java.time.LocalTime;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,10 +13,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class AvailabilityDTO implements Serializable {
-    private Long id;
-    private String day;
-    private LocalTime startTime;
-    private LocalTime endTime;
-    private ActivityOptionDTO option;
+public class RateDTO implements Serializable {
+	private long id;
+	private ActivityOptionDTO option;
+	private BigDecimal rate;
+	private LocalDate startDate;
+	private LocalDate endDate;
 }

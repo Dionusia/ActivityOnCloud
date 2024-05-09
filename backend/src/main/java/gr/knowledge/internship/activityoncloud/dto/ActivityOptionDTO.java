@@ -1,8 +1,11 @@
 package gr.knowledge.internship.activityoncloud.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.Duration;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import gr.knowledge.internship.activityoncloud.entity.DurationJsonDeserializer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +18,9 @@ public class ActivityOptionDTO implements Serializable {
     private Long id;
     private String name;
     private String description;
+    @JsonDeserialize(using = DurationJsonDeserializer.class)
     private Duration duration;
     private Long capacity;
     private ActivityDTO activity;
+    private BigDecimal pricePerPerson;
 }
