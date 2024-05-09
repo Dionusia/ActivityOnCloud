@@ -12,37 +12,37 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import gr.knowledge.internship.activityoncloud.dto.BookingDTO;
-import gr.knowledge.internship.activityoncloud.service.BookingService;
+import gr.knowledge.internship.activityoncloud.dto.HolidayDTO;
+import gr.knowledge.internship.activityoncloud.service.HolidayService;
 
 @RestController
-@RequestMapping(value = "/booking")
-public class BookingController {
+@RequestMapping(value = "/holiday")
+public class HolidayController {
 	@Autowired
-	private BookingService bookingService;
+	private HolidayService holidayService;
 
 	@GetMapping
-	public List<BookingDTO> getAllBookings() {
-		return bookingService.getAllBookings();
+	public List<HolidayDTO> getAllHolidays() {
+		return holidayService.getAllHolidays();
 	}
 
 	@GetMapping("/{id}")
-	public BookingDTO getBookingById(@PathVariable Long id) {
-		return bookingService.getBookingById(id);
+	public HolidayDTO getHolidayById(@PathVariable Long id) {
+		return holidayService.getHolidayById(id);
 	}
 
 	@PostMapping("/save")
-	public BookingDTO saveBooking(@RequestBody BookingDTO booking) {
-		return bookingService.saveBooking(booking);
+	public HolidayDTO saveHoliday(@RequestBody HolidayDTO holiday) {
+		return holidayService.saveHoliday(holiday);
 	}
 
 	@PutMapping("/update")
-	public BookingDTO updateBooking(@RequestBody BookingDTO booking) {
-		return bookingService.updateBooking(booking);
+	public HolidayDTO updateHoliday(@RequestBody HolidayDTO holiday) {
+		return holidayService.updateHoliday(holiday);
 	}
 
 	@DeleteMapping("/delete")
-	public void deleteBooking(@RequestBody BookingDTO booking) {
-		bookingService.deleteBooking(booking);
+	public void deleteHoliday(@RequestBody HolidayDTO holiday) {
+		holidayService.deleteHoliday(holiday);
 	}
 }

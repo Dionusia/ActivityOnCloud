@@ -2,7 +2,8 @@ package gr.knowledge.internship.activityoncloud.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,8 +14,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -34,31 +33,51 @@ public class Booking implements Serializable {
 	@NotNull
 	@GeneratedValue(generator = "booking_seq", strategy = GenerationType.SEQUENCE)
 	@SequenceGenerator(name = "booking_seq", sequenceName = "booking_seq")
-	private long id;
-	@JoinColumn(name = "activity_admin_id")
+	private Long id;
+
+	@Column(name = "uuid")
+	@NotNull
+	private UUID uuid;
+
+	@Column(name = "name")
+	@Size(max = 32)
+	@NotNull
+	private String name;
+
+	@Column(name = "surname")
+	@Size(max = 48)
+	@NotNull
+	private String surname;
+
+	@Column(name = "phone")
+	@Size(max = 13)
+	@NotNull
+	private String phone;
+
+	@Column(name = "email")
+	@Size(max = 48)
+	@NotNull
+	private String email;
+
 	@ManyToOne
+	@JoinColumn(name = "option_id")
+	@NotNull
+	private ActivityOption activityOption;
+
+	@ManyToOne
+	@JoinColumn(name = "admin_id")
 	@NotNull
 	private ActivityAdmin activityAdmin;
-	@JoinColumn(name = "activity_id")
-	@ManyToOne
-	@NotNull
-	private Activity activity;
+
 	@Column(name = "start_time")
 	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
-	private LocalDateTime startTime;
-	@Column(name = "end_time")
-	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
-	private LocalDateTime endTime;
+	private LocalTime startTime;
+
 	@Column(name = "persons")
 	@NotNull
-	private int persons;
-	@Column(name = "price_total")
+	private Integer persons;
+
+	@Column(name = "total_price", precision = 10, scale = 2)
 	@NotNull
-	private BigDecimal priceTotal;
-	@Column(name = "customer_name")
-	@Size(max = 64)
-	@NotNull
-	private String customerName;
+	private BigDecimal totalPrice;
 }

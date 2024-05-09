@@ -26,7 +26,7 @@ module.exports = {
       directory: path.join(__dirname, 'dist'),
     },
     historyApiFallback: true,
-    port:5000,
+    port:3000,
     open: {
       app: {
         name: 'Google Chrome',

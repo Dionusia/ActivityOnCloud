@@ -12,37 +12,37 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import gr.knowledge.internship.activityoncloud.dto.BookingDTO;
-import gr.knowledge.internship.activityoncloud.service.BookingService;
+import gr.knowledge.internship.activityoncloud.dto.RateDTO;
+import gr.knowledge.internship.activityoncloud.service.RateService;
 
 @RestController
-@RequestMapping(value = "/booking")
-public class BookingController {
+@RequestMapping(value = "/rate")
+public class RateController {
 	@Autowired
-	private BookingService bookingService;
+	private RateService rateService;
 
 	@GetMapping
-	public List<BookingDTO> getAllBookings() {
-		return bookingService.getAllBookings();
+	public List<RateDTO> getAllRates() {
+		return rateService.getAllRates();
 	}
 
 	@GetMapping("/{id}")
-	public BookingDTO getBookingById(@PathVariable Long id) {
-		return bookingService.getBookingById(id);
+	public RateDTO getRateById(@PathVariable Long id) {
+		return rateService.getRateById(id);
 	}
 
 	@PostMapping("/save")
-	public BookingDTO saveBooking(@RequestBody BookingDTO booking) {
-		return bookingService.saveBooking(booking);
+	public RateDTO saveRate(@RequestBody RateDTO rate) {
+		return rateService.saveRate(rate);
 	}
 
 	@PutMapping("/update")
-	public BookingDTO updateBooking(@RequestBody BookingDTO booking) {
-		return bookingService.updateBooking(booking);
+	public RateDTO updateRate(@RequestBody RateDTO rate) {
+		return rateService.updateRate(rate);
 	}
 
 	@DeleteMapping("/delete")
-	public void deleteBooking(@RequestBody BookingDTO booking) {
-		bookingService.deleteBooking(booking);
+	public void deleteRate(@RequestBody RateDTO rate) {
+		rateService.deleteRate(rate);
 	}
 }
