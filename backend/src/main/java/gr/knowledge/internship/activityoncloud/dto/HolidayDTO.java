@@ -1,18 +1,20 @@
 package gr.knowledge.internship.activityoncloud.dto;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
-public class ActivityDTO implements Serializable {
+@AllArgsConstructor
+@NoArgsConstructor
+public class HolidayDTO implements Serializable {
 	private Long id;
-	private String name;
-	private ActivityAdminDTO admin;
+	private LocalDate date;
+	private ActivityOptionDTO option;
+	private ActivityOptionDTO admin;
 }

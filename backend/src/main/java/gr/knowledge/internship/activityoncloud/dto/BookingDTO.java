@@ -2,7 +2,6 @@ package gr.knowledge.internship.activityoncloud.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.UUID;
 

@@ -1,6 +1,7 @@
 package gr.knowledge.internship.activityoncloud.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalTime;
 
 import jakarta.persistence.Column;
@@ -32,19 +33,19 @@ public class Availability implements Serializable {
     @SequenceGenerator(name = "availability_seq", sequenceName = "availability_seq")
     private Long id;
     @NotNull
-    @Column(name = "day_of_week")
-    private String dayOfWeek;
+    @Column(name = "day")
+    private String day;
     @NotNull
-    @Column(name = "open_time")
-    private LocalTime openTime;
+    @Column(name="price_per_person")
+    private BigDecimal pricePerPerson;
     @NotNull
-    @Column(name = "close_time")
-    private LocalTime closeTime;
+    @Column(name = "start_time")
+    private LocalTime startTime;
     @NotNull
-    @Column(name = "persons_capacity")
-    private Integer personsCapacity;
+    @Column(name = "end_time")
+    private LocalTime endTime;
     @ManyToOne
-    @JoinColumn(name = "activity_id")
+    @JoinColumn(name = "option_id")
     @NotNull
-    private Activity activity;
+    private ActivityOption option;
 }

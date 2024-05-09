@@ -26,7 +26,7 @@ public class LoggingAspect {
 	private void beforeServiceMethod(JoinPoint joinPoint) {
 		CodeSignature codeSignature = (CodeSignature) joinPoint.getSignature();
 		String[] parameters = codeSignature.getParameterNames();
-		Map<String, String> arguments = new HashMap<String, String>();
+		Map<String, String> arguments = new HashMap<>();
 		for (int i = 0; i < parameters.length; i++) {
 			arguments.put(parameters[i], joinPoint.getArgs()[i].toString());
 		}

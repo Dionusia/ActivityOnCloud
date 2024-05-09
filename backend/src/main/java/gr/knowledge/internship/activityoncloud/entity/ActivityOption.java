@@ -1,15 +1,13 @@
 package gr.knowledge.internship.activityoncloud.entity;
 
+import java.io.Serializable;
+import java.time.Duration;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.io.Serializable;
-import java.time.Duration;
+import lombok.*;
 
 @Entity
 @Getter
@@ -24,9 +22,8 @@ public class ActivityOption implements Serializable {
     @GeneratedValue(generator = "option_seq", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "option_seq", sequenceName = "option_seq")
     private Long id;
-
     @ManyToOne
-    @JoinColumn(name = "activity")
+    @JoinColumn(name = "activity_id")
     @NotNull
     private Activity activity;
 
@@ -41,6 +38,7 @@ public class ActivityOption implements Serializable {
 
     @Column(name = "duration")
     @NotNull
+    @Convert(converter = DurationConverter.class)
     private Duration duration;
 
     @Column(name = "capacity")
