@@ -11,7 +11,9 @@ export type TimeSlot = {
 }
 
 export type Booking = {
+    id: string;
     customerName: string;
+    contact: string;
     activityName: string;
     participantsNum: string;
     timeframe: string;
