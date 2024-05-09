@@ -3,6 +3,7 @@ package gr.knowledge.internship.activityoncloud.entity;
 import java.io.Serializable;
 import java.time.Duration;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -38,7 +39,7 @@ public class ActivityOption implements Serializable {
 
     @Column(name = "duration")
     @NotNull
-    @Convert(converter = DurationConverter.class)
+    @JsonDeserialize(using = DurationJsonDeserializer.class)
     private Duration duration;
 
     @Column(name = "capacity")
