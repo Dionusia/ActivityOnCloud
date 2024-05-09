@@ -35,7 +35,7 @@ public class ActivityOption implements Serializable {
     private String description;
     @Column(name = "duration")
     @NotNull
-    @JsonDeserialize(using = DurationJsonDeserializer.class)
+    @Convert(converter = DurationConverter.class)
     private Duration duration;
     @Column(name = "capacity")
     @NotNull
