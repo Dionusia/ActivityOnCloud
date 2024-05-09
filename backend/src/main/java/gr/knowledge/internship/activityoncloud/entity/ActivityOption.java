@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -40,21 +41,17 @@ public class ActivityOption implements Serializable {
     @JoinColumn(name = "activity_id")
     @NotNull
     private Activity activity;
-
     @Column(name = "name", length = 64)
     @Size(max = 64)
     @NotNull
     private String name;
-
     @Column(name = "description", length = 256)
     @Size(max = 256)
     private String description;
-
     @Column(name = "duration")
     @NotNull
-    @JsonDeserialize(using = DurationJsonDeserializer.class)
+    @Convert(converter = DurationConverter.class)
     private Duration duration;
-
     @Column(name = "capacity")
     @NotNull
     private Long capacity;

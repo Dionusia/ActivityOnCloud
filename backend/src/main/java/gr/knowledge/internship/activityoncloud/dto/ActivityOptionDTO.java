@@ -1,6 +1,7 @@
 package gr.knowledge.internship.activityoncloud.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.Duration;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
