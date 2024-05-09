@@ -16,5 +16,5 @@ public class HolidayDTO implements Serializable {
 	private Long id;
 	private LocalDate date;
 	private ActivityOptionDTO option;
-	private ActivityOptionDTO admin;
+	private ActivityAdminDTO admin;
 }

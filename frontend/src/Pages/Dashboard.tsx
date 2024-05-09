@@ -15,11 +15,13 @@ const Dashboard: React.FC = () => {
       .then((response) => {
         const formattedBookings: Booking[] = response.data.map(
           (bookingData: any) => ({
-            customerName: bookingData.customerName,
-            activityName: bookingData.activity.name,
+            id: bookingData.uuid,
+            customerName: bookingData.name +" "+ bookingData.surname,
+            contact: bookingData.email+" | "+bookingData.phone,
+            activityName: bookingData.activityOption.name,
             participantsNum: bookingData.persons,
-            timeframe: formatDateTime(bookingData.startTime),
-            pricePayed: bookingData.priceTotal,
+            timeframe: bookingData.startTime,
+            pricePayed: bookingData.totalPrice,
           })
         );
         setBookingsList(formattedBookings);
