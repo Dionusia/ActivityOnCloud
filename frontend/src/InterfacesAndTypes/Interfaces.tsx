@@ -33,6 +33,7 @@ export interface ActivityDescriptionProp {
     text: string;
     duration: Duration;
     price: number;
+    numberOfPeople: number;
 }
 
 export interface TimePickerProp{

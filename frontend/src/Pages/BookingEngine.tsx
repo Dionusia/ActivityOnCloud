@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import ActivityInfoParent from "../Components/ActivityInfo";
 import FilterComponents from "../Components/FilterCriteria";
 import instance from "../AxiosConfig";
-//#region interfaces and types
 import { Activity, UserInputArgs, TimeSlots} from "../InterfacesAndTypes/Interfaces";
-//#endregion 
+
 const BookingEngine: React.FC = () => {
     const [activitiesList, setAvailableActivitiesList] = useState<Activity[]>([]);
     const [timeSlots, setTimeSlots] = useState<TimeSlots>({});
     const [renderKey, setRenderKey] = useState(0);
     const [selectedPerson, setSelectedPerson] = useState<number | null>(null);
     const [formattedDate, setFormattedDate] = useState<string>("");
+    const [selectedOption, setSelectedOption] = useState<number | null>(null);
     //let formattedDate = "test";
     useEffect(() => {
         instance.get('/activity')
@@ -41,7 +41,7 @@ const BookingEngine: React.FC = () => {
                 return null;
             }
             return (
-                <div key={`${index}-${renderKey}`}>
+                <div key={`${index}-${renderKey}`} className={`w-full ${selectedOption === activity.id ? 'border-2 border-black rounded-lg' : ''} hover:shadow-xl`} onClick={() => setSelectedOption(activity.id)}>
                     {Object.keys(timeSlots).length > 0 &&
                         <ActivityInfoParent
                             activity={availableActivity}
@@ -49,6 +49,7 @@ const BookingEngine: React.FC = () => {
                             userInputArgs={UserInputArgs}
                         />
                     }
+                    
                 </div>
             )
             })
@@ -58,7 +59,7 @@ const BookingEngine: React.FC = () => {
         <div className=" flex flex-col space-y-4 items-center">
             <FilterComponents setTimeSlots={setTimeSlots} selectedPerson={selectedPerson} setSelectedPerson={setSelectedPerson} setFormattedDate={setFormattedDate} />
             
-            <div className="flex flex-col items-center space-y-4">
+            <div className="flex flex-col items-center space-y-6 w-4/5 max-w-96">
                 {   
                     createActivityInfoComponent(activitiesList, renderKey, selectedPerson as number, formattedDate)        
                 }
