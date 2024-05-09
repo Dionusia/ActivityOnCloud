@@ -1,7 +1,7 @@
 import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { Props } from "../InterfacesAndTypes/Types";
+import { ActivityOptionProps, Props } from "../InterfacesAndTypes/Types";
 
 const responsive = {
   desktop: {
@@ -18,7 +18,7 @@ const responsive = {
   },
 };
 
-const ActivityOptionCards: React.FC<Props> = ({ activityOption }) => {
+const ActivityOptionCards: React.FC<ActivityOptionProps> = ({ activityOption }) => {
   return (
     <div className="h-56 sm:h-64 xl:h-80 2xl:h-96 w-4/5 mx-auto">
       <Carousel responsive={responsive}>

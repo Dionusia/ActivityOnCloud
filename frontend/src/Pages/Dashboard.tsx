@@ -4,6 +4,7 @@ import { Booking } from "../InterfacesAndTypes/Types";
 import { ActivityOption } from "../InterfacesAndTypes/Types";
 import instance from "../AxiosConfig";
 import ActivityOptionTable from "../Components/ActivityOptionTable";
+import SearchByName from "../Components/SearchByName";
 
 const Dashboard: React.FC = () => {
   const [bookingsList, setBookingsList] = useState<Booking[]>([]);
@@ -67,8 +68,10 @@ const Dashboard: React.FC = () => {
       </h1>
       <div className="text-center">
         Bookings
-        {/* <BookingsTable booking={bookingsList} />*/}
-        <ActivityOptionTable activityOption={activityOpts} booking={[]} />
+         <SearchByName booking={bookingsList} />
+         <br/>
+         Activities
+        <ActivityOptionTable activityOption={activityOpts} />
       </div>
     </div>
   );
