@@ -51,3 +51,5 @@ HELP.md
 frontend/src/webpack.config.js
 *.txt
 frontend/package-lock.json
+/frontend/src/node_modules
+/frontend/src/node_modules
