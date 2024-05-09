@@ -14,10 +14,11 @@ public class ActivityoncloudApplication {
 		SpringApplication.run(ActivityoncloudApplication.class, args);
 	}
 
-    @Bean
-    public ModelMapper modelMapper(){
-        return new ModelMapper();
-    }
+	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
+	}
+
 	@Bean
 	WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {

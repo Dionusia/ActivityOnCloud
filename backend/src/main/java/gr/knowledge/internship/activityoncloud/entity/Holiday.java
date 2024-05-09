@@ -28,8 +28,8 @@ public class Holiday implements Serializable {
 	@Id
 	@NotNull
 	@Column(name = "id")
-    @GeneratedValue(generator = "holiday_seq", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "holiday_seq", sequenceName = "holiday_seq")
+	@GeneratedValue(generator = "holiday_seq", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "holiday_seq", sequenceName = "holiday_seq")
 	private Long id;
 	@NotNull
 	@Column(name = "date")
