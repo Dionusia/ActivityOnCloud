@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import BookingsTable from '../Components/BookingsTable';
-import { Booking } from '../InterfacesAndTypes/Types';
-import instance from '../AxiosConfig';
-
+import React, { useEffect, useState } from "react";
+import BookingsTable from "../Components/BookingsTable";
+import { Booking } from "../InterfacesAndTypes/Types";
+import { ActivityOption } from "../InterfacesAndTypes/Types";
+import instance from "../AxiosConfig";
+import ActivityOptionTable from "../Components/ActivityOptionTable";
 
 const Dashboard: React.FC = () => {
   const [bookingsList, setBookingsList] = useState<Booking[]>([]);
+  const [activityOpts, setActivityOptions] = useState<ActivityOption[]>([]);
 
   useEffect(() => {
     instance
@@ -27,6 +29,24 @@ const Dashboard: React.FC = () => {
       });
   }, []);
 
+  useEffect(() => {
+    instance
+      .get("/activity-option")
+      .then((response) => {
+        const activityOptions: ActivityOption[] = response.data.map(
+          (activityData: any) => ({
+            activityName: activityData.name,
+            activityDescription: activityData.description,
+            activityDuration: activityData.duration,
+            activityCapacity: activityData.capacity,
+          })
+        );
+        setActivityOptions(activityOptions);
+      })
+      .catch((error) => {
+        console.error("Error fetching activity options:", error);
+      });
+  }, []);
   // Function to format date and time
   const formatDateTime = (dateTimeString: string): string => {
     const dateTime = new Date(dateTimeString);
@@ -39,10 +59,14 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className='flex flex-col '>
-      <h1 className='flex-grow text-center my-6 py-2 px-4 shadow-md rounded'>Dashboard</h1>
-      <div className='text-center'> Bookings
-        <BookingsTable booking={bookingsList} />
+    <div className="flex flex-col ">
+      <h1 className="flex-grow text-center my-6 py-2 px-4 shadow-md rounded">
+        Dashboard
+      </h1>
+      <div className="text-center">
+        Bookings
+        {/* <BookingsTable booking={bookingsList} />*/}
+        <ActivityOptionTable activityOption={activityOpts} booking={[]} />
       </div>
     </div>
   );
