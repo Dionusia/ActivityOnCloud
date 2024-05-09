@@ -9,7 +9,8 @@ import {
         ActivityDescriptionProp, 
         TimePickerProp,
         ActivityInfoParentProps } from "../InterfacesAndTypes/Interfaces";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 const handleBookClick = (activity: Activity,selectedInfoFinal: ExtendedUserInputArgs) => {
 
@@ -51,7 +52,7 @@ const ActivityTitle: React.FC<ActivityTitleProp> = ({ text }) => {
     )
 }
 
-const ActivityDescription: React.FC<ActivityDescriptionProp> = ({ text, duration, price }) => {
+const ActivityDescription: React.FC<ActivityDescriptionProp> = ({ text, duration, price, numberOfPeople }) => {
     //check if any of the duration values are not 0 and add them to the string
     const durationString = `${duration.durationDays ? `${duration.durationDays}d ` : ''}
                             ${duration.durationHours ? `${duration.durationHours}h ` : ''}
@@ -67,7 +68,9 @@ const ActivityDescription: React.FC<ActivityDescriptionProp> = ({ text, duration
                     {`Activity Duration: ${durationString}`}
                 </p>
                 <p>
-                    {`Price: ${price}€`}
+                    {`${numberOfPeople}adults x ${price}€`}
+                    <br/>
+                    <p className="font-semibold">Total Price:  {price * numberOfPeople}€</p>
                 </p>
             </div>
         </div>
@@ -75,45 +78,34 @@ const ActivityDescription: React.FC<ActivityDescriptionProp> = ({ text, duration
 }
 
 const TimePicker: React.FC<TimePickerProp> = ({ timeList, selectedTime, setSelectedTime }) => {
-    const [isOpen, setIsOpen] = useState(false);
-
-    const toggleDropdown = () => {
-        setIsOpen(!isOpen);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const handlePrev = () => {
+        if(currentIndex > 0){
+            setCurrentIndex(currentIndex - 1);
+            // setSelectedTime(timeList[currentIndex - 1]);
+        }
+    }
+    const handleNext = () => {
+        if(currentIndex < timeList.length - 3){
+            setCurrentIndex(currentIndex + 1);
+            // setSelectedTime(timeList[currentIndex + 1]);
+        }
     }
     return(
-        <div>
-            <button id="dropdownDefaultButton" onClick={toggleDropdown} data-dropdown-toggle="dropdown" 
-                className="text-white 
-                        bg-customGreen 
-                        hover:bg-customHoverGreen 
-                        focus:ring-0       
-                        focus:outline-none 
-                        focus:ring-blue-300 
-                        font-medium rounded-lg text-15
-                        px-6 py-2.5 text-center 
-                        inline-flex items-center
-                        w-44" type="button">
-                <div className="flex-grow text-center ">{selectedTime}</div>
-                <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4"/>
-                </svg>
+        <div className="flex max-w-4/5 space-x-2">
+            <button onClick={handlePrev} className="rounded hover:bg-black-400">
+                <FontAwesomeIcon icon={faChevronLeft} />
             </button>
-            <div id="dropdown" className={` ${isOpen? '' : 'hidden'} bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700`}>
-                <ul className="py-2 text-gray-700 dark:text-white text-15" aria-labelledby="dropdownDefaultButton">
-                    {
-                        timeList.map((time, index) => (
-                            <li key={index} onClick={toggleDropdown}>
-                                <a href="#" onClick={() => setSelectedTime(time)} 
-                                className="block px-4 py-2 
-                                            font-medium
-                                            hover:bg-gray-400
-                                            hover:text-white
-                                            text-center text-15">{time}</a>
-                            </li>
-                        ))
-                    }
-                </ul>
+            <div className="flex space-x-2">
+                {timeList.slice(currentIndex, currentIndex + 3).map((time, index) => (
+                    <div key={index} className="p-1 border-2 border-black rounded-xl ">
+                        {time}
+                    </div>
+                ))} 
             </div>
+            <button onClick={handleNext} className="rounded">
+                <FontAwesomeIcon icon={faChevronRight} />
+            </button>
         </div>
     )
 }
@@ -131,27 +123,24 @@ const ActivityInfoParent: React.FC<ActivityInfoParentProps> = ({activity, timeSl
     };
 
     return (
-        <div className="items-center space-y-4 bg-gray-100 p-4 rounded-lg inline-block ">
+        <div className="items-center space-y-4 bg-gray-100 p-4 rounded-lg inline-block w-full">
             <div className={'flex items-center space-x-2'}>
-                <div className={'flex flex-col space-y-2'}>
+                <div className={'flex flex-col space-y-2 w-full items-center'}>
                     <ActivityTitle text={activity.name} />
-                    <ActivityDescription text= {activity.description} duration={
+                    <ActivityDescription 
+                        text= {activity.description} 
+                        duration={
                                 {
                                     durationDays: activity.durationDays,
                                     durationHours: activity.durationHours,
                                     durationMinutes: activity.durationMinutes
-                                } } price={selectedInfoFinal.price} />
-                </div>
-            </div>
-            <div>
-                <h1 className=" text-15 font-medium">Available Times</h1>
-                <div className={'flex items-center justify-between ml-0 space-x-4'}>
-                    <TimePicker timeList={timeList} selectedTime={selectedTime} setSelectedTime={setSelectedTime} />
-                    <Button text="Book Now" 
-                    onClick={handleBookClick}  
-                    activity={activity} 
-                    userInputArgs={selectedInfoFinal}
-                    />
+                                } } 
+                        price={activity.pricePerPerson} 
+                        numberOfPeople={userInputArgs.selectedPerson} />
+                    <div className="w-full flex flex-col items-center">
+                        <h1 className=" font-medium text-lg text-center">Available Times</h1>
+                        <TimePicker timeList={timeList} selectedTime={selectedTime} setSelectedTime={setSelectedTime} />
+                    </div>
                 </div>
             </div>
         </div>
