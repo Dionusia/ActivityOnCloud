@@ -21,4 +21,5 @@ public class ActivityOptionDTO implements Serializable {
     private Duration duration;
     private Long capacity;
     private ActivityDTO activity;
+    private BigDecimal pricePerPerson;
 }
