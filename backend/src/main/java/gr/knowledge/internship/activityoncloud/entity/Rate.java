@@ -29,8 +29,8 @@ public class Rate implements Serializable {
 	@Id
 	@NotNull
 	@Column(name = "id")
-    @GeneratedValue(generator = "rate_seq", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "rate_seq", sequenceName = "rate_seq")
+	@GeneratedValue(generator = "rate_seq", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "rate_seq", sequenceName = "rate_seq")
 	private Long id;
 	@NotNull
 	@JoinColumn(name = "option_id")

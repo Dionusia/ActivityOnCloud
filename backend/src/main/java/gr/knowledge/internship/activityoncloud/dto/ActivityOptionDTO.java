@@ -20,7 +20,7 @@ public class ActivityOptionDTO implements Serializable {
     private String description;
     @JsonDeserialize(using = DurationJsonDeserializer.class)
     private Duration duration;
-    private Long capacity;
+    private int capacity;
     private ActivityDTO activity;
     private BigDecimal pricePerPerson;
 }
