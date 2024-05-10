@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import '../index.css';
 import instance from "../AxiosConfig";
 import {   
-        Activity, 
+        ActivityOption,
         ExtendedUserInputArgs, 
         ButtonProp, 
-        ActivityTitleProp, 
-        ActivityDescriptionProp, 
+        ActivityOptionTitleProp,
+        ActivityOptionDescriptionProp,
         TimePickerProp,
-        ActivityInfoParentProps } from "../InterfacesAndTypes/Interfaces";
+        ActivityOptionInfoParentProps } from "../InterfacesAndTypes/Interfaces";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
-const handleBookClick = (activity: Activity,selectedInfoFinal: ExtendedUserInputArgs) => {
+const handleBookClick = (activity: ActivityOption, selectedInfoFinal: ExtendedUserInputArgs) => {
 
     console.log("Info: "+ selectedInfoFinal.selectedTime, selectedInfoFinal.price, selectedInfoFinal.selectedPerson, selectedInfoFinal.selectedDate);
 
@@ -44,7 +44,7 @@ const Button: React.FC<ButtonProp> = ({ text, onClick, activity, userInputArgs }
     )
 }
 
-const ActivityTitle: React.FC<ActivityTitleProp> = ({ text }) => {
+const ActivityTitle: React.FC<ActivityOptionTitleProp> = ({ text }) => {
     return (
         <h1 className={'text-2xl font-bold text-black'}>
             {text}
@@ -52,7 +52,7 @@ const ActivityTitle: React.FC<ActivityTitleProp> = ({ text }) => {
     )
 }
 
-const ActivityDescription: React.FC<ActivityDescriptionProp> = ({ text, duration, price, numberOfPeople }) => {
+const ActivityDescription: React.FC<ActivityOptionDescriptionProp> = ({ text, duration, price, numberOfPeople }) => {
     //check if any of the duration values are not 0 and add them to the string
     const durationString = `${duration.durationDays ? `${duration.durationDays}d ` : ''}
                             ${duration.durationHours ? `${duration.durationHours}h ` : ''}
@@ -115,7 +115,7 @@ const TimePicker: React.FC<TimePickerProp> = ({ timeList, selectedTime, setSelec
 }
 //#endregion
 
-const ActivityInfoParent: React.FC<ActivityInfoParentProps> = ({activity, timeSlot, userInputArgs }) => {
+const ActivityInfoParent: React.FC<ActivityOptionInfoParentProps> = ({activity, timeSlot, userInputArgs }) => {
     const timeList = timeSlot.map(timeSlot => timeSlot.start.slice(0, -3));
     const [selectedTime, setSelectedTime] = useState(timeList[0]);
 
