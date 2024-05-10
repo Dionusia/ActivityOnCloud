@@ -12,33 +12,32 @@ import gr.knowledge.internship.activityoncloud.entity.Availability;
 
 @Component
 public class AvailabilityMapper {
-    @Autowired
-    private ModelMapper modelMapper;
+	@Autowired
+	private ModelMapper modelMapper;
 
-    public Availability toEntity(AvailabilityDTO availabilityDTO) {
-        return modelMapper.map(availabilityDTO, Availability.class);
-    }
+	public Availability toEntity(AvailabilityDTO availabilityDTO) {
+		return modelMapper.map(availabilityDTO, Availability.class);
+	}
 
-    public AvailabilityDTO toDTO(Availability availability) {
-        return modelMapper.map(availability, AvailabilityDTO.class);
-    }
+	public AvailabilityDTO toDTO(Availability availability) {
+		return modelMapper.map(availability, AvailabilityDTO.class);
+	}
 
-    public List<Availability> toEntityList(List<AvailabilityDTO> availabilityDTOList) {
-        List<Availability> availabilityList = new ArrayList<>();
-        for (AvailabilityDTO availabilityDTO : availabilityDTOList) {
-            Availability availabilityToAdd = modelMapper.map(availabilityDTO, Availability.class);
-            availabilityList.add(availabilityToAdd);
-        }
-        return availabilityList;
-    }
+	public List<Availability> toEntityList(List<AvailabilityDTO> availabilityDTOList) {
+		List<Availability> availabilityList = new ArrayList<>();
+		for (AvailabilityDTO availabilityDTO : availabilityDTOList) {
+			Availability availabilityToAdd = modelMapper.map(availabilityDTO, Availability.class);
+			availabilityList.add(availabilityToAdd);
+		}
+		return availabilityList;
+	}
 
-    public List<AvailabilityDTO> toDTOList(List<Availability> availabilityList) {
-        List<AvailabilityDTO> availabilityDTOList = new ArrayList<>();
-        for (Availability availability : availabilityList) {
-            AvailabilityDTO availabilityDTOToAdd = modelMapper.map(availability, AvailabilityDTO.class);
-            availabilityDTOList.add(availabilityDTOToAdd);
-        }
-        return availabilityDTOList;
-    }
+	public List<AvailabilityDTO> toDTOList(List<Availability> availabilityList) {
+		List<AvailabilityDTO> availabilityDTOList = new ArrayList<>();
+		for (Availability availability : availabilityList) {
+			AvailabilityDTO availabilityDTOToAdd = modelMapper.map(availability, AvailabilityDTO.class);
+			availabilityDTOList.add(availabilityDTOToAdd);
+		}
+		return availabilityDTOList;
+	}
 }
-
