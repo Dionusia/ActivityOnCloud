@@ -1,6 +1,7 @@
 package gr.knowledge.internship.activityoncloud.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.Duration;
 
 import gr.knowledge.internship.activityoncloud.converter.DurationConverter;
@@ -54,4 +55,7 @@ public class ActivityOption implements Serializable {
 	private Long capacity;
 	@Column(name = "imageURL")
 	private String imageURL;
+	@Column(name = "price_per_person")
+    @NotNull
+    private BigDecimal pricePerPerson;
 }
