@@ -23,4 +23,6 @@ public class ActivityOptionDTO implements Serializable {
     private int capacity;
     private ActivityDTO activity;
     private BigDecimal pricePerPerson;
+
+    private String imageUrl;
 }

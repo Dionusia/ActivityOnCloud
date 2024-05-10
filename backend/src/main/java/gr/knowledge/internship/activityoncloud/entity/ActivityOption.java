@@ -52,6 +52,8 @@ public class ActivityOption implements Serializable {
     @Column(name = "capacity")
     @NotNull
     private int capacity;
+    @Column(name = "image_url")
+    private String imageUrl;
     @Column(name = "price_per_person")
     private BigDecimal pricePerPerson;
 }
