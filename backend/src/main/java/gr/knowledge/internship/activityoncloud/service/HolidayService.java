@@ -1,5 +1,6 @@
 package gr.knowledge.internship.activityoncloud.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +55,12 @@ public class HolidayService {
 		Holiday holidayInDatabase = holidayRepository.findById(holidayDTO.getId())
 				.orElseThrow(EntityNotFoundException::new);
 		return holidayInDatabase;
+	}
+
+	@Transactional(readOnly = true)
+	public boolean isHolidayForActivityId(long activityId, LocalDate date) {
+		List<Holiday> holidaysForActivityId = holidayRepository.getByDate(date);
+		holidaysForActivityId.stream().filter(h -> h.getOption().getActivity().getId().equals(activityId));
+		return holidaysForActivityId.size() > 0;
 	}
 }

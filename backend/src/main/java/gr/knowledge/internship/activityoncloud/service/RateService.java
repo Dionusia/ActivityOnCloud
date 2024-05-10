@@ -51,8 +51,11 @@ public class RateService {
 	}
 
 	private Rate existsInDatabase(RateDTO rateDTO) {
-		Rate rateInDatabase = rateRepository.findById(rateDTO.getId())
-				.orElseThrow(EntityNotFoundException::new);
+		Rate rateInDatabase = rateRepository.findById(rateDTO.getId()).orElseThrow(EntityNotFoundException::new);
 		return rateInDatabase;
+	}
+
+	public List<RateDTO> getRatesByOptionId(Long optionId) {
+		return rateMapper.toDTOList(rateRepository.getByOptionId(optionId));
 	}
 }

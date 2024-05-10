@@ -1,6 +1,7 @@
 package gr.knowledge.internship.activityoncloud.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.Duration;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -21,6 +22,9 @@ public class ActivityOptionDTO implements Serializable {
     @JsonSerialize(using = DurationJsonSerializer.class)
     @JsonDeserialize(using = DurationJsonDeserializer.class)
     private Duration duration;
-    private Long capacity;
+    private int capacity;
     private ActivityDTO activity;
+    private BigDecimal pricePerPerson;
+
+    private String imageUrl;
 }

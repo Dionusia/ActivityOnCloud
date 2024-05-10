@@ -1,7 +1,7 @@
 package gr.knowledge.internship.activityoncloud.dto;
 
-import java.io.Serializable;
-import java.time.LocalDate;
+import java.math.BigDecimal;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,9 +12,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class HolidayDTO implements Serializable {
-	private Long id;
-	private LocalDate date;
-	private ActivityOptionDTO option;
-	private ActivityAdminDTO admin;
+public class AvailabilityInfoDTO {
+	private BigDecimal priceTotal;
+	private List<TimeSlotDTO> timeslots;
 }
