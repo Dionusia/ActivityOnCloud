@@ -11,6 +11,7 @@ import {
         ActivityOptionInfoParentProps } from "../InterfacesAndTypes/Interfaces";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { Card } from "flowbite-react";
 
 const handleBookClick = (activity: ActivityOption, selectedInfoFinal: ExtendedUserInputArgs) => {
 
@@ -52,7 +53,7 @@ const ActivityOptionTitle: React.FC<ActivityOptionTitleProp> = ({ text }) => {
     )
 }
 
-const ActivityOptionDescription: React.FC<ActivityOptionDescriptionProp> = ({ text, duration, price, numberOfPeople }) => {
+const ActivityOptionDescription: React.FC<ActivityOptionDescriptionProp> = ({ text, price, numberOfPeople }) => {
     return (
         <div className="max-w-3/5 items-center ">
             <p className={'text-black text-lg  max-h-40 break-words overflow-auto'}>
@@ -60,9 +61,6 @@ const ActivityOptionDescription: React.FC<ActivityOptionDescriptionProp> = ({ te
             </p>
             <br/>
             <div className={'text-black text-15 '}>
-                <p>
-                    {`Activity Duration: ${durationString}`}
-                </p>
                 <p>
                     {`${numberOfPeople} adults \u00D7 ${price}€` /*unicode for multiplication sign*/}   
                     <br/>
@@ -94,13 +92,13 @@ const TimePicker: React.FC<TimePickerProp> = ({ timeList, selectedTime, setSelec
             </button>
             <div className="flex space-x-2">
                 {timeList.slice(currentIndex, currentIndex + 3).map((time, index) => (
-                    <div 
+                    <Card 
                         key={index} 
-                        className={`p-1 border-2 border-black rounded-xl hover:cursor-pointer hover:bg-gray-300 ${time === selectedTime ? 'bg-gray-300' : ''}`}
+                        className={`p-1 rounded-xl hover:cursor-pointer hover:bg-gray-300 ${time === selectedTime ? 'bg-gray-300' : ''}`}
                         onClick={() => setSelectedTime(time)}
                     >
                         {time}
-                    </div>
+                    </Card>
                 ))} 
             </div>
             <button onClick={handleNext} className="rounded">
@@ -111,7 +109,7 @@ const TimePicker: React.FC<TimePickerProp> = ({ timeList, selectedTime, setSelec
 }
 //#endregion
 
-const ActivityInfoParent: React.FC<ActivityOptionInfoParentProps> = ({activity, timeSlot, userInputArgs }) => {
+const ActivityInfoParent: React.FC<ActivityOptionInfoParentProps> = ({activity, timeSlot, userInputArgs, pricePerPerson}) => {
     const timeList = timeSlot.map(timeSlot => timeSlot.start.slice(0, -3));
     const [selectedTime, setSelectedTime] = useState(timeList[0]);
 
@@ -119,31 +117,27 @@ const ActivityInfoParent: React.FC<ActivityOptionInfoParentProps> = ({activity, 
         selectedPerson: userInputArgs.selectedPerson,
         selectedDate: userInputArgs.selectedDate,
         selectedTime: selectedTime,
-        price: activity.pricePerPerson * userInputArgs.selectedPerson,
+        price: pricePerPerson * userInputArgs.selectedPerson,
     };
 
     return (
-        <div className="items-center space-y-4 bg-gray-100 p-4 rounded-lg inline-block w-full">
-            <div className={'flex items-center space-x-2'}>
-                <div className={'flex flex-col space-y-2 w-full items-center'}>
-                    <ActivityOptionTitle text={activity.name} />
-                    <ActivityOptionDescription
-                        text= {activity.description} 
-                        duration={
-                                {
-                                    durationDays: activity.durationDays,
-                                    durationHours: activity.durationHours,
-                                    durationMinutes: activity.durationMinutes
-                                } } 
-                        price={activity.pricePerPerson} 
-                        numberOfPeople={userInputArgs.selectedPerson} />
-                    <div className="w-full flex flex-col items-center">
-                        <h1 className=" font-medium text-lg text-center">Available Times</h1>
-                        <TimePicker timeList={timeList} selectedTime={selectedTime} setSelectedTime={setSelectedTime} />
+        <Card className="hover:shadow-lg"> 
+            <div className="items-center space-y-4 bg-white-100 p-4 rounded-lg inline-block w-full">
+                <div className={'flex items-center space-x-2'}>
+                    <div className={'flex flex-col space-y-2 w-full items-center'}>
+                        <ActivityOptionTitle text={activity.name} />
+                        <ActivityOptionDescription
+                            text= {activity.description} 
+                            price={pricePerPerson} 
+                            numberOfPeople={userInputArgs.selectedPerson} />
+                        <div className="w-full flex flex-col items-center">
+                            <h1 className=" font-medium text-lg text-center">Available Times</h1>
+                            <TimePicker timeList={timeList} selectedTime={selectedTime} setSelectedTime={setSelectedTime} />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </Card>
     )
 }
 
