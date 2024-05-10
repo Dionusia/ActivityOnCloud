@@ -1,7 +1,10 @@
 package gr.knowledge.internship.activityoncloud.service;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,15 +18,14 @@ import org.springframework.transaction.annotation.Transactional;
 import gr.knowledge.internship.activityoncloud.dto.ActivityOptionDTO;
 import gr.knowledge.internship.activityoncloud.dto.AvailabilityDTO;
 import gr.knowledge.internship.activityoncloud.dto.AvailabilityInfoDTO;
+import gr.knowledge.internship.activityoncloud.dto.BookingDTO;
 import gr.knowledge.internship.activityoncloud.dto.RateDTO;
 import gr.knowledge.internship.activityoncloud.dto.TimeSlotDTO;
 import gr.knowledge.internship.activityoncloud.entity.Availability;
 import gr.knowledge.internship.activityoncloud.mapper.AvailabilityMapper;
 import gr.knowledge.internship.activityoncloud.repository.AvailabilityRepository;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.extern.log4j.Log4j2;
 
-@Log4j2
 @Service
 @Transactional
 public class AvailabilityService {
@@ -33,6 +35,8 @@ public class AvailabilityService {
 	private HolidayService holidayService;
 	@Autowired
 	private RateService rateService;
+	@Autowired
+	private BookingService bookingService;
 	@Autowired
 	private AvailabilityMapper availabilityMapper;
 
@@ -74,41 +78,62 @@ public class AvailabilityService {
 
 	@Transactional(readOnly = true)
 	public Map<Long, AvailabilityInfoDTO> findAvailableOptionsWithSlots(LocalDate date, long activityId) {
-		List<AvailabilityDTO> availableByDayList = new ArrayList<>();
+		List<AvailabilityDTO> availableOptionsByDayList = new ArrayList<>();
 		Map<Long, AvailabilityInfoDTO> activityTimeslots = new HashMap<>();
+		List<BookingDTO> bookingsList = new ArrayList<BookingDTO>();
 		if (holidayService.isHolidayForActivityId(activityId, date)) {
 			return activityTimeslots;
 		}
+		bookingsList = bookingService.getAllBookings();
 		String day = date.getDayOfWeek().toString();
 		day = day.substring(0, 1) + day.substring(1).toLowerCase();
-		availableByDayList = availabilityMapper.toDTOList(availabilityRepository.getByDay(day));
-		availableByDayList = availableByDayList.stream()
+		availableOptionsByDayList = availabilityMapper.toDTOList(availabilityRepository.getByDay(day));
+		availableOptionsByDayList = availableOptionsByDayList.stream()
 				.filter(a -> a.getOption().getActivity().getId().equals(activityId)).collect(Collectors.toList());
-		for (AvailabilityDTO available : availableByDayList) {
+		for (AvailabilityDTO available : availableOptionsByDayList) {
 			BigDecimal price = this.calculatePriceForOption(available.getOption(), date);
-			List<TimeSlotDTO> timeslotsForOption = this.calculateTimeSlotsForOption(available.getOption());
-			AvailabilityInfoDTO infoDTO = new AvailabilityInfoDTO();
-			activityTimeslots.put(available.getOption().getId(), infoDTO);
+			List<TimeSlotDTO> timeslotsForOption = this.calculateTimeSlotsForOption(available, bookingsList, date);
+			activityTimeslots.put(available.getOption().getId(), new AvailabilityInfoDTO(price, timeslotsForOption));
 		}
 		return activityTimeslots;
 	}
 
-	private List<TimeSlotDTO> calculateTimeSlotsForOption(ActivityOptionDTO option) {
-		return null;
+	private List<BookingDTO> getBookingsForCurrent(List<BookingDTO> bookingsList, LocalDate date, Long optionId,
+			LocalTime timeStart) {
+		LocalDateTime currentDateTime = LocalDateTime.of(date, timeStart);
+		bookingsList = bookingsList.stream().filter(b -> b.getActivityOption().getId().equals(optionId))
+				.collect(Collectors.toList());
+		bookingsList = bookingsList.stream().filter(b -> b.getStartTime().equals(currentDateTime))
+				.collect(Collectors.toList());
+		return bookingsList;
+	}
+
+	private List<TimeSlotDTO> calculateTimeSlotsForOption(AvailabilityDTO available, List<BookingDTO> bookingsList,
+			LocalDate date) {
+		Duration optionDuration = available.getOption().getDuration();
+		List<TimeSlotDTO> timeslots = new ArrayList<TimeSlotDTO>();
+		LocalTime currentSlotStart = available.getStartTime();
+		while (currentSlotStart.isBefore(available.getEndTime())) {
+			TimeSlotDTO currentSlot = new TimeSlotDTO();
+			currentSlot.setStart(LocalDateTime.of(date, currentSlotStart));
+			currentSlot.setEnd(LocalDateTime.of(date, currentSlotStart.plus(optionDuration)));
+			currentSlot.generateCapacity(
+					this.getBookingsForCurrent(bookingsList, date, available.getOption().getId(), currentSlotStart),
+					available.getOption().getCapacity());
+			timeslots.add(currentSlot);
+			currentSlotStart = currentSlotStart.plus(optionDuration);
+		}
+		return timeslots;
 	}
 
 	private BigDecimal calculatePriceForOption(ActivityOptionDTO option, LocalDate date) {
 		List<RateDTO> ratesOfOption = rateService.getRatesByOptionId(option.getId());
-//		BigDecimal pricePerPerson = option.g
+		BigDecimal pricePerPerson = option.getPricePerPerson();
 		for (RateDTO rate : ratesOfOption) {
-			if (date.isAfter(rate.getStartDate()) && date.isAfter(rate.getEndDate())) {
+			if (date.isAfter(rate.getStartDate()) && date.isBefore(rate.getEndDate())) {
+				return pricePerPerson.multiply(rate.getRate());
 			}
 		}
-		return null;
-	}
-
-	private List<TimeSlotDTO> calculateTimeSlotsForOption(Long optionId) {
-		// TODO Auto-generated method stub
-		return null;
+		return pricePerPerson;
 	}
 }
