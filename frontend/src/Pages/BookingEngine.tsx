@@ -11,11 +11,12 @@ const BookingEngine: React.FC = () => {
     const [selectedPerson, setSelectedPerson] = useState<number | null>(null);
     const [formattedDate, setFormattedDate] = useState<string>("");
     const [selectedOption, setSelectedOption] = useState<number | null>(null);
-    //let formattedDate = "test";
+    const [pricePerPerson, setPricePerPerson] = useState<number[]>([]);
+
     useEffect(() => {
         instance.get('/activity-option')
             .then(response => {
-                console.log(response.data);
+                // console.log(response.data);
                 setAvailableOptionsList(response.data);                
             })
             .catch( error => {
@@ -27,14 +28,10 @@ const BookingEngine: React.FC = () => {
         setRenderKey(prevKey => prevKey + 1);
     }, [timeSlots]);
 
-    const createActivityInfoComponent = (availableOptionsList: ActivityOption[], renderKey: number, selectedPerson: number, formattedDate: string) => {
+    const createActivityInfoComponent = (availableOptionsList: ActivityOption[], renderKey: number, selectedPerson: number, formattedDate: string, pricePerPerson: number[]) => {
         return availableOptionsList.map((option, index) => {
-            console.log(availableOptionsList);
-            // console.log(timeSlots);
-            // console.log(Object.keys(timeSlots));
             
             const availableOption = availableOptionsList.find(a => a.id === parseInt(Object.keys(timeSlots)[index]));
-            console.log(availableOption);
 
             const UserInputArgs: UserInputArgs = {
                 selectedPerson: selectedPerson,
@@ -46,12 +43,13 @@ const BookingEngine: React.FC = () => {
                 return null;
             }
             return (
-                <div key={`${index}-${renderKey}`} className={`w-full ${selectedOption === option.id ? 'border-2 border-black rounded-lg' : ''} hover:shadow-xl`} onClick={() => setSelectedOption(option.id)}>
+                <div key={`${index}-${renderKey}`} className={`w-full ${selectedOption === option.id ? 'border-2 border-black rounded-lg' : ''}`} onClick={() => setSelectedOption(option.id)}>
                     {Object.keys(timeSlots).length > 0 &&
                         <ActivityInfoParent
                             activity={availableOption}
                             timeSlot={timeSlots[Object.keys(timeSlots)[index]]}
                             userInputArgs={UserInputArgs}
+                            pricePerPerson={pricePerPerson[index]}
                         />
                     }
                     
@@ -62,11 +60,11 @@ const BookingEngine: React.FC = () => {
 
     return (
         <div className=" flex flex-col space-y-4 items-center">
-            <FilterComponents setTimeSlots={setTimeSlots} selectedPerson={selectedPerson} setSelectedPerson={setSelectedPerson} setFormattedDate={setFormattedDate} />
+            <FilterComponents setTimeSlots={setTimeSlots} selectedPerson={selectedPerson} setSelectedPerson={setSelectedPerson} setFormattedDate={setFormattedDate} setPricePerPerson={setPricePerPerson}/>
             
             <div className="flex flex-col items-center space-y-6 w-4/5 max-w-96">
                 {   
-                    createActivityInfoComponent(availableOptionsList, renderKey, selectedPerson as number, formattedDate)        
+                    createActivityInfoComponent(availableOptionsList, renderKey, selectedPerson as number, formattedDate, pricePerPerson)        
                 }
             </div>
         </div>
