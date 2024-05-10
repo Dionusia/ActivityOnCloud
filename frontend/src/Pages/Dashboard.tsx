@@ -34,7 +34,7 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     instance
-      .get("/activity-option")
+      .get("/activity-option?of-admin?adminId=1")
       .then((response) => {
         const activityOptions: ActivityOption[] = response.data.map(
           (activityData: any) => ({
