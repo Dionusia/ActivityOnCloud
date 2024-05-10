@@ -1,10 +1,5 @@
 import { Duration, TimeSlot } from "./Types";
 
-export interface UserInputArgs {
-    selectedPerson: number;
-    selectedDate: string;
-}
-
 export interface Activity {
     id: number;
     activityAdmin: number;
@@ -42,7 +37,13 @@ export interface TimePickerProp{
     setSelectedTime: (time: string) => void;
 }
 
+export interface UserInputArgs {
+    selectedPerson: number;
+    selectedDate: string;
+}
+
 export interface ExtendedUserInputArgs extends UserInputArgs {
+
     selectedTime: string;
     price: number;
 }

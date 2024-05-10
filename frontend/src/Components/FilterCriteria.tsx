@@ -54,7 +54,7 @@ const FilterComponents: React.FC<FilterComponentsProps> = ({
       console.log("Formatted Date:", formattedTempDate);
     }
     instance
-      .get("/availability/available", {
+      .get("/availability/available/1", {
         params: {
           date: formattedTempDate,
           people: selectedPerson,
