@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import gr.knowledge.internship.activityoncloud.dto.AvailabilityDTO;
 import gr.knowledge.internship.activityoncloud.dto.AvailabilityInfoDTO;
 import gr.knowledge.internship.activityoncloud.service.AvailabilityService;
-import lombok.extern.log4j.Log4j2;
 
-@Log4j2
 @RestController
 @RequestMapping(value = "/availability")
 public class AvailabilityController {
