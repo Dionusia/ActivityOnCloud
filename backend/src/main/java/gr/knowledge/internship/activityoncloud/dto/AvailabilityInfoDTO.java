@@ -13,6 +13,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AvailabilityInfoDTO {
-	private BigDecimal priceTotal;
+	private BigDecimal pricePerPerson;
 	private List<TimeSlotDTO> timeslots;
 }

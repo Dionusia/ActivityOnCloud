@@ -80,7 +80,7 @@ public class AvailabilityService {
 	public Map<Long, AvailabilityInfoDTO> findAvailableOptionsWithSlots(LocalDate date, long activityId) {
 		List<AvailabilityDTO> availableOptionsByDayList = new ArrayList<>();
 		Map<Long, AvailabilityInfoDTO> activityTimeslots = new HashMap<>();
-		List<BookingDTO> bookingsList = new ArrayList<BookingDTO>();
+		List<BookingDTO> bookingsList = new ArrayList<>();
 		if (holidayService.isHolidayForActivityId(activityId, date)) {
 			return activityTimeslots;
 		}
@@ -111,7 +111,7 @@ public class AvailabilityService {
 	private List<TimeSlotDTO> calculateTimeSlotsForOption(AvailabilityDTO available, List<BookingDTO> bookingsList,
 			LocalDate date) {
 		Duration optionDuration = available.getOption().getDuration();
-		List<TimeSlotDTO> timeslots = new ArrayList<TimeSlotDTO>();
+		List<TimeSlotDTO> timeslots = new ArrayList<>();
 		LocalTime currentSlotStart = available.getStartTime();
 		while (currentSlotStart.isBefore(available.getEndTime())) {
 			TimeSlotDTO currentSlot = new TimeSlotDTO();

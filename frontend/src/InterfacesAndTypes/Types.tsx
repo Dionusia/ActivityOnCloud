@@ -1,9 +1,3 @@
-export type Duration = {
-  durationDays: number;
-  durationHours: number;
-  durationMinutes: number;
-};
-
 export type TimeSlot = {
   start: string;
   end: string;
@@ -24,6 +18,7 @@ export type ActivityOption = {
   activityDescription: string;
   activityDuration: String;
   activityCapacity: number;
+  activityImageUrl: string;
 };
 
 export type Props = {

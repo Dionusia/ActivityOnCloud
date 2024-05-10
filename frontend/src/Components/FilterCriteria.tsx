@@ -12,6 +12,7 @@ const FilterComponents: React.FC<FilterComponentsProps> = ({
   selectedPerson,
   setSelectedPerson,
   setFormattedDate,
+  setPricePerPerson
 }) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
@@ -53,18 +54,21 @@ const FilterComponents: React.FC<FilterComponentsProps> = ({
       formattedTempDate = adjustedDate.toISOString().split("T")[0];
       console.log("Formatted Date:", formattedTempDate);
     }
+
     instance
-      .get("/availability/available", {
+      .get("/availability/available/1", {
         params: {
           date: formattedTempDate,
-          people: selectedPerson,
         },
       })
       .then((response) => {
         console.log("Time slots:", response.data);
+        let pricePerPersonArr: number[] = [];
         const modifiedResponseData = Object.keys(response.data).reduce(
           (acc, key) => {
-            acc[key] = response.data[key].map((timeSlot: TimeSlot) => ({
+            // console.log(response.data[key]);
+            pricePerPersonArr.push(response.data[key].pricePerPerson);
+            acc[key] = response.data[key].timeslots.map((timeSlot: TimeSlot) => ({
               ...timeSlot,
               start: timeSlot.start.split("T")[1],
               end: timeSlot.end.split("T")[1],
@@ -73,7 +77,9 @@ const FilterComponents: React.FC<FilterComponentsProps> = ({
           },
           {} as TimeSlots
         );
-
+        // console.log(modifiedResponseData);
+        // console.log("Price per person:", response.data.pricePerPerson); 
+        setPricePerPerson(pricePerPersonArr);
         setTimeSlots(modifiedResponseData);
       })
       .catch((error) => {

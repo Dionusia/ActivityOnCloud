@@ -19,8 +19,8 @@ const Dashboard: React.FC = () => {
         const formattedBookings: Booking[] = response.data.map(
           (bookingData: any) => ({
             id: bookingData.uuid,
-            customerName: bookingData.name +" "+ bookingData.surname,
-            contact: bookingData.email+" | "+bookingData.phone,
+            customerName: bookingData.name + " " + bookingData.surname,
+            contact: bookingData.email + " | " + bookingData.phone,
             activityName: bookingData.activityOption.name,
             participantsNum: bookingData.persons,
             timeframe: bookingData.startTime,
@@ -44,6 +44,7 @@ const Dashboard: React.FC = () => {
             activityDescription: activityData.description,
             activityDuration: activityData.duration,
             activityCapacity: activityData.capacity,
+            activityImageUrl: activityData.imageUrl,
           })
         );
         setActivityOptions(activityOptions);
@@ -70,9 +71,9 @@ const Dashboard: React.FC = () => {
       </h1>
       <div className="text-center">
         Bookings
-         <SearchByName booking={bookingsList} />
-         <br/>
-         Activities
+        <SearchByName booking={bookingsList} />
+        <br />
+        Activities
         <ActivityOptionTable activityOption={activityOpts} />
       </div>
     </div>

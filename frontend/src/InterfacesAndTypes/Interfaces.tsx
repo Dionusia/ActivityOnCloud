@@ -1,38 +1,38 @@
-import { Duration, TimeSlot } from "./Types";
+import { TimeSlot } from "./Types";
 
-export interface UserInputArgs {
-    selectedPerson: number;
-    selectedDate: string;
+interface Activity {
+    id: number;
+    name: string;
+    admin: {id:number};
 }
 
-export interface Activity {
+export interface ActivityOption {
     id: number;
-    activityAdmin: number;
     name: string;
     description: string;
-    durationDays: number;
-    durationHours: number;
-    durationMinutes: number;
+    duration: string;
+    capacity: number;
+    activity: Activity;
     pricePerPerson: number;
 }
 
 export interface ButtonProp {
     text: string;
-    onClick: (activity: Activity, userInputArgs: ExtendedUserInputArgs) => void;
-    activity: Activity;
+    onClick: (activity: ActivityOption, userInputArgs: ExtendedUserInputArgs) => void;
+    activity: ActivityOption;
     userInputArgs: ExtendedUserInputArgs;
     
 }
 // μπορει να μπορουν να γινουν 1 interface (1)
-export interface ActivityTitleProp {
+export interface ActivityOptionTitleProp {
     text: string;
 
 }
 // μπορει να μπορουν να γινουν 1 interface (2)
-export interface ActivityDescriptionProp {
+export interface ActivityOptionDescriptionProp {
     text: string;
-    duration: Duration;
     price: number;
+    numberOfPeople: number;
 }
 
 export interface TimePickerProp{
@@ -41,15 +41,21 @@ export interface TimePickerProp{
     setSelectedTime: (time: string) => void;
 }
 
+export interface UserInputArgs {
+    selectedPerson: number;
+    selectedDate: string;
+}
+
 export interface ExtendedUserInputArgs extends UserInputArgs {
     selectedTime: string;
     price: number;
 }
 
-export interface ActivityInfoParentProps {
-   activity: Activity;
+export interface ActivityOptionInfoParentProps {
+   activity: ActivityOption;
    timeSlot: TimeSlot[];
-    userInputArgs: UserInputArgs;
+   userInputArgs: UserInputArgs;
+   pricePerPerson: number; 
 }
 
 export interface TimeSlots {
@@ -66,6 +72,8 @@ export interface FilterComponentsProps {
     selectedPerson: number | null;
     setSelectedPerson: React.Dispatch<React.SetStateAction<number | null>>;
     setFormattedDate: React.Dispatch<React.SetStateAction<string>>;
+    setPricePerPerson: React.Dispatch<React.SetStateAction<number[]>>;
+    
 }
 
 export interface PersonPickerProps {
