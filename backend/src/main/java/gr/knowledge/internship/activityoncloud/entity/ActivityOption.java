@@ -1,6 +1,7 @@
 package gr.knowledge.internship.activityoncloud.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.Duration;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -42,4 +43,7 @@ public class ActivityOption implements Serializable {
     @Column(name = "capacity")
     @NotNull
     private Long capacity;
+    @Column(name = "price_per_person")
+    @NotNull
+    private BigDecimal pricePerPerson;
 }
