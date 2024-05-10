@@ -31,7 +31,6 @@ export interface ActivityOptionTitleProp {
 // μπορει να μπορουν να γινουν 1 interface (2)
 export interface ActivityOptionDescriptionProp {
     text: string;
-    duration: string;
     price: number;
     numberOfPeople: number;
 }
@@ -48,7 +47,6 @@ export interface UserInputArgs {
 }
 
 export interface ExtendedUserInputArgs extends UserInputArgs {
-
     selectedTime: string;
     price: number;
 }
@@ -56,7 +54,8 @@ export interface ExtendedUserInputArgs extends UserInputArgs {
 export interface ActivityOptionInfoParentProps {
    activity: ActivityOption;
    timeSlot: TimeSlot[];
-    userInputArgs: UserInputArgs;
+   userInputArgs: UserInputArgs;
+   pricePerPerson: number; 
 }
 
 export interface TimeSlots {
@@ -73,6 +72,8 @@ export interface FilterComponentsProps {
     selectedPerson: number | null;
     setSelectedPerson: React.Dispatch<React.SetStateAction<number | null>>;
     setFormattedDate: React.Dispatch<React.SetStateAction<string>>;
+    setPricePerPerson: React.Dispatch<React.SetStateAction<number[]>>;
+    
 }
 
 export interface PersonPickerProps {
