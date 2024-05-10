@@ -2,23 +2,34 @@ import React from 'react';
 import { Formik, Form } from 'formik';
 import { Button, Label, TextInput, CustomFlowbiteTheme, Flowbite } from 'flowbite-react';
 import instance from '../AxiosConfig';
+import * as Yup from 'yup';
 
-const customTheme: CustomFlowbiteTheme = {
-    button: {
-      color: {
-        primary: "bg-red-500 hover:bg-red-600",
-      },
-    },
-  };
 
 
 const PersonalInfoForm = () => {
+
+    
+
     return (
         <div>
         <h1 className="text-center mb-5 shadow-md">Personal Information</h1>
+        
         <Formik
             initialValues={{ firstname: '', surname: '', email: '', phone: '' }}
-            
+            validationSchema = {Yup.object({
+                firstname: Yup.string()
+                 .max(32, 'Must be 32 characters or less')
+                 .required('Required'),
+               surname: Yup.string()
+                 .max(48, 'Must be 48 characters or less')
+                 .required('Required'),
+               email: Yup.string().email('Invalid email address').required('Required'),
+                phone: Yup
+                  .string()
+                  .max(13, 'Must be 13 characters or less')
+                  .required('Required')
+                  .matches(/^[0-9]+$/, 'Phone number can only contain numbers'),
+              })}
             onSubmit={(values, { setSubmitting }) => {
                 instance.post('/booking', values).then((response) => {
                     console.log(response.data);
