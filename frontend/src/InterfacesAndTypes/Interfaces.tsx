@@ -14,6 +14,7 @@ export interface ActivityOption {
     capacity: number;
     activity: Activity;
     pricePerPerson: number;
+    imageUrl: string;
 }
 
 export interface ButtonProp {

@@ -4,6 +4,7 @@ import ActivityInfoParent from "../Components/ActivityOptionInfo";
 import FilterComponents from "../Components/FilterCriteria";
 import instance from "../AxiosConfig";
 import { ActivityOption, UserInputArgs, TimeSlots} from "../InterfacesAndTypes/Interfaces";
+import { Button } from "flowbite-react";
 
 const BookingEngine: React.FC = () => {
     const [availableOptionsList, setAvailableOptionsList] = useState<ActivityOption[]>([]);

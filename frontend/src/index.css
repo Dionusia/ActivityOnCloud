@@ -2,10 +2,4 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap');
-@font-face {
-    font-family: 'Myriad Pro';
-    src: url('/fonts/MyriadPro-Regular.woff2') format('woff2'),
-         url('/fonts/MyriadPro-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-  }
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@200&display=swap');

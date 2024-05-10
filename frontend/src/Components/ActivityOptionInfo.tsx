@@ -47,7 +47,7 @@ const Button: React.FC<ButtonProp> = ({ text, onClick, activity, userInputArgs }
 
 const ActivityOptionTitle: React.FC<ActivityOptionTitleProp> = ({ text }) => {
     return (
-        <h1 className={'text-2xl font-bold text-black'}>
+        <h1 className={' text-2xl font-helvetica text-black'}>
             {text}
         </h1>
     )
@@ -60,7 +60,7 @@ const ActivityOptionDescription: React.FC<ActivityOptionDescriptionProp> = ({ te
                 {text}
             </p>
             <br/>
-            <div className={'text-black text-15 '}>
+            <div className={'text-black text-15 font-roboto-slab-extra-light'}>
                 <p>
                     {`${numberOfPeople} adults \u00D7 ${price}€` /*unicode for multiplication sign*/}   
                     <br/>
@@ -94,7 +94,7 @@ const TimePicker: React.FC<TimePickerProp> = ({ timeList, selectedTime, setSelec
                 {timeList.slice(currentIndex, currentIndex + 3).map((time, index) => (
                     <Card 
                         key={index} 
-                        className={`p-1 rounded-xl hover:cursor-pointer hover:bg-gray-300 ${time === selectedTime ? 'bg-gray-300' : ''}`}
+                        className={`p-1 rounded-xl hover:cursor-pointer ${time === selectedTime ? 'border-2 border-black rounded-xl' : ''}`}
                         onClick={() => setSelectedTime(time)}
                     >
                         {time}
@@ -121,7 +121,16 @@ const ActivityInfoParent: React.FC<ActivityOptionInfoParentProps> = ({activity, 
     };
 
     return (
-        <Card className="hover:shadow-lg"> 
+        <Card 
+        className="hover:shadow-lg"
+        //imgAlt="Meaningful alt text for an image that is not purely decorative"
+        //imgSrc= {"../Photos/MountainBike.jpeg"}
+        >  
+            <img
+                className="object-cover rounded-t-lg w-full h-[150px]"
+                src={activity.imageUrl}
+                alt={"Meaningful alt text for an image that is not purely decorative"}
+            />   
             <div className="items-center space-y-4 bg-white-100 p-4 rounded-lg inline-block w-full">
                 <div className={'flex items-center space-x-2'}>
                     <div className={'flex flex-col space-y-2 w-full items-center'}>
@@ -131,7 +140,7 @@ const ActivityInfoParent: React.FC<ActivityOptionInfoParentProps> = ({activity, 
                             price={pricePerPerson} 
                             numberOfPeople={userInputArgs.selectedPerson} />
                         <div className="w-full flex flex-col items-center">
-                            <h1 className=" font-medium text-lg text-center">Available Times</h1>
+                            <h1 className=" font-roboto-slub-extra-light text-lg text-center">Available Times</h1>
                             <TimePicker timeList={timeList} selectedTime={selectedTime} setSelectedTime={setSelectedTime} />
                         </div>
                     </div>
