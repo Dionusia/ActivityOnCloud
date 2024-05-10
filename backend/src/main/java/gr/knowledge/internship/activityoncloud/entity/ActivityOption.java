@@ -53,7 +53,7 @@ public class ActivityOption implements Serializable {
 	@Column(name = "capacity")
 	@NotNull
 	private Long capacity;
-	@Column(name = "imageURL")
+	@Column(name = "image_url")
 	private String imageURL;
 	@Column(name = "price_per_person")
     @NotNull
