@@ -57,14 +57,15 @@ const FilterComponents: React.FC<FilterComponentsProps> = ({
       .get("/availability/available/1", {
         params: {
           date: formattedTempDate,
-          people: selectedPerson,
         },
       })
       .then((response) => {
         console.log("Time slots:", response.data);
         const modifiedResponseData = Object.keys(response.data).reduce(
           (acc, key) => {
-            acc[key] = response.data[key].map((timeSlot: TimeSlot) => ({
+            console.log(response.data[key]);
+            
+            acc[key] = response.data[key].timeslots.map((timeSlot: TimeSlot) => ({
               ...timeSlot,
               start: timeSlot.start.split("T")[1],
               end: timeSlot.end.split("T")[1],
@@ -73,7 +74,8 @@ const FilterComponents: React.FC<FilterComponentsProps> = ({
           },
           {} as TimeSlots
         );
-
+        console.log(modifiedResponseData);
+        
         setTimeSlots(modifiedResponseData);
       })
       .catch((error) => {
