@@ -14,13 +14,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TimeSlotDTO implements Serializable {
-    private LocalDateTime start;
-    private LocalDateTime end;
-    private int remainingCapacity;
+	private LocalDateTime start;
+	private LocalDateTime end;
+	private int remainingCapacity;
 
 	public void generateCapacity(List<BookingDTO> bookings, Integer personsCapacity) {
 		this.setRemainingCapacity(personsCapacity);
-		for(BookingDTO booking : bookings) {
+		for (BookingDTO booking : bookings) {
 			this.setRemainingCapacity(this.getRemainingCapacity() - booking.getPersons());
 		}
 	}

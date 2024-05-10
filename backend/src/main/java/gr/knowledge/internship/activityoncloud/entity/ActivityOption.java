@@ -4,9 +4,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Duration;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
@@ -54,5 +51,7 @@ public class ActivityOption implements Serializable {
     private Duration duration;
     @Column(name = "capacity")
     @NotNull
-    private Long capacity;
+    private int capacity;
+    @Column(name = "price_per_person")
+    private BigDecimal pricePerPerson;
 }

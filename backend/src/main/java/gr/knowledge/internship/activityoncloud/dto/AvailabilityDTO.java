@@ -13,9 +13,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AvailabilityDTO implements Serializable {
-    private Long id;
-    private String day;
-    private LocalTime startTime;
-    private LocalTime endTime;
-    private ActivityOptionDTO option;
+	private Long id;
+	private String day;
+	private LocalTime startTime;
+	private LocalTime endTime;
+	private ActivityOptionDTO option;
 }
