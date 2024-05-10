@@ -13,13 +13,11 @@ public class DurationJsonDeserializer extends JsonDeserializer<Duration> {
     @Override
     public Duration deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
         String text = p.getText();
-
         try {
-            // Convert from HH:MM:SS to Duration
-            LocalTime localTime = LocalTime.parse(text);  // Parse HH:MM:SS
-            return Duration.between(LocalTime.MIDNIGHT, localTime);
+            LocalTime localTime = LocalTime.parse(text);  // "HH:MM:SS"
+            return Duration.between(LocalTime.MIDNIGHT, localTime);  // Duration since midnight
         } catch (DateTimeParseException e) {
-            throw new IOException("Cannot parse duration: " + text, e);
+            throw new IOException("Could not parse duration: " + text, e);
         }
     }
 }

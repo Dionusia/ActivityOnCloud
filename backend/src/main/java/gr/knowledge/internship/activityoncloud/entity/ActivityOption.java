@@ -1,25 +1,15 @@
 package gr.knowledge.internship.activityoncloud.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.Duration;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Getter
@@ -51,7 +41,5 @@ public class ActivityOption implements Serializable {
     private Duration duration;
     @Column(name = "capacity")
     @NotNull
-    private int capacity;
-    @Column(name = "price_per_person")
-    private BigDecimal pricePerPerson;
+    private Long capacity;
 }

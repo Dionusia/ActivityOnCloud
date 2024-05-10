@@ -5,7 +5,6 @@ import jakarta.persistence.Converter;
 
 import java.time.Duration;
 import java.time.LocalTime;
-import java.time.format.DateTimeParseException;
 
 @Converter(autoApply = true)
 public class DurationConverter implements AttributeConverter<Duration, String> {
@@ -15,10 +14,11 @@ public class DurationConverter implements AttributeConverter<Duration, String> {
             return null;
         }
 
-        long hours = duration.toHours();
-        long minutes = duration.toMinutesPart();
-        long seconds = duration.toSecondsPart();
+        long hours = duration.toHours();  // Get hours
+        long minutes = duration.toMinutesPart();  // Get minutes
+        long seconds = duration.toSecondsPart();  // Get seconds
 
+        // Return in "HH:MM:SS" format, suitable for PostgreSQL INTERVAL
         return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 
@@ -28,11 +28,7 @@ public class DurationConverter implements AttributeConverter<Duration, String> {
             return null;
         }
 
-        try {
-            LocalTime localTime = LocalTime.parse(dbData);  // Interpret HH:MM:SS
-            return Duration.between(LocalTime.MIDNIGHT, localTime);  // Convert to Duration
-        } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException("Invalid duration format: " + dbData, e);
-        }
+        LocalTime localTime = LocalTime.parse(dbData);
+        return Duration.between(LocalTime.MIDNIGHT, localTime);  // Convert from "HH:MM:SS"
     }
 }

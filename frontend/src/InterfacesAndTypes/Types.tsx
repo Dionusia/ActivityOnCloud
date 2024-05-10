@@ -18,6 +18,7 @@ export type ActivityOption = {
   activityDescription: string;
   activityDuration: String;
   activityCapacity: number;
+  activityImageUrl: string;
 };
 
 export type Props = {
