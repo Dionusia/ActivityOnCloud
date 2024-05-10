@@ -44,7 +44,7 @@ const Button: React.FC<ButtonProp> = ({ text, onClick, activity, userInputArgs }
     )
 }
 
-const ActivityTitle: React.FC<ActivityOptionTitleProp> = ({ text }) => {
+const ActivityOptionTitle: React.FC<ActivityOptionTitleProp> = ({ text }) => {
     return (
         <h1 className={'text-2xl font-bold text-black'}>
             {text}
@@ -52,11 +52,7 @@ const ActivityTitle: React.FC<ActivityOptionTitleProp> = ({ text }) => {
     )
 }
 
-const ActivityDescription: React.FC<ActivityOptionDescriptionProp> = ({ text, duration, price, numberOfPeople }) => {
-    //check if any of the duration values are not 0 and add them to the string
-    const durationString = `${duration.durationDays ? `${duration.durationDays}d ` : ''}
-                            ${duration.durationHours ? `${duration.durationHours}h ` : ''}
-                            ${duration.durationMinutes ? `${duration.durationMinutes}m` : ''}`;
+const ActivityOptionDescription: React.FC<ActivityOptionDescriptionProp> = ({ text, duration, price, numberOfPeople }) => {
     return (
         <div className="max-w-3/5 items-center ">
             <p className={'text-black text-lg  max-h-40 break-words overflow-auto'}>
@@ -130,8 +126,8 @@ const ActivityInfoParent: React.FC<ActivityOptionInfoParentProps> = ({activity, 
         <div className="items-center space-y-4 bg-gray-100 p-4 rounded-lg inline-block w-full">
             <div className={'flex items-center space-x-2'}>
                 <div className={'flex flex-col space-y-2 w-full items-center'}>
-                    <ActivityTitle text={activity.name} />
-                    <ActivityDescription 
+                    <ActivityOptionTitle text={activity.name} />
+                    <ActivityOptionDescription
                         text= {activity.description} 
                         duration={
                                 {
