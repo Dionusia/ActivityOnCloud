@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ActivityInfoParent from "../Components/ActivityOptionInfo";
 import FilterComponents from "../Components/FilterCriteria";
 import instance from "../AxiosConfig";
 import { ActivityOption, UserInputArgs, TimeSlots} from "../InterfacesAndTypes/Interfaces";
+import { Button } from "flowbite-react";
 
 const BookingEngine: React.FC = () => {
     const [availableOptionsList, setAvailableOptionsList] = useState<ActivityOption[]>([]);
@@ -10,6 +12,12 @@ const BookingEngine: React.FC = () => {
     const [renderKey, setRenderKey] = useState(0);
     const [selectedPerson, setSelectedPerson] = useState<number | null>(null);
     const [formattedDate, setFormattedDate] = useState<string>("");
+    const navigate = useNavigate();
+
+    const RedirectOnPersonalInfoPage = () => {
+        navigate('/personal-info');
+    };
+
     const [selectedOption, setSelectedOption] = useState<number | null>(null);
     const [pricePerPerson, setPricePerPerson] = useState<number[]>([]);
 
@@ -66,6 +74,9 @@ const BookingEngine: React.FC = () => {
                 {   
                     createActivityInfoComponent(availableOptionsList, renderKey, selectedPerson as number, formattedDate, pricePerPerson)        
                 }
+            </div>
+            <div className='flex justify-center fixed bottom-4 mb-4'>
+                <Button type="submit" className="bg-customGreen text-white" onClick={RedirectOnPersonalInfoPage}>Checkout</Button>
             </div>
         </div>
     );

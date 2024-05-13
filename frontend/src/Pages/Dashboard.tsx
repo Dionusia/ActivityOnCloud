@@ -6,13 +6,15 @@ import instance from "../AxiosConfig";
 import ActivityOptionTable from "../Components/ActivityOptionTable";
 import SearchByName from "../Components/SearchByName";
 
+const adminId = 1;
+
 const Dashboard: React.FC = () => {
   const [bookingsList, setBookingsList] = useState<Booking[]>([]);
   const [activityOpts, setActivityOptions] = useState<ActivityOption[]>([]);
 
   useEffect(() => {
     instance
-      .get("/booking")
+      .get("/booking/of-admin?adminId="+adminId)
       .then((response) => {
         const formattedBookings: Booking[] = response.data.map(
           (bookingData: any) => ({
@@ -34,7 +36,7 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     instance
-      .get("/activity-option")
+      .get("/activity-option/of-admin?adminId="+adminId)
       .then((response) => {
         const activityOptions: ActivityOption[] = response.data.map(
           (activityData: any) => ({

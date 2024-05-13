@@ -2,7 +2,6 @@ package gr.knowledge.internship.activityoncloud.controller;
 
 import java.util.List;
 
-import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +16,6 @@ import gr.knowledge.internship.activityoncloud.dto.ActivityDTO;
 import gr.knowledge.internship.activityoncloud.service.ActivityService;
 
 @RestController
-@Log4j2
 @RequestMapping(value = "/activity")
 public class ActivityController {
 	@Autowired
