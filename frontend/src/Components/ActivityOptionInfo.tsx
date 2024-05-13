@@ -129,7 +129,7 @@ const ActivityInfoParent: React.FC<ActivityOptionInfoParentProps> = ({activity, 
             <img
                 className="object-cover rounded-t-lg w-full h-[150px]"
                 src={activity.imageUrl}
-                alt={"Meaningful alt text for an image that is not purely decorative"}
+                alt={"Meaningful alt text for an image that is not purely decorative" + activity.imageUrl}
             />   
             <div className="items-center space-y-4 bg-white-100 p-4 rounded-lg inline-block w-full">
                 <div className={'flex items-center space-x-2'}>
