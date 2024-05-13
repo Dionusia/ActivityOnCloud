@@ -8,9 +8,17 @@ module.exports = {
 
   theme: {
     extend: {
+      fontFamily: {
+        'roboto-slab': ['Roboto Slab', 'serif'],
+        'roboto-slab-extra-light': ['Roboto Slab', 'serif'],
+        'helvetica': ['Helvetica', 'sans-serif'],
+      },
       colors: {
         'customGreen': '#04B1A7',
         'customHoverGreen': '#03857D'
+      },
+      fontWeight: {
+        'extra-light': 200,
       },
     },
   },

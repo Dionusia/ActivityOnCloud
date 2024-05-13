@@ -1,6 +1,7 @@
 package gr.knowledge.internship.activityoncloud.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,9 +54,13 @@ public class ActivityOptionService {
 		activityOptionRepository.deleteById(id);
 	}
 
-	private ActivityOption existsInDatabase(ActivityOptionDTO activityOptionDTO) {
-		ActivityOption activityInDatabase = activityOptionRepository.findById(activityOptionDTO.getId())
-				.orElseThrow(EntityNotFoundException::new);
-		return activityInDatabase;
-	}
+    private ActivityOption existsInDatabase(ActivityOptionDTO activityOptionDTO) {
+        ActivityOption activityInDatabase = activityOptionRepository.findById(activityOptionDTO.getId())
+                .orElseThrow(EntityNotFoundException::new);
+        return activityInDatabase;
+    }
+
+    public List<ActivityOptionDTO> getActivityOptionsOfAdmin(Long adminId) {
+        return activityOptionMapper.toDTOList(activityOptionRepository.findByActivityAdminId(adminId));
+    }
 }
