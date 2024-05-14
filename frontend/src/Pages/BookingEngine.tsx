@@ -40,7 +40,7 @@ const BookingEngine: React.FC = () => {
 
     const createActivityInfoComponent = (availableOptionsList: ActivityOption[], renderKey: number, selectedPerson: number, formattedDate: string, pricePerPerson: number[]) => {
         // console.log(availableOptionsList);
-        // console.log(timeSlots);
+        console.log(timeSlots);
         
         return availableOptionsList.map((option,index) => {
 

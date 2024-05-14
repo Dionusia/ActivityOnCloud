@@ -30,8 +30,8 @@ const ActivityOptionCards: React.FC<ActivityOptionProps> = ({
             <div className="shadow-md m-4 p-4 w-64 h-70 rounded-lg bg-gray-100">
               <img
                 className="object-cover h-32 w-full"
-                src={activityItem.activityImageUrl}
-                alt={activityItem.activityName}
+                src={'/Photos/MountainBike.jpeg'}
+                alt={activityItem.activityImageUrl}
               />
               <h2 className="font-medium mb-2">{activityItem.activityName}</h2>
               <p className="mb-2">{activityItem.activityDescription}</p>
