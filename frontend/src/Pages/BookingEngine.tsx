@@ -1,25 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useDebugValue, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ActivityInfoParent from "../Components/ActivityOptionInfo";
 import FilterComponents from "../Components/FilterCriteria";
 import instance from "../AxiosConfig";
 import { ActivityOption, UserInputArgs, TimeSlots} from "../InterfacesAndTypes/Interfaces";
 import { Button } from "flowbite-react";
+import ActivityContext from "../ActivityContext";
 
 const BookingEngine: React.FC = () => {
+    //#region states
     const [availableOptionsList, setAvailableOptionsList] = useState<ActivityOption[]>([]);
     const [timeSlots, setTimeSlots] = useState<TimeSlots>({});
     const [renderKey, setRenderKey] = useState(0);
     const [selectedPerson, setSelectedPerson] = useState<number | null>(null);
     const [formattedDate, setFormattedDate] = useState<string>("");
-    const navigate = useNavigate();
+    const [pricePerPerson, setPricePerPerson] = useState<number[]>([]);
+    //#endregion
 
+    const activityContext = useContext(ActivityContext);
+    const navigate = useNavigate();
     const RedirectOnPersonalInfoPage = () => {
         navigate('/personal-info');
     };
-
-    const [selectedOption, setSelectedOption] = useState<number | null>(null);
-    const [pricePerPerson, setPricePerPerson] = useState<number[]>([]);
 
     useEffect(() => {
         instance.get('/activity-option')
@@ -38,7 +40,7 @@ const BookingEngine: React.FC = () => {
 
     const createActivityInfoComponent = (availableOptionsList: ActivityOption[], renderKey: number, selectedPerson: number, formattedDate: string, pricePerPerson: number[]) => {
         return availableOptionsList.map((option, index) => {
-            
+        
             const availableOption = availableOptionsList.find(a => a.id === parseInt(Object.keys(timeSlots)[index]));
 
             const UserInputArgs: UserInputArgs = {
@@ -51,7 +53,9 @@ const BookingEngine: React.FC = () => {
                 return null;
             }
             return (
-                <div key={`${index}-${renderKey}`} className={`w-full ${selectedOption === option.id ? 'border-2 border-black rounded-lg' : ''}`} onClick={() => setSelectedOption(option.id)}>
+                <div key={`${index}-${renderKey}`} 
+                    className={`w-full ${activityContext.selectedOption && activityContext.selectedOption.id === option.id ? 'border-2 border-black rounded-lg' : ''}`} 
+                                onClick={() => activityContext.setSelectedOption(option)}>
                     {Object.keys(timeSlots).length > 0 &&
                         <ActivityInfoParent
                             activity={availableOption}
@@ -67,18 +71,17 @@ const BookingEngine: React.FC = () => {
     }
 
     return (
-        <div className=" flex flex-col space-y-4 items-center">
-            <FilterComponents setTimeSlots={setTimeSlots} selectedPerson={selectedPerson} setSelectedPerson={setSelectedPerson} setFormattedDate={setFormattedDate} setPricePerPerson={setPricePerPerson}/>
-            
-            <div className="flex flex-col items-center space-y-6 w-4/5 max-w-96">
-                {   
-                    createActivityInfoComponent(availableOptionsList, renderKey, selectedPerson as number, formattedDate, pricePerPerson)        
-                }
+            <div className=" flex flex-col space-y-4 items-center">
+                <FilterComponents setTimeSlots={setTimeSlots} selectedPerson={selectedPerson} setSelectedPerson={setSelectedPerson} setFormattedDate={setFormattedDate} setPricePerPerson={setPricePerPerson}/>
+                <div className="flex flex-col items-center space-y-6 w-4/5 max-w-96">
+                    {   
+                        createActivityInfoComponent(availableOptionsList, renderKey, selectedPerson as number, formattedDate, pricePerPerson)        
+                    }
+                </div>
+                <div className='flex justify-center fixed bottom-4 mb-4'>
+                    <Button type="submit" className="bg-customGreen text-white" onClick={RedirectOnPersonalInfoPage}>Checkout</Button>
+                </div>
             </div>
-            <div className='flex justify-center fixed bottom-4 mb-4'>
-                <Button type="submit" className="bg-customGreen text-white" onClick={RedirectOnPersonalInfoPage}>Checkout</Button>
-            </div>
-        </div>
     );
 }
 

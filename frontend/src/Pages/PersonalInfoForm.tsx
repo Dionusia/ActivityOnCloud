@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Formik, Form } from 'formik';
 import { Button, Label, TextInput, CustomFlowbiteTheme, Flowbite } from 'flowbite-react';
 import instance from '../AxiosConfig';
 import * as Yup from 'yup';
+import ActivityContext from '../ActivityContext';
 
 
 
 const PersonalInfoForm = () => {
-
-    
+    const selectedOption = useContext(ActivityContext);
+    console.log(selectedOption);
 
     return (
         <div>
