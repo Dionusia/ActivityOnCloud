@@ -39,8 +39,8 @@ const BookingEngine: React.FC = () => {
     }, [timeSlots]);
 
     const createActivityInfoComponent = (availableOptionsList: ActivityOption[], renderKey: number, selectedPerson: number, formattedDate: string, pricePerPerson: number[]) => {
-        console.log(availableOptionsList);
-        console.log(timeSlots);
+        // console.log(availableOptionsList);
+        // console.log(timeSlots);
         
         return availableOptionsList.map((option,index) => {
 
@@ -77,9 +77,9 @@ const BookingEngine: React.FC = () => {
     }
 
     return (
-            <div className=" flex flex-col space-y-4 items-center">
+            <div className="h-screen flex flex-col space-y-4 items-center">
                 <FilterComponents setTimeSlots={setTimeSlots} selectedPerson={selectedPerson} setSelectedPerson={setSelectedPerson} setFormattedDate={setFormattedDate} setPricePerPerson={setPricePerPerson}/>
-                <div className="flex flex-col items-center space-y-6 w-4/5 max-w-96">
+                <div className="flex flex-col items-center space-y-6 w-4/5 max-w-96 overflow-y-auto">
                     {   
                         createActivityInfoComponent(availableOptionsList, renderKey, selectedPerson as number, formattedDate, pricePerPerson)        
                     }
