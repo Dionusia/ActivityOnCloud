@@ -66,6 +66,7 @@ export interface TimeSlots {
 export interface DatePickProps {
     onDateChange: (date: Date | null) => void;
     selectedDate: Date | null;
+    setSelectedDate: React.Dispatch<React.SetStateAction<Date | null>>;
 }
 
 export interface FilterComponentsProps {
@@ -80,6 +81,7 @@ export interface FilterComponentsProps {
 export interface PersonPickerProps {
     onPersonChange: (num: number | null) => void;
     selectedPerson: number | null;
+    setSelectedPerson: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
 export interface SearchButtonProps {

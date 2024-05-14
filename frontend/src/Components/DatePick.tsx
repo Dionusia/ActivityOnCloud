@@ -1,19 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaCalendarAlt } from "react-icons/fa";
 import { DatePickProps } from "../InterfacesAndTypes/Interfaces";
 
-const DatePick: React.FC<DatePickProps> = ({ onDateChange, selectedDate }) => {
+const DatePick: React.FC<DatePickProps> = ({ onDateChange, selectedDate, setSelectedDate }) => {
  
   const handleDateChange = (date: Date | null) => {
     onDateChange(date);
   };
 
+  useEffect(() => {
+    setSelectedDate(new Date());
+  }, []);
+
   return (
     <div className="relative flex">
       <DatePicker
-        selected={selectedDate}
+        selected={selectedDate }
         onChange={handleDateChange}
         className="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customGreen focus:border-customGreen block w-full pl-8 p-2.5"
         popperClassName=" rounded-lg shadow-lg bg-white"

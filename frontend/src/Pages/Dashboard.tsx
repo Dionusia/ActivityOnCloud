@@ -69,12 +69,17 @@ const Dashboard: React.FC = () => {
       <h1 className="flex-grow text-center my-6 py-2 px-4 shadow-md rounded">
         Dashboard
       </h1>
-      <div className="text-center">
+      <div className="flex flex-col justify-center text-center ">
         Bookings
         <SearchByName booking={bookingsList} />
         <br />
         Activities
-        <ActivityOptionTable activityOption={activityOpts} />
+        <div className="mt-4">
+          <ActivityOptionTable activityOption={activityOpts} />
+        </div>
+          
+  
+        
       </div>
     </div>
   );
