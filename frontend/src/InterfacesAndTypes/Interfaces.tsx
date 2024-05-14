@@ -17,13 +17,6 @@ export interface ActivityOption {
     imageUrl: string;
 }
 
-export interface ButtonProp {
-    text: string;
-    onClick: (activity: ActivityOption, userInputArgs: ExtendedUserInputArgs) => void;
-    activity: ActivityOption;
-    userInputArgs: ExtendedUserInputArgs;
-    
-}
 // μπορει να μπορουν να γινουν 1 interface (1)
 export interface ActivityOptionTitleProp {
     text: string;

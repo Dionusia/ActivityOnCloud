@@ -3,8 +3,7 @@ import '../index.css';
 import instance from "../AxiosConfig";
 import {   
         ActivityOption,
-        ExtendedUserInputArgs, 
-        ButtonProp, 
+        ExtendedUserInputArgs,  
         ActivityOptionTitleProp,
         ActivityOptionDescriptionProp,
         TimePickerProp,
@@ -35,16 +34,6 @@ const handleBookClick = (activity: ActivityOption, selectedInfoFinal: ExtendedUs
 }
 
 //#region child components
-const Button: React.FC<ButtonProp> = ({ text, onClick, activity, userInputArgs }) => {
-    return (
-        <button 
-            onClick={() => onClick(activity, userInputArgs)}
-            className={"px-6 py-2.5 text-15 text-white rounded-lg font-medium bg-customGreen hover:bg-customHoverGreen"}
-        >
-            {text}
-        </button>
-    )
-}
 
 const ActivityOptionTitle: React.FC<ActivityOptionTitleProp> = ({ text }) => {
     return (
@@ -87,7 +76,7 @@ const TimePicker: React.FC<TimePickerProp> = ({ timeList, selectedTime, setSelec
         }
     }
     return(
-        <div className="flex max-w-4/5 space-x-2">
+        <div className="flex max-w-4/5 space-x-2 ">
             <button onClick={handlePrev} className="rounded hover:bg-black-400">
                 <FontAwesomeIcon icon={faChevronLeft} />
             </button>
