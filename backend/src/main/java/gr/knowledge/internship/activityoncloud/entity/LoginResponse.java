@@ -10,6 +10,6 @@ import lombok.Setter;
 @Setter
 @Getter
 public class LoginResponse {
-    private String token;
-    private Long expiresIn;
+	private String token;
+	private Long expiresIn;
 }

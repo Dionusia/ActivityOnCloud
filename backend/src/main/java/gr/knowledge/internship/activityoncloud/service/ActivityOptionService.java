@@ -53,13 +53,13 @@ public class ActivityOptionService {
 		activityOptionRepository.deleteById(id);
 	}
 
-    private ActivityOption existsInDatabase(ActivityOptionDTO activityOptionDTO) {
-        ActivityOption activityInDatabase = activityOptionRepository.findById(activityOptionDTO.getId())
-                .orElseThrow(EntityNotFoundException::new);
-        return activityInDatabase;
-    }
+	private ActivityOption existsInDatabase(ActivityOptionDTO activityOptionDTO) {
+		ActivityOption activityInDatabase = activityOptionRepository.findById(activityOptionDTO.getId())
+				.orElseThrow(EntityNotFoundException::new);
+		return activityInDatabase;
+	}
 
-    public List<ActivityOptionDTO> getActivityOptionsOfAdmin(Long adminId) {
-        return activityOptionMapper.toDTOList(activityOptionRepository.findByActivityAdminId(adminId));
-    }
+	public List<ActivityOptionDTO> getActivityOptionsOfAdmin(Long adminId) {
+		return activityOptionMapper.toDTOList(activityOptionRepository.findByActivityAdminId(adminId));
+	}
 }
