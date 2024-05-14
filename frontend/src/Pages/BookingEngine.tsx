@@ -1,6 +1,6 @@
 import React, { useContext, useDebugValue, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ActivityInfoParent from "../Components/ActivityOptionInfo";
+import ActivityOptionInfo from "../Components/ActivityOptionInfo";
 import FilterComponents from "../Components/FilterCriteria";
 import instance from "../AxiosConfig";
 import { ActivityOption, UserInputArgs, TimeSlots} from "../InterfacesAndTypes/Interfaces";
@@ -24,7 +24,7 @@ const BookingEngine: React.FC = () => {
     };
 
     useEffect(() => {
-        instance.get('/activity-option')
+        instance.get('/activity-option/of-admin?adminId=1')
             .then(response => {
                 // console.log(response.data);
                 setAvailableOptionsList(response.data);                
@@ -39,10 +39,16 @@ const BookingEngine: React.FC = () => {
     }, [timeSlots]);
 
     const createActivityInfoComponent = (availableOptionsList: ActivityOption[], renderKey: number, selectedPerson: number, formattedDate: string, pricePerPerson: number[]) => {
-        return availableOptionsList.map((option, index) => {
+        console.log(availableOptionsList);
+        console.log(timeSlots);
         
-            const availableOption = availableOptionsList.find(a => a.id === parseInt(Object.keys(timeSlots)[index]));
+        return availableOptionsList.map((option,index) => {
 
+            const timeSlotsKeys = Object.keys(timeSlots);
+            //
+            const availableOption = availableOptionsList.find(option => option.id === parseInt(timeSlotsKeys[index]));
+            // console.log("This is the available option", availableOption);
+            
             const UserInputArgs: UserInputArgs = {
                 selectedPerson: selectedPerson,
                 selectedDate: formattedDate,
@@ -55,9 +61,9 @@ const BookingEngine: React.FC = () => {
             return (
                 <div key={`${index}-${renderKey}`} 
                     className={`w-full ${activityContext.selectedOption && activityContext.selectedOption.id === option.id ? 'border-2 border-black rounded-lg' : ''}`} 
-                                onClick={() => activityContext.setSelectedOption(option)}>
+                                onClick={() => activityContext.setSelectedOption(availableOption)}>
                     {Object.keys(timeSlots).length > 0 &&
-                        <ActivityInfoParent
+                        <ActivityOptionInfo
                             activity={availableOption}
                             timeSlot={timeSlots[Object.keys(timeSlots)[index]]}
                             userInputArgs={UserInputArgs}
