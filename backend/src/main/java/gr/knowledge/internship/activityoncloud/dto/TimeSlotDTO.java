@@ -24,4 +24,12 @@ public class TimeSlotDTO implements Serializable {
 			this.setRemainingCapacity(this.getRemainingCapacity() - booking.getPersons());
 		}
 	}
+
+	public static TimeSlotDTO from(ActivityOptionDTO option, LocalDateTime start, List<BookingDTO> bookingsList) {
+		TimeSlotDTO timeslot = new TimeSlotDTO();
+		timeslot.setStart(start);
+		timeslot.setEnd(start.plus(option.getDuration()));
+		timeslot.generateCapacity(bookingsList, option.getCapacity());
+		return timeslot;
+	}
 }

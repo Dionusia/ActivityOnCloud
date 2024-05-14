@@ -55,4 +55,9 @@ public class BookingService {
 				.orElseThrow(EntityNotFoundException::new);
 		return bookingInDatabase;
 	}
+
+	public List<BookingDTO> getBookingsOfAdmin(Long adminId) {
+		List<Booking> bookingsOfAdmin = bookingRepository.findByActivityAdminId(adminId);
+		return bookingMapper.toDTOList(bookingsOfAdmin);
+	}
 }

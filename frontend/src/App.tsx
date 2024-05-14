@@ -1,28 +1,34 @@
-import React from "react";
-import Dashboard from "./Pages/Dashboard";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import BookingEngine from "./Pages/BookingEngine";
-import PersonalInfoForm from "./Pages/PersonalInfoForm";
-import ActivityCreation from "./Pages/ActivityCreation";
+import React, {useState} from 'react';
+import Dashboard from './Pages/Dashboard';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import BookingEngine from './Pages/BookingEngine';
+import PersonalInfoForm from './Pages/PersonalInfoForm';
+import {ActivityOption, ExtendedUserInputArgs} from './InterfacesAndTypes/Interfaces';
+import ActivityContext from './ActivityContext';
+
 
 const App: React.FC = () => {
+  const [selectedOption, setSelectedOption] = useState<ActivityOption | null>(null);  
+  const [selectedInfoFinal, setSelectedInfoFinal] = useState<ExtendedUserInputArgs | null>(null);
   return (
-    <div>
-      <Router>
-        <Routes>
-          <Route path="/dashboard" element={<Dashboard />}></Route>
+    <ActivityContext.Provider value={{selectedOption, setSelectedOption, selectedInfoFinal, setSelectedInfoFinal}}>
+      {
+        <div>
+          <Router>
+          <Routes>
+            <Route path="/dashboard" element ={<Dashboard />}>
+            </Route>
 
-          <Route path="/booking-engine" element={<BookingEngine />}></Route>
+            <Route path="/booking-engine" element ={<BookingEngine />}>
+            </Route>
 
-          <Route path="/personal-info" element={<PersonalInfoForm />}></Route>
-
-          <Route
-            path="/activity-creation"
-            element={<ActivityCreation />}
-          ></Route>
-        </Routes>
-      </Router>
-    </div>
+            <Route path="/personal-info" element ={<PersonalInfoForm />}>
+            </Route>
+          </Routes>
+        </Router>
+        </div> 
+      }
+    </ActivityContext.Provider>
   );
 };
 

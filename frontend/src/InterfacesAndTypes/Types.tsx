@@ -1,9 +1,3 @@
-export type Duration = {
-  durationDays: number;
-  durationHours: number;
-  durationMinutes: number;
-};
-
 export type TimeSlot = {
   start: string;
   end: string;
@@ -19,7 +13,8 @@ export type Booking = {
   timeframe: string;
   pricePayed: string;
 };
-export type ActivityOption = {
+
+export type Option = {
   activityName: string;
   activityDescription: string;
   activityDuration: String;
@@ -32,5 +27,5 @@ export type Props = {
 };
 
 export type ActivityOptionProps = {
-  activityOption: ActivityOption[];
+  activityOption: Option[];
 };
