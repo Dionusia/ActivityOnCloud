@@ -13,7 +13,8 @@ export type Booking = {
   timeframe: string;
   pricePayed: string;
 };
-export type ActivityOption = {
+
+export type Option = {
   activityName: string;
   activityDescription: string;
   activityDuration: String;
@@ -26,5 +27,5 @@ export type Props = {
 };
 
 export type ActivityOptionProps = {
-  activityOption: ActivityOption[];
+  activityOption: Option[];
 };

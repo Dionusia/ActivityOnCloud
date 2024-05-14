@@ -85,4 +85,10 @@ export interface PersonPickerProps {
 export interface SearchButtonProps {
     onSearch: () => void;
 }
-  
+
+export interface ActivityContextProps {
+    selectedOption: ActivityOption | null;
+    setSelectedOption: (option: ActivityOption | null) => void;
+    selectedInfoFinal: ExtendedUserInputArgs | null;
+    setSelectedInfoFinal: (info: ExtendedUserInputArgs | null) => void;
+}

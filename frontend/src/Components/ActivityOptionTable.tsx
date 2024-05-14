@@ -3,6 +3,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { ActivityOptionProps, Props } from "../InterfacesAndTypes/Types";
 
+
 const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
@@ -31,7 +32,7 @@ const ActivityOptionCards: React.FC<ActivityOptionProps> = ({
               <img
                 className="object-cover h-32 w-full"
                 src={activityItem.activityImageUrl}
-                alt={activityItem.activityName}
+                alt={activityItem.activityImageUrl}
               />
               <h2 className="font-medium mb-2">{activityItem.activityName}</h2>
               <p className="mb-2">{activityItem.activityDescription}</p>
@@ -44,5 +45,6 @@ const ActivityOptionCards: React.FC<ActivityOptionProps> = ({
     </div>
   );
 };
+
 
 export default ActivityOptionCards;
