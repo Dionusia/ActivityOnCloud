@@ -110,13 +110,13 @@ const TimePicker: React.FC<TimePickerProp> = ({ timeList, selectedTime, setSelec
 }
 //#endregion
 
-const ActivityInfoParent: React.FC<ActivityOptionInfoParentProps> = ({activity, timeSlot, userInputArgs, pricePerPerson}) => {
-    const timeList = timeSlot.map(timeSlot => timeSlot.start.slice(0, -3));
+const ActivityOptionInfo: React.FC<ActivityOptionInfoParentProps> = ({activity, timeSlot, userInputArgs, pricePerPerson}) => {
+    const timeList = timeSlot ? timeSlot.map(timeSlot => timeSlot.start.slice(0, -3)):[];
     const [selectedTime, setSelectedTime] = useState(timeList[0]);
     const activityContext = React.useContext(ActivityContext);
     
     useEffect(() => {
-        const selectedInfoFinal: ExtendedUserInputArgs = {
+        const selectedInfoFinal: ExtendedUserInputArgs = {  // user selected info and total price for the activity
             selectedPerson: userInputArgs.selectedPerson,
             selectedDate: userInputArgs.selectedDate,
             selectedTime: selectedTime,
@@ -156,4 +156,4 @@ const ActivityInfoParent: React.FC<ActivityOptionInfoParentProps> = ({activity, 
     )
 }
 
-export default ActivityInfoParent;
+export default ActivityOptionInfo;
