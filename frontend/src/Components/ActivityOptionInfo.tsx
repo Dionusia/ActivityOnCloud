@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import '../index.css';
 import instance from "../AxiosConfig";
 import {   
@@ -12,6 +12,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { Card } from "flowbite-react";
+import ActivityContext from "../ActivityContext";
 
 const handleBookClick = (activity: ActivityOption, selectedInfoFinal: ExtendedUserInputArgs) => {
 
@@ -112,14 +113,19 @@ const TimePicker: React.FC<TimePickerProp> = ({ timeList, selectedTime, setSelec
 const ActivityInfoParent: React.FC<ActivityOptionInfoParentProps> = ({activity, timeSlot, userInputArgs, pricePerPerson}) => {
     const timeList = timeSlot.map(timeSlot => timeSlot.start.slice(0, -3));
     const [selectedTime, setSelectedTime] = useState(timeList[0]);
-
-    const selectedInfoFinal: ExtendedUserInputArgs = {
-        selectedPerson: userInputArgs.selectedPerson,
-        selectedDate: userInputArgs.selectedDate,
-        selectedTime: selectedTime,
-        price: pricePerPerson * userInputArgs.selectedPerson,
-    };
-
+    const activityContext = React.useContext(ActivityContext);
+    
+    useEffect(() => {
+        const selectedInfoFinal: ExtendedUserInputArgs = {
+            selectedPerson: userInputArgs.selectedPerson,
+            selectedDate: userInputArgs.selectedDate,
+            selectedTime: selectedTime,
+            price: pricePerPerson * userInputArgs.selectedPerson,
+        };
+        console.log("Info: "+ selectedInfoFinal.selectedTime, selectedInfoFinal.price, selectedInfoFinal.selectedPerson, selectedInfoFinal.selectedDate);
+        activityContext.setSelectedInfoFinal(selectedInfoFinal);
+        
+    },[selectedTime, userInputArgs.selectedPerson, userInputArgs.selectedDate, pricePerPerson]);
     return (
         <Card 
         className="hover:shadow-lg"
