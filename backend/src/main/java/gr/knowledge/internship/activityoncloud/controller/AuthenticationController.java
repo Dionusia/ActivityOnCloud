@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import gr.knowledge.internship.activityoncloud.dto.LoginResponseDTO;
 import gr.knowledge.internship.activityoncloud.dto.LoginUserDTO;
 import gr.knowledge.internship.activityoncloud.dto.RegisterUserDTO;
-import gr.knowledge.internship.activityoncloud.entity.LoginResponse;
 import gr.knowledge.internship.activityoncloud.entity.User;
 import gr.knowledge.internship.activityoncloud.service.AuthenticationService;
 import gr.knowledge.internship.activityoncloud.service.JwtService;
@@ -16,7 +16,6 @@ import lombok.extern.log4j.Log4j2;
 
 @RequestMapping(value = "/auth")
 @RestController
-@Log4j2
 public class AuthenticationController {
 	private final JwtService jwtService;
 
@@ -34,11 +33,10 @@ public class AuthenticationController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDTO loginUserDTO) {
+	public ResponseEntity<LoginResponseDTO> authenticate(@RequestBody LoginUserDTO loginUserDTO) {
 		User authenticatedUser = authenticationService.authenticate(loginUserDTO);
-		log.debug("dfcds");
 		String jwtToken = jwtService.generateToken(authenticatedUser);
-		LoginResponse loginResponse = new LoginResponse(jwtToken, jwtService.getExpirationTime());
+		LoginResponseDTO loginResponse = new LoginResponseDTO(jwtToken, jwtService.getExpirationTime());
 		return ResponseEntity.ok(loginResponse);
 	}
 }
