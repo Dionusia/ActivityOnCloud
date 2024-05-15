@@ -1,24 +1,79 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Button, TextInput } from "flowbite-react";
 import PersonPicker from "../Components/PersonPicker";
 import { PersonPickerProps } from "../InterfacesAndTypes/Interfaces";
+import instance from "../AxiosConfig";
+import { Category } from "../InterfacesAndTypes/Types";
+import { number } from "yup";
 
 const ActivityCreation: React.FC = () => {
-  const [selectedPerson, setSelectedPerson] = useState<number | null>(null);
+  const [categories, setCategories] = useState<Category[]>([]);
 
-  const onPersonChange = (num: number | null) => {
-    setSelectedPerson(num);
-  };
+  useEffect(() => {
+    instance
+      .get("/activity")
+      .then((response) => {
+        setCategories(response.data);
+      })
+      .catch((error) => {
+        console.error(
+          "There was an error retrieving the activities array" + error
+        );
+      });
+  }, []);
+
   return (
     <div className="flex justify-center w-8/10">
       <Formik
-        initialValues={{ name: "", surname: "", email: "", phone: "" }}
+        initialValues={{
+          title: "",
+          category: "",
+          description: "",
+          price: "",
+          duration: "",
+          capacity: "",
+          photo: "",
+        }}
         onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
+          const selectedCategory = categories.find(
+            (category) => category.id === Number(values.category)
+          );
+
+          if (!selectedCategory) {
+            console.error("No category found with id:", values.category);
+            return;
+          }
+
+          const data = {
+            name: values.title,
+            description: values.description,
+            duration: "01:24",
+            capacity: values.capacity,
+            activity: {
+              id: selectedCategory.id,
+              name: selectedCategory.name,
+              admin: {
+                id: selectedCategory.adminId,
+              },
+            },
+            pricePerPerson: values.price,
+            imageUrl: null,
+          };
+
+          instance
+            .post("/activity-option/save", data)
+            .then((response) => {
+              alert("Data submitted successfully");
+              setSubmitting(false);
+            })
+            .catch((error) => {
+              console.error(
+                "There was an error submitting the form: ",
+                error.response ? error.response.data : error
+              );
+              setSubmitting(false);
+            });
         }}
       >
         {({ isSubmitting }) => (
@@ -27,7 +82,7 @@ const ActivityCreation: React.FC = () => {
               <Field
                 className="flex-1 m-2  rounded-lg focus:ring-customGreen focus:border-customGreen"
                 type="text"
-                name="name"
+                name="title"
                 placeholder="Title"
               />
 
@@ -37,9 +92,12 @@ const ActivityCreation: React.FC = () => {
                 className="flex-1 m-2 rounded-lg focus:ring-customGreen focus:border-customGreen"
               >
                 <option value="">Category</option>
-                <option value="category1">WaterSports</option>
-                <option value="category2">MountainBike</option>
-                <option value="category3">Yoga</option>
+
+                {categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
               </Field>
             </div>
 

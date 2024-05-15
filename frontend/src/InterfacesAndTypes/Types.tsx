@@ -22,10 +22,19 @@ export type Option = {
   activityImageUrl: string;
 };
 
+export type Category = {
+  id: number;
+  name: string;
+  adminId: number;
+};
 export type Props = {
   booking: Booking[];
 };
 
 export type ActivityOptionProps = {
   activityOption: Option[];
+};
+
+export type CategoryProps = {
+  category: Category[];
 };
