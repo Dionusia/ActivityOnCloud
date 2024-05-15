@@ -77,9 +77,9 @@ const BookingEngine: React.FC = () => {
     }
 
     return (
-            <div className="h-screen flex flex-col space-y-4 items-center">
+            <div className=" flex flex-col space-y-4 items-center">
                 <FilterComponents setTimeSlots={setTimeSlots} selectedPerson={selectedPerson} setSelectedPerson={setSelectedPerson} setFormattedDate={setFormattedDate} setPricePerPerson={setPricePerPerson}/>
-                <div className="flex flex-col items-center space-y-6 w-4/5 max-w-96 overflow-y-auto">
+                <div className="flex flex-col items-center space-y-6 w-4/5 max-w-96 overflow-auto">
                     {   
                         createActivityInfoComponent(availableOptionsList, renderKey, selectedPerson as number, formattedDate, pricePerPerson)        
                     }
