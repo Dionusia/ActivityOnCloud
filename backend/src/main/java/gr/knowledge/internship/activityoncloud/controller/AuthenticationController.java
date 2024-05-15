@@ -12,7 +12,6 @@ import gr.knowledge.internship.activityoncloud.dto.RegisterUserDTO;
 import gr.knowledge.internship.activityoncloud.entity.User;
 import gr.knowledge.internship.activityoncloud.service.AuthenticationService;
 import gr.knowledge.internship.activityoncloud.service.JwtService;
-import lombok.extern.log4j.Log4j2;
 
 @RequestMapping(value = "/auth")
 @RestController
