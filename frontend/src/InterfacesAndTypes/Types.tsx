@@ -29,3 +29,8 @@ export type Props = {
 export type ActivityOptionProps = {
   activityOption: Option[];
 };
+
+export type AvailabilityInfoList = {
+  pricePerPerson: number;
+  timeslots: TimeSlot[];
+};

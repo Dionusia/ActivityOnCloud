@@ -4,11 +4,12 @@ import PersonPicker from "./PersonPicker";
 import SearchButton from "./SearchButton";
 import instance from "../AxiosConfig";
 import { FilterComponentsProps } from "../InterfacesAndTypes/Interfaces";
-import { TimeSlots } from "../InterfacesAndTypes/Interfaces";
+import { TimeSlotsResponse } from "../InterfacesAndTypes/Interfaces";
 import { TimeSlot } from "../InterfacesAndTypes/Types";
 
 const FilterComponents: React.FC<FilterComponentsProps> = ({
-  setTimeSlots,
+  onSearchButtonClick,
+  setTimeSlotsResponse,
   selectedPerson,
   setSelectedPerson,
   setFormattedDate,
@@ -62,32 +63,17 @@ const FilterComponents: React.FC<FilterComponentsProps> = ({
         },
       })
       .then((response) => {
-        console.log("Time slots:", response.data);
-        let pricePerPersonArr: number[] = [];
-        const modifiedResponseData = Object.keys(response.data).reduce(
-          (acc, key) => {
-            // console.log(response.data[key]);
-            pricePerPersonArr.push(response.data[key].pricePerPerson);
-            acc[key] = response.data[key].timeslots.map((timeSlot: TimeSlot) => ({
-              ...timeSlot,
-              start: timeSlot.start.split("T")[1],
-              end: timeSlot.end.split("T")[1],
-            }));
-            return acc;
-          },
-          {} as TimeSlots
-        );
-        // console.log(modifiedResponseData);
-        // console.log("Price per person:", response.data.pricePerPerson); 
-        setPricePerPerson(pricePerPersonArr);
-        setTimeSlots(modifiedResponseData);
+        console.log("Request response for TimeSlots:", response.data);
+        setTimeSlotsResponse(response.data);
       })
       .catch((error) => {
         console.log(error + ": Get time slots error");
       });
+
+      onSearchButtonClick(); //moved the Card creation on Button search click
   };
   return (
-    <form className="flex flex-col items-center justify-center mt-8">
+    <form className="flex flex-col items-center justify-center  mt-8">
       <div className="flex space-x-4 items-center mx-5">
         <DatePicker
           selectedDate={selectedDate}

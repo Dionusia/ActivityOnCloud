@@ -3,18 +3,22 @@ import { useNavigate } from "react-router-dom";
 import ActivityOptionInfo from "../Components/ActivityOptionInfo";
 import FilterComponents from "../Components/FilterCriteria";
 import instance from "../AxiosConfig";
-import { ActivityOption, UserInputArgs, TimeSlots} from "../InterfacesAndTypes/Interfaces";
+import { ActivityOption, OptionToBeRendered, TimeSlotsResponse, UserInputArgs, } from "../InterfacesAndTypes/Interfaces";
 import { Button } from "flowbite-react";
 import ActivityContext from "../ActivityContext";
 
+
+//για καποιο λογο καλειτε 2 φορεσ το component
 const BookingEngine: React.FC = () => {
     //#region states
     const [availableOptionsList, setAvailableOptionsList] = useState<ActivityOption[]>([]);
-    const [timeSlots, setTimeSlots] = useState<TimeSlots>({});
+    const [timeSlotsResponseList, setTimeSlotsResponseList] = useState<TimeSlotsResponse[]>([]);
     const [renderKey, setRenderKey] = useState(0);
     const [selectedPerson, setSelectedPerson] = useState<number | null>(null);
     const [formattedDate, setFormattedDate] = useState<string>("");
     const [pricePerPerson, setPricePerPerson] = useState<number[]>([]);
+    const [optionsToBeRendered, setOptionsToBeRendered] = useState<OptionToBeRendered[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
     //#endregion
 
     const activityContext = useContext(ActivityContext);
@@ -35,60 +39,69 @@ const BookingEngine: React.FC = () => {
     },[]); 
 
     useEffect(() => {
-        setRenderKey(prevKey => prevKey + 1);
-    }, [timeSlots]);
+        // This code will run whenever optionsToBeRendered changes
+        console.log("optionsToBeRendered outside function: ", optionsToBeRendered);
+        setIsLoading(false);
+        console.log(isLoading);
+      }, [optionsToBeRendered]);
 
-    const createActivityInfoComponent = (availableOptionsList: ActivityOption[], renderKey: number, selectedPerson: number, formattedDate: string, pricePerPerson: number[]) => {
-        // console.log(availableOptionsList);
-        console.log(timeSlots);
+
+     const createActivityInfoComponent = (availableOptionsList: ActivityOption[],optionsToBeRendered: OptionToBeRendered[], setOptionsToBeRendered:React.Dispatch<React.SetStateAction<OptionToBeRendered[]>>) => {
+        //console.log(availableOptionsList);
+        //console.log("timeSplotsResponse: ",timeSlotsResponseList);
+        setOptionsToBeRendered([]);
+        let newOptions = [];
+        newOptions = [...optionsToBeRendered];
         
-        return availableOptionsList.map((option,index) => {
-
-            const timeSlotsKeys = Object.keys(timeSlots);
-            //
-            const availableOption = availableOptionsList.find(option => option.id === parseInt(timeSlotsKeys[index]));
-            // console.log("This is the available option", availableOption);
-            
-            const UserInputArgs: UserInputArgs = {
-                selectedPerson: selectedPerson,
-                selectedDate: formattedDate,
-            };
-            //console.log("Date in component is: "+formattedDate);
-            
-            if (!availableOption) {
-                return null;
+        for (let i = 0; i < availableOptionsList.length; i++) {
+            for(let j = 0; j< timeSlotsResponseList.length; j++) {
+                if( availableOptionsList[i].id == timeSlotsResponseList[j].optionId) {
+                   newOptions.push({activityOption: availableOptionsList[i], availabilityInfoList: timeSlotsResponseList[j].availabilityInfoList});
+                }
             }
-            return (
-                <div key={`${index}-${renderKey}`} 
-                    className={`w-full ${activityContext.selectedOption && activityContext.selectedOption.id === option.id ? 'border-2 border-black rounded-lg' : ''}`} 
-                                onClick={() => activityContext.setSelectedOption(availableOption)}>
-                    {Object.keys(timeSlots).length > 0 &&
-                        <ActivityOptionInfo
-                            activity={availableOption}
-                            timeSlot={timeSlots[Object.keys(timeSlots)[index]]}
-                            userInputArgs={UserInputArgs}
-                            pricePerPerson={pricePerPerson[index]}
-                        />
-                    }
-                    
-                </div>
-            )
-            })
+        }
+        setOptionsToBeRendered(newOptions);
+        console.log("optionsToBeRendered in function: ", optionsToBeRendered);
+          
+         
     }
-
-    return (
-            <div className=" flex flex-col space-y-4 items-center">
-                <FilterComponents setTimeSlots={setTimeSlots} selectedPerson={selectedPerson} setSelectedPerson={setSelectedPerson} setFormattedDate={setFormattedDate} setPricePerPerson={setPricePerPerson}/>
-                <div className="flex flex-col items-center space-y-6 w-4/5 max-w-96 overflow-auto">
-                    {   
-                        createActivityInfoComponent(availableOptionsList, renderKey, selectedPerson as number, formattedDate, pricePerPerson)        
+        return (
+            <div className=" flex flex-col items-center w-screen h-screen">
+                <div className="fixed flex justify-center h-1/20 shadow-md pb-2">
+                    <FilterComponents 
+                        onSearchButtonClick={() => createActivityInfoComponent(availableOptionsList, optionsToBeRendered, setOptionsToBeRendered)} 
+                        setTimeSlotsResponse={setTimeSlotsResponseList} 
+                        selectedPerson={selectedPerson} 
+                        setSelectedPerson={setSelectedPerson} 
+                        setFormattedDate={setFormattedDate} 
+                        setPricePerPerson={setPricePerPerson}/>
+                </div>
+                <div className="flex flex-col items-center space-y-6 my-24 w-11/12 max-w-screen overflow-y-auto">
+                    { 
+                        
+                        optionsToBeRendered.map((option, index) => {
+                            console.log(option.availabilityInfoList.timeslots);
+                            return(
+                            <ActivityOptionInfo 
+                                key={index} 
+                                activity={option.activityOption} 
+                                userInputArgs={{selectedPerson: selectedPerson as number, selectedDate: formattedDate}}
+                                pricePerPerson={option.availabilityInfoList.pricePerPerson}
+                                timeSlot={option.availabilityInfoList.timeslots}
+                            />
+                        )})
                     }
                 </div>
-                <div className='flex justify-center fixed bottom-4 mb-4'>
-                    <Button type="submit" className="bg-customGreen text-white" onClick={RedirectOnPersonalInfoPage}>Checkout</Button>
+
+                <div className=' flex mb-0 w-screen shadow-md justify-center fixed bottom-0'
+                style={{boxShadow: '0 -4px 6px -1px rgba(0, 0, 0, 0.1), 0 -2px 4px -1px rgba(0, 0, 0, 0.06)'}}>
+                    <Button type="submit" className="bg-customGreen text-white my-4 " onClick={RedirectOnPersonalInfoPage}>Checkout</Button>
                 </div>
+                   
+    
             </div>
-    );
+    
+        );
 }
 
 export default BookingEngine;
