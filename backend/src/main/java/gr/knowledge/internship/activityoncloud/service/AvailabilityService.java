@@ -6,11 +6,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
+import gr.knowledge.internship.activityoncloud.helper.AvailabileTimeSlotsMapHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -77,9 +76,9 @@ public class AvailabilityService {
 	}
 
 	@Transactional(readOnly = true)
-	public Map<Long, AvailabilityInfoDTO> findAvailableOptionsWithSlots(LocalDate date, long activityId) {
-		List<AvailabilityDTO> availableOptionsByDayList = new ArrayList<>();
-		Map<Long, AvailabilityInfoDTO> activityTimeslots = new HashMap<>();
+	public List<AvailabileTimeSlotsMapHelper> findAvailableOptionsWithSlots(LocalDate date, long activityId) {
+		List<AvailabilityDTO> availableOptionsByDayList = new ArrayList<AvailabilityDTO>();
+		List<AvailabileTimeSlotsMapHelper> activityTimeslots = new ArrayList<AvailabileTimeSlotsMapHelper>();
 		List<BookingDTO> bookingsList = new ArrayList<>();
 		if (holidayService.isHolidayForActivityId(activityId, date)) {
 			return activityTimeslots;
@@ -93,7 +92,7 @@ public class AvailabilityService {
 		for (AvailabilityDTO available : availableOptionsByDayList) {
 			BigDecimal price = this.calculatePriceForOption(available.getOption(), date);
 			List<TimeSlotDTO> timeslotsForOption = this.calculateTimeSlotsForOption(available, bookingsList, date);
-			activityTimeslots.put(available.getOption().getId(), new AvailabilityInfoDTO(price, timeslotsForOption));
+			activityTimeslots.add(new AvailabileTimeSlotsMapHelper(available.getOption().getId(), new AvailabilityInfoDTO(price, timeslotsForOption)));
 		}
 		return activityTimeslots;
 	}
