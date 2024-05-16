@@ -88,15 +88,15 @@ public class AvailabilityService {
 		if (holidayService.isDateHolidayForActivityId(date, activityId)) {
 			return activityTimeslots;
 		}
-		List<AvailabilityDTO> availableOptionsByDay = new ArrayList<>();
+		List<AvailabilityDTO> availableActivityOptionsOfDay = new ArrayList<>();
 		List<BookingDTO> bookingsList = new ArrayList<>();
 		bookingsList = bookingService.getAllBookings();
 		String day = date.getDayOfWeek().toString();
 		day = day.substring(0, 1) + day.substring(1).toLowerCase();
-		availableOptionsByDay = availabilityMapper.toDTOList(availabilityRepository.getByDay(day));
-		availableOptionsByDay = availableOptionsByDay.stream()
+		availableActivityOptionsOfDay = availabilityMapper.toDTOList(availabilityRepository.getByDay(day));
+		availableActivityOptionsOfDay = availableActivityOptionsOfDay.stream()
 				.filter(a -> availableActivityIdEqualsLong.test(a, activityId)).collect(Collectors.toList());
-		for (AvailabilityDTO available : availableOptionsByDay) {
+		for (AvailabilityDTO available : availableActivityOptionsOfDay) {
 			BigDecimal price = this.calculatePriceForOption(available.getOption(), date);
 			List<TimeSlotDTO> timeslotsForOption = this.calculateTimeSlotsForOption(available, bookingsList, date);
 			activityTimeslots.put(available.getOption().getId(), new AvailabilityInfoDTO(price, timeslotsForOption));
@@ -117,9 +117,9 @@ public class AvailabilityService {
 		List<TimeSlotDTO> timeslots = new ArrayList<>();
 		while (currentSlotStart.isBefore(available.getEndTime())) {
 			LocalDateTime currentDatetime = LocalDateTime.of(date, currentSlotStart);
-			List<BookingDTO> filteredBookings = this.getBookingsForCurrent(bookingsList, currentDatetime,
+			List<BookingDTO> bookingsOfCurrentOptionAndDate = this.getBookingsForCurrent(bookingsList, currentDatetime,
 					option.getId());
-			timeslots.add(TimeSlotDTO.from(option, LocalDateTime.of(date, currentSlotStart), filteredBookings));
+			timeslots.add(TimeSlotDTO.from(option, LocalDateTime.of(date, currentSlotStart), bookingsOfCurrentOptionAndDate));
 			currentSlotStart = currentSlotStart.plus(option.getDuration());
 		}
 		return timeslots;

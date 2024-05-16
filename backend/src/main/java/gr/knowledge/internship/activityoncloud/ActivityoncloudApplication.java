@@ -9,7 +9,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 public class ActivityoncloudApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(ActivityoncloudApplication.class, args);
 	}
