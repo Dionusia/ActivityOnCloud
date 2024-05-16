@@ -10,7 +10,7 @@ const adminId = 1;
 
 const Dashboard: React.FC = () => {
   const [bookingsList, setBookingsList] = useState<Booking[]>([]);
-  const [activityOpts, setActivityOptions] = useState<Option[]>([]);
+  const [activityOptions, setActivityOptions] = useState<Option[]>([]);
 
   useEffect(() => {
     instance
@@ -75,7 +75,7 @@ const Dashboard: React.FC = () => {
         <br />
         Activities
         <div className="mt-4">
-          <ActivityOptionTable activityOption={activityOpts} />
+          <ActivityOptionTable activityOption={activityOptions} />
         </div>
           
   
