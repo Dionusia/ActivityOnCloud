@@ -3,13 +3,16 @@ import { Formik, Form, Field, useFormikContext } from "formik";
 import { Button, Modal } from "flowbite-react";
 import instance from "../AxiosConfig";
 import { Category } from "../InterfacesAndTypes/Types";
+import AddCategoryModal from "../Components/AddCategoryModal";
+import CategorySelect from "../Components/CategorySelect";
+import ActivityDetails from "../Components/ActivityDetails";
 
 const ActivityCreation: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [openModal, setOpenModal] = useState(false);
   const [newCategory, setNewCategory] = useState("");
 
-  useEffect(() => {
+useEffect(() => {
     instance
       .get("/activity")
       .then((response) => {
@@ -22,6 +25,18 @@ const ActivityCreation: React.FC = () => {
       });
   }, []);
 
+  {
+    /*
+  useEffect(() => {
+    setCategories([
+      { id: 1, name: "Category 1", adminId: 1 },
+      { id: 2, name: "Category 2", adminId: 1 },
+      { id: 3, name: "Category 3", adminId: 1 },
+      // add more categories as needed
+    ]);
+  }, []);
+*/
+}
   return (
     <div className="flex justify-center w-8/10">
       <Formik
@@ -63,8 +78,9 @@ const ActivityCreation: React.FC = () => {
           instance
             .post("/activity-option/save", data)
             .then((response) => {
+              console.log("Data submitted successfully: ", response);
               alert("Data submitted successfully");
-              setSubmitting(true);
+              setSubmitting(false);
             })
             .catch((error) => {
               console.error(
@@ -85,92 +101,23 @@ const ActivityCreation: React.FC = () => {
                 placeholder="Title"
                 required
               />
-              <Field
-                as="select"
-                name="category"
-                className="flex-1 m-2 rounded-lg focus:ring-customGreen focus:border-customGreen"
-                onChange={(e: any) => {
-                  handleChange(e);
 
-                  if (e.target.value === "Add category") {
-                    setOpenModal(true);
-                  }
-                }}
-                required
-              >
-                <option value="">Categories</option>
+              <CategorySelect
+                handleChange={handleChange}
+                categories={categories}
+                onAddCategory={() => setOpenModal(true)}
+              />
 
-                {categories.map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.name}
-                  </option>
-                ))}
-                <option>Add category</option>
-              </Field>
-              <Modal
+              <AddCategoryModal
                 show={openModal}
                 onClose={() => setOpenModal(false)}
-                className="mx-auto my-auto w-1/2 max-x-lg"
-              >
-                <Modal.Header>Add Category</Modal.Header>
-                <Modal.Body>
-                  <input
-                    type="text"
-                    value={newCategory}
-                    onChange={(e) => setNewCategory(e.target.value)}
-                    className="m-2 flex-1  w-2/3  justify-center shadow-sm focus:ring-customGreen focus:border-customGreen  sm:text-sm border-gray-300 rounded-md"
-                  />
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button
-                    className="w-1/8   flex-1 m-2  bg-customGreen text-white rounded-lg hover:bg-customGreen-dark"
-                    type="button"
-                  >
-                    Save
-                  </Button>
-                  <Button
-                    className="w-1/8   flex-1 m-2  bg-customGreen text-white rounded-lg hover:bg-customGreen-dark"
-                    onClick={() => setOpenModal(false)}
-                  >
-                    Cancel
-                  </Button>
-                </Modal.Footer>
-              </Modal>
+                newCategory={newCategory}
+                setNewCategory={setNewCategory}
+              />
             </div>
 
-            <div className="flex m-2 p-1  ">
-              <Field
-                as="textarea"
-                name="description"
-                placeholder="Description"
-                className="w-1/2 flex-1 m-2 rounded-lg bg-white focus:ring-customGreen focus:border-customGreen"
-                style={{ maxHeight: "140px" }}
-              />
-              <div className="flex flex-col  items-center">
-                <Field
-                  type="number"
-                  name="price"
-                  placeholder="Price"
-                  min="0"
-                  step="0.1"
-                  className=" w-2/3  flex-1 m-2 rounded-lg bg-white h-1/4 focus:ring-customGreen focus:border-customGreen"
-                />
-                <Field
-                  type="text"
-                  name="duration"
-                  placeholder="(HH:MM)"
-                  pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]"
-                  className="w-2/3 flex-1 m-2 rounded-lg bg-white h-1/4 focus:ring-customGreen focus:border-customGreen"
-                  required
-                />
-                <Field
-                  type="number"
-                  name="capacity"
-                  placeholder="People"
-                  className=" w-2/3 flex-1 m-2 rounded-lg bg-white  h-1/4 focus:ring-customGreen focus:border-customGreen"
-                />
-              </div>
-            </div>
+            <ActivityDetails />
+
             <div className="flex flex-col items-center">
               <Field
                 type="file"
