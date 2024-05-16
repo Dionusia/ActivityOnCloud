@@ -24,7 +24,7 @@ const BookingEngine: React.FC = () => {
     };
 
     useEffect(() => {
-        instance.get('/activity-option')
+        instance.get('/activity-option/of-admin?adminId=1')
             .then(response => {
                 // console.log(response.data);
                 setAvailableOptionsList(response.data);                
@@ -42,7 +42,8 @@ const BookingEngine: React.FC = () => {
         return availableOptionsList.map((option, index) => {
         
             const availableOption = availableOptionsList.find(a => a.id === parseInt(Object.keys(timeSlots)[index]));
-
+            //console.log("From availableOption: ",availableOption);
+            //console.log("From Option: ",option);
             const UserInputArgs: UserInputArgs = {
                 selectedPerson: selectedPerson,
                 selectedDate: formattedDate,
@@ -52,6 +53,8 @@ const BookingEngine: React.FC = () => {
             if (!availableOption) {
                 return null;
             }
+            //console.log(activityContext.selectedOption);
+            
             return (
                 <div key={`${index}-${renderKey}`} 
                     className={`w-full ${activityContext.selectedOption && activityContext.selectedOption.id === option.id ? 'border-2 border-black rounded-lg' : ''}`} 
@@ -73,12 +76,12 @@ const BookingEngine: React.FC = () => {
     return (
             <div className=" flex flex-col space-y-4 items-center">
                 <FilterComponents setTimeSlots={setTimeSlots} selectedPerson={selectedPerson} setSelectedPerson={setSelectedPerson} setFormattedDate={setFormattedDate} setPricePerPerson={setPricePerPerson}/>
-                <div className="flex flex-col items-center space-y-6 w-4/5 max-w-96">
+                <div className="flex flex-col items-center space-y-6 w-4/5 max-w-96 mb-4">
                     {   
                         createActivityInfoComponent(availableOptionsList, renderKey, selectedPerson as number, formattedDate, pricePerPerson)        
                     }
                 </div>
-                <div className='flex justify-center fixed bottom-4 mb-4'>
+                <div className='flex justify-center fixed bottom-4 mb-4 mt-4'>
                     <Button type="submit" className="bg-customGreen text-white" onClick={RedirectOnPersonalInfoPage}>Checkout</Button>
                 </div>
             </div>

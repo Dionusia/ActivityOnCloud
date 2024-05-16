@@ -17,6 +17,7 @@ const FilterComponents: React.FC<FilterComponentsProps> = ({
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
   let formattedTempDate = "test";
+  
 
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
@@ -91,12 +92,14 @@ const FilterComponents: React.FC<FilterComponentsProps> = ({
       <div className="flex space-x-4 items-center mx-5">
         <DatePicker
           selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate} 
           onDateChange={handleDateChange}
         />
         {/* TODO check remaining persons whenever the no of people is incremented through the person picker */}
         <PersonPicker
           onPersonChange={handlePersonChange}
-          selectedPerson={selectedPerson} // Pass numberOfPeople instead of selectedPerson
+          selectedPerson={selectedPerson } // Pass numberOfPeople instead of selectedPerson
+          setSelectedPerson={setSelectedPerson}
         />
         <SearchButton onSearch={handleSearch} />
       </div>

@@ -1,51 +1,64 @@
 import React, { useContext } from 'react';
-import { Formik, Form } from 'formik';
+import { useFormik } from 'formik';
 import { Button, Label, TextInput, CustomFlowbiteTheme, Flowbite } from 'flowbite-react';
 import instance from '../AxiosConfig';
 import * as Yup from 'yup';
 import ActivityContext from '../ActivityContext';
+import { ActivityOption, ExtendedUserInputArgs } from '../InterfacesAndTypes/Interfaces';
+import { v4 as uuidv4 } from 'uuid';
 
 
 
 const PersonalInfoForm = () => {
-    const selectedOption = useContext(ActivityContext);
-    console.log(selectedOption);
+    const activityContext = useContext(ActivityContext);
+    console.log(activityContext.selectedOption  , activityContext.selectedInfoFinal);
 
+    const formik = useFormik({
+        initialValues: { firstname: '', surname: '', email: '', phone: '' },
+        validationSchema: Yup.object({
+          firstname: Yup.string().max(32, 'Must be 32 characters or less').required('Required'),
+          surname: Yup.string().max(48, 'Must be 48 characters or less').required('Required'),
+          email: Yup.string().email('Invalid email address').required('Required'),
+        }),
+        onSubmit: (values) => {
+          console.log(values);
+          handleBookClick(activityContext.selectedOption  , activityContext.selectedInfoFinal);
+        },
+      });
+
+    const handleBookClick = (activity: ActivityOption | null, selectedInfoFinal: ExtendedUserInputArgs | null) => {
+        const uuid = uuidv4();
+        if (selectedInfoFinal && activity) {
+            console.log("Info: "+ selectedInfoFinal.selectedTime, selectedInfoFinal.price, selectedInfoFinal.selectedPerson, selectedInfoFinal.selectedDate);
+            instance.post('/booking/save', {
+                uuid: uuid,
+                name: formik.values.firstname,
+                surname: formik.values.surname,
+                email: formik.values.email,
+                phone: formik.values.phone,
+                activityAdmin: {id: activity.activity.admin.id},
+                activityOption:{
+                    id: activity.id,
+                },
+                date: selectedInfoFinal.selectedDate,
+                startTime: selectedInfoFinal.selectedDate+"T"+selectedInfoFinal.selectedTime,
+                persons: selectedInfoFinal.selectedPerson,
+                totalPrice: selectedInfoFinal.price,
+            })
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.error('Submit Booking Error:', error);
+            });
+        }
+    }
+    
+        
     return (
         <div>
         <h1 className="text-center mb-5 shadow-md">Personal Information</h1>
-        
-        <Formik
-            initialValues={{ firstname: '', surname: '', email: '', phone: '' }}
-            validationSchema = {Yup.object({
-                firstname: Yup.string()
-                 .max(32, 'Must be 32 characters or less')
-                 .required('Required'),
-               surname: Yup.string()
-                 .max(48, 'Must be 48 characters or less')
-                 .required('Required'),
-               email: Yup.string().email('Invalid email address').required('Required'),
-                phone: Yup
-                  .string()
-                  .max(13, 'Must be 13 characters or less')
-                  .required('Required')
-                  .matches(/^[0-9]+$/, 'Phone number can only contain numbers'),
-              })}
-            onSubmit={(values, { setSubmitting }) => {
-                instance.post('/booking', values).then((response) => {
-                    console.log(response.data);
-                }).catch((error) => {
-                    console.log(error + ': Post Request Error from Personal Info Page');
-                })
-
-                setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
-                setSubmitting(false);
-                }, 400);
-            }}
-        >
-            {formik => (
-                <Form onSubmit={formik.handleSubmit} className="px-4 flex-col items-center">
+                <form onSubmit={formik.handleSubmit} className="px-4 flex-col items-center">
                     <div className="mb-2 block">
                         <Label htmlFor="firstname" value="Your First Name" />
                         <TextInput type="text" placeholder="first name" {...formik.getFieldProps('firstname')} required  />
@@ -65,9 +78,7 @@ const PersonalInfoForm = () => {
                     <div className='flex justify-center mt-2'>
                         <Button type="submit" className="bg-customGreen text-white">Submit</Button>
                     </div>
-                </Form>
-            )}
-        </Formik>
+                </form>
         </div>
     );
 }
