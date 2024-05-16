@@ -80,8 +80,6 @@ export interface FilterComponentsProps {
     selectedPerson: number | null;
     setSelectedPerson: React.Dispatch<React.SetStateAction<number | null>>;
     setFormattedDate: React.Dispatch<React.SetStateAction<string>>;
-    setPricePerPerson: React.Dispatch<React.SetStateAction<number[]>>;
-    onSearchButtonClick: () => void;
     
 }
 
@@ -100,3 +98,11 @@ export interface ActivityContextProps {
     selectedInfoFinal: ExtendedUserInputArgs | null;
     setSelectedInfoFinal: (info: ExtendedUserInputArgs | null) => void;
 }
+
+export interface BookingEngineListProps {
+    optionsToBeRendered: OptionToBeRendered[];
+    selectedCard: number | null;
+    setSelectedCard: (index: number) => void;
+    selectedPerson: number;
+    formattedDate: string;
+  }

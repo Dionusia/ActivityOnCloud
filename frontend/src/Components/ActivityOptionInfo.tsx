@@ -15,25 +15,6 @@ import { Card } from "flowbite-react";
 import ActivityContext from "../ActivityContext";
 import { date } from "yup";
 
-const handleBookClick = (activity: ActivityOption, selectedInfoFinal: ExtendedUserInputArgs) => {
-
-    console.log("Info: "+ selectedInfoFinal.selectedTime, selectedInfoFinal.price, selectedInfoFinal.selectedPerson, selectedInfoFinal.selectedDate);
-
-    instance.post('/booking/new-booking', {
-        activityId: activity.id,
-        date: selectedInfoFinal.selectedDate,
-        startTime: selectedInfoFinal.selectedTime,
-        persons: selectedInfoFinal.selectedPerson,
-        priceTotal: selectedInfoFinal.price,
-        customerName: 'Mike Mpallas',
-    })
-    .then(response => {
-        console.log(response.data);
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}
 
 //#region child components
 const Button: React.FC<ButtonProp> = ({ text, onClick, activity, userInputArgs }) => {
@@ -131,7 +112,7 @@ const ActivityOptionInfo: React.FC<ActivityOptionInfoParentProps> = ({activity, 
             selectedTime: selectedTime,
             price: pricePerPerson * userInputArgs.selectedPerson,
         };
-        console.log("Info: "+ selectedInfoFinal.selectedTime, selectedInfoFinal.price, selectedInfoFinal.selectedPerson, selectedInfoFinal.selectedDate);
+        console.log("Selected Card Info: "+ selectedInfoFinal.selectedTime, selectedInfoFinal.price, selectedInfoFinal.selectedPerson, selectedInfoFinal.selectedDate);
         activityContext.setSelectedInfoFinal(selectedInfoFinal);
         
     },[selectedTime, userInputArgs.selectedPerson, userInputArgs.selectedDate, pricePerPerson]);

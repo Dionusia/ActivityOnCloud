@@ -4,16 +4,14 @@ import PersonPicker from "./PersonPicker";
 import SearchButton from "./SearchButton";
 import instance from "../AxiosConfig";
 import { FilterComponentsProps } from "../InterfacesAndTypes/Interfaces";
-import { TimeSlotsResponse } from "../InterfacesAndTypes/Interfaces";
-import { TimeSlot } from "../InterfacesAndTypes/Types";
+
 
 const FilterComponents: React.FC<FilterComponentsProps> = ({
-  onSearchButtonClick,
   setTimeSlotsResponse,
   selectedPerson,
   setSelectedPerson,
   setFormattedDate,
-  setPricePerPerson
+
 }) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
@@ -70,7 +68,6 @@ const FilterComponents: React.FC<FilterComponentsProps> = ({
         console.log(error + ": Get time slots error");
       });
 
-      onSearchButtonClick(); //moved the Card creation on Button search click
   };
   return (
     <form className="flex flex-col items-center justify-center  mt-8">
