@@ -11,7 +11,7 @@ const App: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState<ActivityOption | null>(null);  
   const [selectedInfoFinal, setSelectedInfoFinal] = useState<ExtendedUserInputArgs | null>(null);
   return (
-    <ActivityContext.Provider value={{selectedOption, setSelectedOption, selectedInfoFinal, setSelectedInfoFinal}}>
+    <ActivityContext.Provider value={{selectedOption, setSelectedOption, selectedInfoFinal, setSelectedInfoFinal}}> {/*TODO: Future edit remove Dashboard from Context */}
       {
         <div>
           <Router>

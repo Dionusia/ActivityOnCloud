@@ -27,6 +27,7 @@ const BookingEngine: React.FC = () => {
 
     useEffect(() => {
         instance.get('/activity-option/of-admin?adminId=1')
+        instance.get('/activity-option/of-admin?adminId=1')
             .then(response => {
                 //  console.log(response.data);
                 setAvailableOptionsList(response.data);                

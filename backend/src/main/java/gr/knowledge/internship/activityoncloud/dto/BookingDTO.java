@@ -25,5 +25,5 @@ public class BookingDTO implements Serializable {
 	private Integer persons;
 	private BigDecimal totalPrice;
 	private ActivityOptionDTO activityOption;
-	private ActivityAdminDTO activityAdminId;
+	private ActivityAdminDTO activityAdmin;
 }

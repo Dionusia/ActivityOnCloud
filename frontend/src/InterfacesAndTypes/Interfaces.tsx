@@ -17,13 +17,6 @@ export interface ActivityOption {
     imageUrl: string;
 }
 
-export interface ButtonProp {
-    text: string;
-    onClick: (activity: ActivityOption, userInputArgs: ExtendedUserInputArgs) => void;
-    activity: ActivityOption;
-    userInputArgs: ExtendedUserInputArgs;
-    
-}
 // μπορει να μπορουν να γινουν 1 interface (1)
 export interface ActivityOptionTitleProp {
     text: string;
@@ -73,6 +66,7 @@ export interface OptionToBeRendered {
 export interface DatePickProps {
     onDateChange: (date: Date | null) => void;
     selectedDate: Date | null;
+    setSelectedDate: React.Dispatch<React.SetStateAction<Date | null>>;
 }
 
 export interface FilterComponentsProps {
@@ -86,6 +80,7 @@ export interface FilterComponentsProps {
 export interface PersonPickerProps {
     onPersonChange: (num: number | null) => void;
     selectedPerson: number | null;
+    setSelectedPerson: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
 export interface SearchButtonProps {

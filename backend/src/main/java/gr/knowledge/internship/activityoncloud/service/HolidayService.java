@@ -2,6 +2,7 @@ package gr.knowledge.internship.activityoncloud.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.function.BiPredicate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,8 @@ public class HolidayService {
 	private HolidayRepository holidayRepository;
 	@Autowired
 	private HolidayMapper holidayMapper;
+	private static BiPredicate<Holiday, Long> holidayActivityIdEqualsLong = (h, i) -> h.getOption().getActivity()
+			.getId().equals(i);
 
 	@Transactional(readOnly = true)
 	public HolidayDTO getHolidayById(Long id) {
@@ -58,9 +61,8 @@ public class HolidayService {
 	}
 
 	@Transactional(readOnly = true)
-	public boolean isHolidayForActivityId(long activityId, LocalDate date) {
+	public boolean isDateHolidayForActivityId(LocalDate date, long activityId) {
 		List<Holiday> holidaysForActivityId = holidayRepository.getByDate(date);
-		holidaysForActivityId.stream().filter(h -> h.getOption().getActivity().getId().equals(activityId));
-		return holidaysForActivityId.size() > 0;
+		return holidaysForActivityId.stream().anyMatch(h -> holidayActivityIdEqualsLong.test(h, activityId));
 	}
 }
