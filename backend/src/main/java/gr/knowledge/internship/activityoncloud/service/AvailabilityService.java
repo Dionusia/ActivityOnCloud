@@ -87,11 +87,10 @@ public class AvailabilityService {
 		List<AvailabilityDTO> availableOptionsByDayList = new ArrayList<AvailabilityDTO>();
 		List<AvailabileTimeSlotsMapHelper> activityTimeslots = new ArrayList<AvailabileTimeSlotsMapHelper>();
 		List<BookingDTO> bookingsList = new ArrayList<>();
-		if (holidayService.isHolidayForActivityId(activityId, date)) {
+		if (holidayService.isDateHolidayForActivityId(date, activityId)) {
 			return activityTimeslots;
 		}
 		List<AvailabilityDTO> availableActivityOptionsOfDay = new ArrayList<>();
-		List<BookingDTO> bookingsList = new ArrayList<>();
 		bookingsList = bookingService.getAllBookings();
 		String day = date.getDayOfWeek().toString();
 		day = day.substring(0, 1) + day.substring(1).toLowerCase();
