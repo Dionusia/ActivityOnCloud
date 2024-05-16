@@ -56,6 +56,6 @@ public class ActivityOption implements Serializable {
 	@Column(name = "image_url")
 	private String imageURL;
 	@Column(name = "price_per_person")
-    @NotNull
-    private BigDecimal pricePerPerson;
+	@NotNull
+	private BigDecimal pricePerPerson;
 }

@@ -1,4 +1,4 @@
-package gr.knowledge.internship.activityoncloud.entity;
+package gr.knowledge.internship.activityoncloud.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class LoginResponse {
-    private String token;
-    private Long expiresIn;
+public class LoginResponseDTO {
+	private String token;
+	private Long expiresIn;
 }

@@ -3,6 +3,7 @@ import Dashboard from './Pages/Dashboard';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import BookingEngine from './Pages/BookingEngine';
 import PersonalInfoForm from './Pages/PersonalInfoForm';
+import Login from './Pages/Login';
 import {ActivityOption, ExtendedUserInputArgs} from './InterfacesAndTypes/Interfaces';
 import ActivityContext from './ActivityContext';
 
@@ -16,14 +17,10 @@ const App: React.FC = () => {
         <div>
           <Router>
           <Routes>
-            <Route path="/dashboard" element ={<Dashboard />}>
-            </Route>
-
-            <Route path="/booking-engine" element ={<BookingEngine />}>
-            </Route>
-
-            <Route path="/personal-info" element ={<PersonalInfoForm />}>
-            </Route>
+            <Route path="/dashboard" element ={<Dashboard />} />
+            <Route path="/booking-engine" element ={<BookingEngine />} />
+            <Route path="/personal-info" element ={<PersonalInfoForm />} />
+            <Route path='/login' element={<Login />} />
           </Routes>
         </Router>
         </div> 

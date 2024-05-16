@@ -121,7 +121,8 @@ public class AvailabilityService {
 			LocalDateTime currentDatetime = LocalDateTime.of(date, currentSlotStart);
 			List<BookingDTO> bookingsOfCurrentOptionAndDate = this.getBookingsForCurrent(bookingsList, currentDatetime,
 					option.getId());
-			timeslots.add(TimeSlotDTO.from(option, LocalDateTime.of(date, currentSlotStart), bookingsOfCurrentOptionAndDate));
+			timeslots.add(
+					TimeSlotDTO.from(option, LocalDateTime.of(date, currentSlotStart), bookingsOfCurrentOptionAndDate));
 			currentSlotStart = currentSlotStart.plus(option.getDuration());
 		}
 		return timeslots;

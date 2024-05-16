@@ -1,12 +1,13 @@
 package gr.knowledge.internship.activityoncloud.repository;
 
-import gr.knowledge.internship.activityoncloud.entity.User;
+import java.util.Optional;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import gr.knowledge.internship.activityoncloud.entity.User;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Integer> {
-    Optional<User> findByEmail(String email);
+	Optional<User> findByEmail(String email);
 }
