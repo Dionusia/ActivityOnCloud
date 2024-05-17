@@ -6,6 +6,7 @@ import PersonalInfoForm from './Pages/PersonalInfoForm';
 import Login from './Pages/Login';
 import {ActivityOption, ExtendedUserInputArgs} from './InterfacesAndTypes/Interfaces';
 import ActivityContext from './ActivityContext';
+import ActivityCreation from "./Pages/ActivityCreation";
 
 
 const App: React.FC = () => {
