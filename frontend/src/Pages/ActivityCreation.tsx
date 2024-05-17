@@ -12,6 +12,7 @@ const ActivityCreation: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [openModal, setOpenModal] = useState(false);
   const [newCategory, setNewCategory] = useState("");
+  const [selectedDays, setSelectedDays] = useState<string[]>([]);
 
   const handleSave = () => {
     instance
@@ -44,8 +45,16 @@ const ActivityCreation: React.FC = () => {
       });
   }, []);
 
-  {
-  }
+  const handleDayClick = (day: string) => {
+    if (selectedDays.includes(day)) {
+      setSelectedDays(
+        selectedDays.filter((selectedDay) => selectedDay !== day)
+      );
+    } else {
+      setSelectedDays([...selectedDays, day]);
+    }
+  };
+
   return (
     <Formik
       initialValues={{
@@ -56,6 +65,8 @@ const ActivityCreation: React.FC = () => {
         duration: "",
         capacity: "",
         photo: "",
+        startTime: "",
+        endTime: "",
       }}
       onSubmit={(values, { setSubmitting }) => {
         const selectedCategory = categories.find(
@@ -135,7 +146,12 @@ const ActivityCreation: React.FC = () => {
 
           <ActivityDetails />
 
-          <TimePicker />
+          <TimePicker
+            selectedDays={selectedDays}
+            setSelectedDays={setSelectedDays}
+            handleDayClick={handleDayClick}
+
+          />
         </Form>
       )}
     </Formik>

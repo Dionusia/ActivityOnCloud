@@ -106,3 +106,9 @@ export interface CategorySelectProps {
   onAddCategory: () => void;
   handleChange: (e: any) => void;
 }
+
+export interface TimeFieldProps {
+  selectedDays: string[];
+  setSelectedDays: (days: string[]) => void;
+  handleDayClick: (day: string) => void;
+}
