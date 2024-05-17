@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -28,4 +30,8 @@ public class ActivityAdmin implements Serializable {
 	@GeneratedValue(generator = "admin_seq", strategy = GenerationType.SEQUENCE)
 	@SequenceGenerator(name = "admin_seq", sequenceName = "admin_seq")
 	private long id;
+	@OneToOne
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	@NotNull
+	private User user;
 }

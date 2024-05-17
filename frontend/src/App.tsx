@@ -1,14 +1,12 @@
-import React, { useState } from "react";
-import Dashboard from "./Pages/Dashboard";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import BookingEngine from "./Pages/BookingEngine";
-import PersonalInfoForm from "./Pages/PersonalInfoForm";
-import {
-  ActivityOption,
-  ExtendedUserInputArgs,
-} from "./InterfacesAndTypes/Interfaces";
-import ActivityContext from "./ActivityContext";
-import ActivityCreation from "./Pages/ActivityCreation";
+import React, {useState} from 'react';
+import Dashboard from './Pages/Dashboard';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import BookingEngine from './Pages/BookingEngine';
+import PersonalInfoForm from './Pages/PersonalInfoForm';
+import Login from './Pages/Login';
+import {ActivityOption, ExtendedUserInputArgs} from './InterfacesAndTypes/Interfaces';
+import ActivityContext from './ActivityContext';
+
 
 const App: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState<ActivityOption | null>(
@@ -17,33 +15,23 @@ const App: React.FC = () => {
   const [selectedInfoFinal, setSelectedInfoFinal] =
     useState<ExtendedUserInputArgs | null>(null);
   return (
-    <ActivityContext.Provider
-      value={{
-        selectedOption,
-        setSelectedOption,
-        selectedInfoFinal,
-        setSelectedInfoFinal,
-      }}
-    >
+    <ActivityContext.Provider value={{selectedOption, setSelectedOption, selectedInfoFinal, setSelectedInfoFinal}}> {/*TODO: Future edit remove Dashboard from Context */}
       {
         <div>
           <Router>
-            <Routes>
-              <Route path="/dashboard" element={<Dashboard />}></Route>
-
-              <Route path="/booking-engine" element={<BookingEngine />}></Route>
-
-              <Route
-                path="/personal-info"
-                element={<PersonalInfoForm />}
-              ></Route>
-              <Route
+          <Routes>
+            <Route path="/dashboard" element ={<Dashboard />} />
+            <Route path="/booking-engine" element ={<BookingEngine />} />
+            <Route path="/personal-info" element ={<PersonalInfoForm />} />
+            <Route path='/login' element={<Login />} />
+            <Route
                 path="/activity-creation"
                 element={<ActivityCreation />}
               ></Route>
-            </Routes>
-          </Router>
-        </div>
+          </Routes>
+          
+        </Router>
+        </div> 
       }
     </ActivityContext.Provider>
   );

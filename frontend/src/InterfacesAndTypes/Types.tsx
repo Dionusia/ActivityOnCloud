@@ -35,6 +35,7 @@ export type ActivityOptionProps = {
   activityOption: Option[];
 };
 
-export type CategoryProps = {
-  category: Category[];
+export type AvailabilityInfoList = {
+  pricePerPerson: number;
+  timeslots: TimeSlot[];
 };

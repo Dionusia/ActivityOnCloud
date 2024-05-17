@@ -1,15 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaUser } from "react-icons/fa";
 import { PersonPickerProps } from "../InterfacesAndTypes/Interfaces";
 
-const PersonPicker: React.FC<PersonPickerProps> = ({
-  onPersonChange,
-  selectedPerson,
-}) => {
+const PersonPicker: React.FC<PersonPickerProps> = ({ onPersonChange,selectedPerson, setSelectedPerson}) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const num = parseInt(event.target.value);
     onPersonChange(isNaN(num) ? null : num);
   };
+
+  useEffect(() => {
+    setSelectedPerson(2);
+  }, []);
 
   return (
     <div id="container" className="relative flex w-24">

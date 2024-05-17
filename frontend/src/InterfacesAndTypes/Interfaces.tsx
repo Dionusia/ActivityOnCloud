@@ -1,4 +1,4 @@
-import { Category, TimeSlot } from "./Types";
+import {Category, AvailabilityInfoList, TimeSlot } from "./Types";
 
 interface Activity {
   id: number;
@@ -17,15 +17,6 @@ export interface ActivityOption {
   imageUrl: string;
 }
 
-export interface ButtonProp {
-  text: string;
-  onClick: (
-    activity: ActivityOption,
-    userInputArgs: ExtendedUserInputArgs
-  ) => void;
-  activity: ActivityOption;
-  userInputArgs: ExtendedUserInputArgs;
-}
 // μπορει να μπορουν να γινουν 1 interface (1)
 export interface ActivityOptionTitleProp {
   text: string;
@@ -60,26 +51,35 @@ export interface ActivityOptionInfoParentProps {
   pricePerPerson: number;
 }
 
-export interface TimeSlots {
-  [key: string]: TimeSlot[];
+export interface TimeSlotsResponse {
+    availabilityInfoList: AvailabilityInfoList;
+    optionId: number;
 }
 
+export interface OptionToBeRendered {
+    activityOption: ActivityOption;
+    availabilityInfoList: AvailabilityInfoList;
+}
+
+
 export interface DatePickProps {
-  onDateChange: (date: Date | null) => void;
-  selectedDate: Date | null;
+    onDateChange: (date: Date | null) => void;
+    selectedDate: Date | null;
+    setSelectedDate: React.Dispatch<React.SetStateAction<Date | null>>;
 }
 
 export interface FilterComponentsProps {
-  setTimeSlots: React.Dispatch<React.SetStateAction<TimeSlots>>;
-  selectedPerson: number | null;
-  setSelectedPerson: React.Dispatch<React.SetStateAction<number | null>>;
-  setFormattedDate: React.Dispatch<React.SetStateAction<string>>;
-  setPricePerPerson: React.Dispatch<React.SetStateAction<number[]>>;
+    setTimeSlotsResponse: React.Dispatch<React.SetStateAction<TimeSlotsResponse[]>>;
+    selectedPerson: number | null;
+    setSelectedPerson: React.Dispatch<React.SetStateAction<number | null>>;
+    setFormattedDate: React.Dispatch<React.SetStateAction<string>>;
+    
 }
 
 export interface PersonPickerProps {
-  onPersonChange: (num: number | null) => void;
-  selectedPerson: number | null;
+    onPersonChange: (num: number | null) => void;
+    selectedPerson: number | null;
+    setSelectedPerson: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
 export interface SearchButtonProps {
@@ -112,4 +112,12 @@ export interface TimeFieldProps {
   setSelectedDays: (days: string[]) => void;
   handleDayClick: (day: string) => void;
   onTimeChange: (startTime: string, endTime: string) => void;
+}
+
+export interface BookingEngineListProps {
+    optionsToBeRendered: OptionToBeRendered[];
+    selectedCard: number | null;
+    setSelectedCard: (index: number) => void;
+    selectedPerson: number;
+    formattedDate: string;
 }

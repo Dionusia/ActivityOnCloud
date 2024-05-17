@@ -40,16 +40,13 @@ HELP.md
 /backend/src/main/resources/application.properties
 
 ### FrontEnd ###
-/frontend/src/node_modules
+/frontend/node_modules
 
 # Mac OSX
 ######################
-.DS_Store
+**/.DS_Store
 .svn
 
 # Custom ignores
-frontend/src/webpack.config.js
 *.txt
-frontend/package-lock.json
-/frontend/src/node_modules
-/frontend/src/node_modules
+frontend/src/.DS_Store
