@@ -96,12 +96,13 @@ export interface ActivityContextProps {
 export interface AddCategoryModalProps {
   show: boolean;
   onClose: () => void;
+  handleSave: () => void;
   newCategory: string;
   setNewCategory: (value: string) => void;
 }
 
-  export interface CategorySelectProps {
-    categories: Category[];
-    onAddCategory: () => void;
-    handleChange: (e: any) => void;
-  }
+export interface CategorySelectProps {
+  categories: Category[];
+  onAddCategory: () => void;
+  handleChange: (e: any) => void;
+}

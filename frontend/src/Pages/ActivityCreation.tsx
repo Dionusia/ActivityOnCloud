@@ -13,6 +13,24 @@ const ActivityCreation: React.FC = () => {
   const [openModal, setOpenModal] = useState(false);
   const [newCategory, setNewCategory] = useState("");
 
+  const handleSave = () => {
+    instance
+      .post("/activity/save", {
+        name: newCategory,
+        admin: {
+          id: 1,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        setCategories((prevCategories) => [...prevCategories, response.data]);
+        setOpenModal(false);
+      })
+      .catch((error) => {
+        console.error("There was an error saving the category: ", error);
+      });
+  };
+
   useEffect(() => {
     instance
       .get("/activity")
@@ -111,6 +129,7 @@ const ActivityCreation: React.FC = () => {
               onClose={() => setOpenModal(false)}
               newCategory={newCategory}
               setNewCategory={setNewCategory}
+              handleSave={handleSave}
             />
           </div>
 
