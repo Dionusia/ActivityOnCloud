@@ -54,6 +54,9 @@ public class User implements UserDetails{
     @Column(name = "updated_at")
     @NotNull
     private Date updatedAt;
+    @Column(name = "role")
+    @NotNull
+    private String role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
