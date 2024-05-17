@@ -2,8 +2,6 @@ package gr.knowledge.internship.activityoncloud.controller;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
-
 import gr.knowledge.internship.activityoncloud.helper.AvailabileTimeSlotsMapHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import gr.knowledge.internship.activityoncloud.dto.AvailabilityDTO;
-import gr.knowledge.internship.activityoncloud.dto.AvailabilityInfoDTO;
 import gr.knowledge.internship.activityoncloud.service.AvailabilityService;
 
 @RestController
