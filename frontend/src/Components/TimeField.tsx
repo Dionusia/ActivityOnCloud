@@ -64,6 +64,9 @@ const TimePicker: React.FC<TimeFieldProps> = ({
             className="m-4 p-2 bg-customGreen text-white rounded-lg hover:bg-customGreen-dark"
             name="addDayTime"
             onClick={() => {
+              if (!values.startTime || !values.endTime) {
+                return alert("Please select start and end time");
+              }
               console.log(selectedDays);
               console.log(values.startTime, values.endTime);
               // other logic...
