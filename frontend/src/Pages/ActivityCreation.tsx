@@ -6,7 +6,7 @@ import { Category } from "../InterfacesAndTypes/Types";
 import AddCategoryModal from "../Components/AddCategoryModal";
 import CategorySelect from "../Components/CategorySelect";
 import ActivityDetails from "../Components/ActivityDetails";
-import TimePick from "../Components/TimePickerModal";
+import TimePicker from "../Components/TimeField";
 
 const ActivityCreation: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -97,12 +97,14 @@ const ActivityCreation: React.FC = () => {
               categories={categories}
               onAddCategory={() => setOpenModal(true)}
             />
-            <Button
-              className="w-8/10  md:w-1/2 flex-1 m-2  bg-customGreen text-white rounded-lg hover:bg-customGreen-dark"
-              type="submit"
-            >
-              Submit
-            </Button>
+            <div>
+              <Button
+                className="w-3/4  md:w-auto flex-1 m-2  bg-customGreen text-white rounded-lg hover:bg-customGreen-dark"
+                type="submit"
+              >
+                Submit
+              </Button>
+            </div>
 
             <AddCategoryModal
               show={openModal}
@@ -113,7 +115,8 @@ const ActivityCreation: React.FC = () => {
           </div>
 
           <ActivityDetails />
-          <TimePick />
+
+          <TimePicker />
         </Form>
       )}
     </Formik>
