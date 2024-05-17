@@ -6,12 +6,14 @@ import * as Yup from 'yup';
 import ActivityContext from '../ActivityContext';
 import { ActivityOption, ExtendedUserInputArgs } from '../InterfacesAndTypes/Interfaces';
 import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const PersonalInfoForm = () => {
     const activityContext = useContext(ActivityContext);
-    console.log(activityContext.selectedOption  , activityContext.selectedInfoFinal);
+    console.log("Context Data: ",activityContext.selectedOption  , activityContext.selectedInfoFinal);
+    const navigate = useNavigate();
 
     const formik = useFormik({
         initialValues: { firstname: '', surname: '', email: '', phone: '' },
@@ -52,6 +54,10 @@ const PersonalInfoForm = () => {
                 console.error('Submit Booking Error:', error);
             });
         }
+       
+        navigate('/successful-booking');
+
+        //alert('You completed the booking');
     }
     
         
@@ -60,19 +66,19 @@ const PersonalInfoForm = () => {
         <h1 className="text-center mb-5 shadow-md">Personal Information</h1>
                 <form onSubmit={formik.handleSubmit} className="px-4 flex-col items-center">
                     <div className="mb-2 block">
-                        <Label htmlFor="firstname" value="Your First Name" />
+                        <Label htmlFor="firstname" value="Your First Name *" />
                         <TextInput type="text" placeholder="first name" {...formik.getFieldProps('firstname')} required  />
                     </div>  
                     <div className="mb-2 block">
-                        <Label htmlFor="surname" value="Your Surname" />
+                        <Label htmlFor="surname" value="Your Surname *" />
                         <TextInput id="surname" type="text" placeholder="surname" {...formik.getFieldProps('surname')} required />
                     </div>
                     <div className="mb-2 block">
-                        <Label htmlFor="email" value="Your Email" />
+                        <Label htmlFor="email" value="Your Email *" />
                         <TextInput type="email" placeholder="email" {...formik.getFieldProps('email')}required />
                     </div>
                     <div>
-                        <Label htmlFor="phone" value="Your Phone" />
+                        <Label htmlFor="phone" value="Your Phone *" />
                         <TextInput  type="tel" placeholder="phone" {...formik.getFieldProps('phone')} required />
                     </div>
                     <div className='flex justify-center mt-2'>

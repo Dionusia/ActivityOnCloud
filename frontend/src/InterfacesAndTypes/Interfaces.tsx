@@ -33,6 +33,8 @@ export interface TimePickerProp{
     timeList: string[];
     selectedTime: string;
     setSelectedTime: (time: string) => void;
+    timeCapacity: string[];
+    selectedPersons: number;
 }
 
 export interface UserInputArgs {
