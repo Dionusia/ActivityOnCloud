@@ -49,3 +49,4 @@ HELP.md
 
 # Custom ignores
 *.txt
+frontend/src/.DS_Store
