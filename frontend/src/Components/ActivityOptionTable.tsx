@@ -9,7 +9,7 @@ import { log } from "console";
 const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
-    items: 4,
+    items: 3,
   },
   tablet: {
     breakpoint: { max: 1024, min: 464 },
@@ -28,26 +28,28 @@ const ActivityOptionCards: React.FC<ActivityOptionProps> = ({activityOption}) =>
   return (
       <div className="overflow-hidden">
       
-      <Carousel responsive={responsive} className=" items-center">
+      <Carousel responsive={responsive} className=" items-center max-w-screen">
         {activityOption.map((activityItem, index) => {
           // console.log(process.env.REACT_APP_PUBLIC_URL);
           console.log(`Photos/${activityItem.activityImageUrl}`);
           // console.log(`${process.env.REACT_APP_PUBLIC_URL}/${activityItem.activityImageUrl}`);
           
           return(
-            <div className="ml-[52px] max-w-[384px] min-w-[384px]" key={index}> {/* fixed for 16:9 screens but not for every screen */ }
-              <Card className=" w-[280px] h-[300px] mb-6"> {/* πλατος=384, πλατος καρτας=280, margin-x=52 για να ειναι κεντρισμενη καρτα μετα στο div*/}
+            <div className="ml-[52px] max-w-[384px] min-w-[384px]" key={index}>
+              <Card className="relative w-[360px] h-[480px] mb-6"> 
                   <img
-                    className="object-cover rounded-t-lg w-[280px] mt-0"
-                    style={{ height: '150px' }}
+                    className="object-cover rounded-t-lg w-[360px] mt-0"
+                    style={{ height: '200px' }}
                     src={`Photos/${activityItem.activityImageUrl}`}
                     alt={`${activityItem.activityImageUrl}`}
                   />
-                  <div>
-                    <h2 className="font-medium mb-2">{activityItem.activityName}</h2>
-                    <p className="mb-2">{activityItem.activityDescription}</p>
-                    <p className="pb-2">Duration: {activityItem.activityDuration}</p>
-                    <p className="pb-8">Capacity: {activityItem.activityCapacity}</p>
+                  <div className="bottom-2 font-roboto-slub mt-4 mx-2">
+                    <h2 className=" font -helvetica font-medium italic mb-2">{activityItem.activityName}</h2>
+                    <p className="italic mx-2 mb-2">{activityItem.activityDescription}</p>
+                    <div className="absolute bottom-2 items-centered w-full font-helvetica">
+                      <p className=" bottom-2 pb-2 ">Duration: {activityItem.activityDuration}</p>
+                      <p className=" bottom-2 pb-2">Capacity: {activityItem.activityCapacity}</p>
+                    </div>
                   </div>
               </Card>
             </div>)
