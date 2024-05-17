@@ -20,17 +20,31 @@ const TimePicker: React.FC<TimeFieldProps> = ({
   selectedDays,
   setSelectedDays,
   handleDayClick,
+  onTimeChange,
 }) => {
-  const { values } = useFormikContext<FormValues>();
+  const { values, setFieldValue } = useFormikContext<FormValues>();
+
+  const handleAddClick = () => {
+    if (!values.startTime || !values.endTime || selectedDays.length === 0) {
+      return alert("Please select start and end time");
+    }
+
+    // other logic...
+    setSelectedDays([]);
+    onTimeChange(values.startTime, values.endTime); // Call the callback function
+    setFieldValue("startTime", "");
+    setFieldValue("endTime", "");
+  };
   return (
     <>
-      <h2 className="text-2xl font-semibold text-gray-900">
-        Schedule Your Opening Hours
-      </h2>
-
       <div className="flex flex-col   p-1 w-2/3 ">
+        <h2 className="text-2xl font-semibold text-gray-900">
+          Schedule Your Opening Hours
+        </h2>
+
         <label className="block m-2">Pick The Day</label>
         <div className="">
+         
           {daysOfWeek.map((day) => (
             <button
               type="button"
@@ -64,15 +78,7 @@ const TimePicker: React.FC<TimeFieldProps> = ({
             className="m-4 p-2 bg-customGreen text-white rounded-lg hover:bg-customGreen-dark"
             name="addDayTime"
             onClick={() => {
-              if (!values.startTime || !values.endTime) {
-                return alert("Please select start and end time");
-              }
-              console.log(selectedDays);
-              console.log(values.startTime, values.endTime);
-              // other logic...
-              setSelectedDays([]);
-              values.startTime = "";
-              values.endTime = "";
+              handleAddClick();
             }}
           >
             Add DayTime

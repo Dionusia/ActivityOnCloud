@@ -111,4 +111,5 @@ export interface TimeFieldProps {
   selectedDays: string[];
   setSelectedDays: (days: string[]) => void;
   handleDayClick: (day: string) => void;
+  onTimeChange: (startTime: string, endTime: string) => void;
 }

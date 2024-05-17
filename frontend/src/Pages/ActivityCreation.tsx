@@ -13,6 +13,18 @@ const ActivityCreation: React.FC = () => {
   const [openModal, setOpenModal] = useState(false);
   const [newCategory, setNewCategory] = useState("");
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
+  const [timeData, setTimeData] = useState<
+    Array<{ days: string[]; startTime: string; endTime: string }>
+  >([]);
+
+  const handleTimeChange = (startTime: string, endTime: string) => {
+    // setTimeData({ days: selectedDays, startTime, endTime });
+    setTimeData((prevData) => [
+      ...prevData,
+      { days: selectedDays, startTime, endTime },
+    ]);
+    console.log(selectedDays, startTime, endTime);
+  };
 
   const handleSave = () => {
     instance
@@ -145,13 +157,37 @@ const ActivityCreation: React.FC = () => {
           </div>
 
           <ActivityDetails />
-
-          <TimePicker
-            selectedDays={selectedDays}
-            setSelectedDays={setSelectedDays}
-            handleDayClick={handleDayClick}
-
-          />
+          <div className="flex">
+            <TimePicker
+              selectedDays={selectedDays}
+              setSelectedDays={setSelectedDays}
+              handleDayClick={handleDayClick}
+              onTimeChange={handleTimeChange}
+            />
+            <div className="flex flex-col">
+              {
+              timeData.map((data, index) => (
+                <div
+                  key={index}
+                  className="  bg-white rounded-lg p-6 shadow-lg mb-4"
+                >
+                  <p className="text-lg font-semibold mb-2">
+                    Selected Days:
+                    <span className="font-normal">{data.days.join(", ")}</span>
+                  </p>
+                  <p className="text-lg font-semibold mb-2">
+                    Start Time:
+                    <span className="font-normal">{data.startTime}</span>
+                  </p>
+                  <p className="text-lg font-semibold">
+                    End Time:{" "}
+                    <span className="font-normal">{data.endTime}</span>
+                  </p>
+                </div>
+                
+              ))}
+            </div>
+          </div>
         </Form>
       )}
     </Formik>
