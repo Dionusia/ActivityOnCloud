@@ -5,12 +5,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 
+import gr.knowledge.internship.activityoncloud.helper.AvailabileTimeSlotsMapHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -83,13 +83,14 @@ public class AvailabilityService {
 	}
 
 	@Transactional(readOnly = true)
-	public Map<Long, AvailabilityInfoDTO> findAvailableOptionsWithSlots(LocalDate date, long activityId) {
-		Map<Long, AvailabilityInfoDTO> activityTimeslots = new HashMap<>();
+	public List<AvailabileTimeSlotsMapHelper> findAvailableOptionsWithSlots(LocalDate date, long activityId) {
+		List<AvailabilityDTO> availableOptionsByDayList = new ArrayList<AvailabilityDTO>();
+		List<AvailabileTimeSlotsMapHelper> activityTimeslots = new ArrayList<AvailabileTimeSlotsMapHelper>();
+		List<BookingDTO> bookingsList = new ArrayList<>();
 		if (holidayService.isDateHolidayForActivityId(date, activityId)) {
 			return activityTimeslots;
 		}
 		List<AvailabilityDTO> availableActivityOptionsOfDay = new ArrayList<>();
-		List<BookingDTO> bookingsList = new ArrayList<>();
 		bookingsList = bookingService.getAllBookings();
 		String day = date.getDayOfWeek().toString();
 		day = day.substring(0, 1) + day.substring(1).toLowerCase();
@@ -99,7 +100,7 @@ public class AvailabilityService {
 		for (AvailabilityDTO available : availableActivityOptionsOfDay) {
 			BigDecimal price = this.calculatePriceForOption(available.getOption(), date);
 			List<TimeSlotDTO> timeslotsForOption = this.calculateTimeSlotsForOption(available, bookingsList, date);
-			activityTimeslots.put(available.getOption().getId(), new AvailabilityInfoDTO(price, timeslotsForOption));
+			activityTimeslots.add(new AvailabileTimeSlotsMapHelper(available.getOption().getId(), new AvailabilityInfoDTO(price, timeslotsForOption)));
 		}
 		return activityTimeslots;
 	}

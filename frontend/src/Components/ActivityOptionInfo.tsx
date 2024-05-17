@@ -12,26 +12,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { Card } from "flowbite-react";
 import ActivityContext from "../ActivityContext";
+import { date } from "yup";
 
-const handleBookClick = (activity: ActivityOption, selectedInfoFinal: ExtendedUserInputArgs) => {
-
-    console.log("Info: "+ selectedInfoFinal.selectedTime, selectedInfoFinal.price, selectedInfoFinal.selectedPerson, selectedInfoFinal.selectedDate);
-
-    instance.post('/booking/new-booking', {
-        activityId: activity.id,
-        date: selectedInfoFinal.selectedDate,
-        startTime: selectedInfoFinal.selectedTime,
-        persons: selectedInfoFinal.selectedPerson,
-        priceTotal: selectedInfoFinal.price,
-        customerName: 'Mike Mpallas',
-    })
-    .then(response => {
-        console.log(response.data);
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}
 
 //#region child components
 
@@ -99,19 +81,27 @@ const TimePicker: React.FC<TimePickerProp> = ({ timeList, selectedTime, setSelec
 }
 //#endregion
 
-const ActivityInfoParent: React.FC<ActivityOptionInfoParentProps> = ({activity, timeSlot, userInputArgs, pricePerPerson}) => {
-    const timeList = timeSlot.map(timeSlot => timeSlot.start.slice(0, -3));
-    const [selectedTime, setSelectedTime] = useState(timeList[0]);
+const ActivityOptionInfo: React.FC<ActivityOptionInfoParentProps> = ({activity, timeSlot, userInputArgs, pricePerPerson}) => {
+    const startTimes: string[] = [];
+
+    for(let i = 0; i < timeSlot.length; i++){
+        const dateTimeParts = timeSlot[i].start.split('T');
+        const timeParts = dateTimeParts[1].split(":");
+        startTimes.push(`${timeParts[0]}:${timeParts[1]}`);
+    }
+
+    
+    const [selectedTime, setSelectedTime] = useState(startTimes[0]);
     const activityContext = React.useContext(ActivityContext);
     
     useEffect(() => {
-        const selectedInfoFinal: ExtendedUserInputArgs = {
+        const selectedInfoFinal: ExtendedUserInputArgs = {  // user selected info and total price for the activity
             selectedPerson: userInputArgs.selectedPerson,
             selectedDate: userInputArgs.selectedDate,
             selectedTime: selectedTime,
             price: pricePerPerson * userInputArgs.selectedPerson,
         };
-        console.log("Info: "+ selectedInfoFinal.selectedTime, selectedInfoFinal.price, selectedInfoFinal.selectedPerson, selectedInfoFinal.selectedDate);
+        console.log("Selected Card Info: "+ selectedInfoFinal.selectedTime, selectedInfoFinal.price, selectedInfoFinal.selectedPerson, selectedInfoFinal.selectedDate);
         activityContext.setSelectedInfoFinal(selectedInfoFinal);
         
     },[selectedTime, userInputArgs.selectedPerson, userInputArgs.selectedDate, pricePerPerson]);
@@ -136,7 +126,7 @@ const ActivityInfoParent: React.FC<ActivityOptionInfoParentProps> = ({activity, 
                             numberOfPeople={userInputArgs.selectedPerson} />
                         <div className="w-full flex flex-col items-center">
                             <h1 className=" font-roboto-slub-extra-light text-lg text-center">Available Times</h1>
-                            <TimePicker timeList={timeList} selectedTime={selectedTime} setSelectedTime={setSelectedTime} />
+                            <TimePicker timeList={startTimes} selectedTime={selectedTime} setSelectedTime={setSelectedTime} />
                         </div>
                     </div>
                 </div>
@@ -145,4 +135,4 @@ const ActivityInfoParent: React.FC<ActivityOptionInfoParentProps> = ({activity, 
     )
 }
 
-export default ActivityInfoParent;
+export default ActivityOptionInfo;

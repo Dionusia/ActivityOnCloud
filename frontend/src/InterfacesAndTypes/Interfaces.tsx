@@ -1,4 +1,4 @@
-import { TimeSlot } from "./Types";
+import { AvailabilityInfoList, TimeSlot } from "./Types";
 
 interface Activity {
     id: number;
@@ -52,9 +52,16 @@ export interface ActivityOptionInfoParentProps {
    pricePerPerson: number; 
 }
 
-export interface TimeSlots {
-    [key: string]: TimeSlot[];
+export interface TimeSlotsResponse {
+    availabilityInfoList: AvailabilityInfoList;
+    optionId: number;
 }
+
+export interface OptionToBeRendered {
+    activityOption: ActivityOption;
+    availabilityInfoList: AvailabilityInfoList;
+}
+
 
 export interface DatePickProps {
     onDateChange: (date: Date | null) => void;
@@ -63,11 +70,10 @@ export interface DatePickProps {
 }
 
 export interface FilterComponentsProps {
-    setTimeSlots: React.Dispatch<React.SetStateAction<TimeSlots>>;
+    setTimeSlotsResponse: React.Dispatch<React.SetStateAction<TimeSlotsResponse[]>>;
     selectedPerson: number | null;
     setSelectedPerson: React.Dispatch<React.SetStateAction<number | null>>;
     setFormattedDate: React.Dispatch<React.SetStateAction<string>>;
-    setPricePerPerson: React.Dispatch<React.SetStateAction<number[]>>;
     
 }
 
@@ -87,3 +93,11 @@ export interface ActivityContextProps {
     selectedInfoFinal: ExtendedUserInputArgs | null;
     setSelectedInfoFinal: (info: ExtendedUserInputArgs | null) => void;
 }
+
+export interface BookingEngineListProps {
+    optionsToBeRendered: OptionToBeRendered[];
+    selectedCard: number | null;
+    setSelectedCard: (index: number) => void;
+    selectedPerson: number;
+    formattedDate: string;
+  }

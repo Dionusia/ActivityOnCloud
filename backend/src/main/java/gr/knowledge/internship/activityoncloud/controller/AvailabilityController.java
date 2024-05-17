@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+import gr.knowledge.internship.activityoncloud.helper.AvailabileTimeSlotsMapHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,8 +53,8 @@ public class AvailabilityController {
 	}
 
 	@GetMapping("/available/{activityId}")
-	public Map<Long, AvailabilityInfoDTO> getAvailableOptionsWithSlots(@RequestParam("date") LocalDate date,
-			@PathVariable Long activityId) {
+	public List<AvailabileTimeSlotsMapHelper> getAvailableOptionsWithSlots(@RequestParam("date") LocalDate date,
+																		   @PathVariable Long activityId) {
 		return availabilityService.findAvailableOptionsWithSlots(date, activityId);
 	}
 }
