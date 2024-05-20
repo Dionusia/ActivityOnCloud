@@ -3,7 +3,6 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { ActivityOptionProps, Props } from "../InterfacesAndTypes/Types";
 import { Card } from "flowbite-react";
-import { log } from "console";
 
 
 const responsive = {
@@ -44,9 +43,9 @@ const ActivityOptionCards: React.FC<ActivityOptionProps> = ({activityOption}) =>
                     alt={`${activityItem.activityImageUrl}`}
                   />
                   <div className="bottom-2 font-roboto-slub mt-4 mx-2">
-                    <h2 className=" font -helvetica font-medium italic mb-2">{activityItem.activityName}</h2>
+                    <h2 className=" font-medium text-lg italic mb-2">{activityItem.activityName}</h2>
                     <p className="italic mx-2 mb-2">{activityItem.activityDescription}</p>
-                    <div className="absolute bottom-2 items-centered w-full font-helvetica">
+                    <div className="absolute bottom-2 items-centered w-full">
                       <p className=" bottom-2 pb-2 ">Duration: {activityItem.activityDuration}</p>
                       <p className=" bottom-2 pb-2">Capacity: {activityItem.activityCapacity}</p>
                     </div>

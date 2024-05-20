@@ -19,7 +19,7 @@ import { date } from "yup";
 
 const ActivityOptionTitle: React.FC<ActivityOptionTitleProp> = ({ text }) => {
     return (
-        <h1 className={' text-2xl font-helvetica text-black'}>
+        <h1 className={' text-2xl font-roboto-slab  text-black'}>
             {text}
         </h1>
     )
@@ -28,7 +28,7 @@ const ActivityOptionTitle: React.FC<ActivityOptionTitleProp> = ({ text }) => {
 const ActivityOptionDescription: React.FC<ActivityOptionDescriptionProp> = ({ text, price, numberOfPeople }) => {
     return (
         <div className="max-w-3/5 items-center ">
-            <p className={'text-black text-lg  max-h-40 break-words overflow-auto'}>
+            <p className={'font-roboto-slab-thin text-lg  max-h-40 break-words overflow-auto'}>
                 {text}
             </p>
             <br/>
@@ -62,7 +62,7 @@ const TimePicker: React.FC<TimePickerProp> = ({selectedPersons, timeCapacity, ti
     }
     return(
         <div className="flex max-w-4/5 space-x-2 ">
-            <button onClick={handlePrev} className="rounded hover:bg-black-400">
+            <button onClick={handlePrev} className={`rounded ${currentIndex > 0 ? 'text-black' : 'text-gray-200'}`}>
                 <FontAwesomeIcon icon={faChevronLeft} />
             </button>
             <div className="flex space-x-2">
@@ -71,7 +71,7 @@ const TimePicker: React.FC<TimePickerProp> = ({selectedPersons, timeCapacity, ti
                 return (
                     <Card 
                         key={index} 
-                        className={`p-1 rounded-xl hover:cursor-pointer ${time === selectedTime ? 'border-2 border-black rounded-xl' : ''} ${isDisabled ? 'bg-gray-200' : ''}`}
+                        className={` n d p-1 rounded-xl hover:cursor-pointer ${time === selectedTime && !isDisabled ? 'border-2 border-black rounded-xl' : ''} ${isDisabled ? 'bg-gray-300 text-white' : ''}`}
                         onClick={isDisabled ? undefined : () => setSelectedTime(time)}
                     >
                         {time}
@@ -79,7 +79,7 @@ const TimePicker: React.FC<TimePickerProp> = ({selectedPersons, timeCapacity, ti
                 );
             })} 
         </div>
-            <button onClick={handleNext} className="rounded">
+            <button onClick={handleNext} className={`rounded ${currentIndex < (timeList.length - 3) ? 'text-black' : 'text-gray-200'}`}>
                 <FontAwesomeIcon icon={faChevronRight} />
             </button>
         </div>
