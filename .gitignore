@@ -41,6 +41,7 @@ HELP.md
 
 ### FrontEnd ###
 /frontend/node_modules
+/frontend/logs.txt
 
 # Mac OSX
 ######################
