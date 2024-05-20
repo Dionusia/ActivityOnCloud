@@ -1,11 +1,20 @@
-import axios from 'axios';
+import axios, { AxiosInstance } from 'axios';
 
-const instance = axios.create({
-  baseURL: 'http://localhost:8081',
-  headers: {
-    'Content-Type': 'application/json',
-    // 'Authorization': 'Bearer your_token_here' 
-  }
-});
-
-export default instance;
+export function createAxiosInstance(navigate: Function): AxiosInstance {
+  const axiosInstance = axios.create({
+    baseURL: 'http://localhost:8081',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
+  axiosInstance.interceptors.response.use(  
+    response => response,
+    error => {
+      if(error.response && error.response.status === 401){
+        navigate('/login');
+      }
+      return Promise.reject(error);
+    }
+  );
+  return axiosInstance;
+}
