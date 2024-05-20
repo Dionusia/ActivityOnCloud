@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Dashboard from './Pages/Dashboard';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import {Route, Routes } from 'react-router-dom';
 import BookingEngine from './Pages/BookingEngine';
 import PersonalInfoForm from './Pages/PersonalInfoForm';
 import Login from './Pages/Login';
@@ -15,14 +15,12 @@ const App: React.FC = () => {
     <ActivityContext.Provider value={{selectedOption, setSelectedOption, selectedInfoFinal, setSelectedInfoFinal}}> {/*TODO: Future edit remove Dashboard from Context */}
       {
         <div>
-          <Router>
           <Routes>
+            <Route path='/login' element={<Login />} />
             <Route path="/dashboard" element ={<Dashboard />} />
             <Route path="/booking-engine" element ={<BookingEngine />} />
             <Route path="/personal-info" element ={<PersonalInfoForm />} />
-            <Route path='/login' element={<Login />} />
           </Routes>
-        </Router>
         </div> 
       }
     </ActivityContext.Provider>
