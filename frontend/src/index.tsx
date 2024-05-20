@@ -11,8 +11,8 @@ if (!rootElement) {
 
 const root = createRoot(rootElement);
 root.render(
-  <BrowserRouter>
-    <StrictMode>
+  <BrowserRouter> {/*The BrowserRouter is a special kind of component in React Router that wraps your application and makes it aware of the routing context.*/}
+    <StrictMode>  {/*StrictMode is a tool for highlighting potential problems in an application. Like Fragment, StrictMode does not render any visible UI. It activates additional checks and warnings for its descendants.*/}
       <App />
     </StrictMode>
   </BrowserRouter>

@@ -1,4 +1,4 @@
-import { AvailabilityInfoList, TimeSlot } from "./Types";
+import { AvailabilityInfoList, TimeSlot} from "./Types";
 
 interface Activity {
     id: number;
@@ -100,4 +100,4 @@ export interface BookingEngineListProps {
     setSelectedCard: (index: number) => void;
     selectedPerson: number;
     formattedDate: string;
-  }
+}

@@ -17,7 +17,7 @@ export type Booking = {
 export type Option = {
   activityName: string;
   activityDescription: string;
-  activityDuration: String;
+  activityDuration: string;
   activityCapacity: number;
   activityImageUrl: string;
 };
@@ -34,3 +34,4 @@ export type AvailabilityInfoList = {
   pricePerPerson: number;
   timeslots: TimeSlot[];
 };
+
