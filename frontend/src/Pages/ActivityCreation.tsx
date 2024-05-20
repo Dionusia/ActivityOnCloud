@@ -24,7 +24,6 @@ const ActivityCreation: React.FC = () => {
     ]);
   };
   const resetStates = () => {
-    setCategories([]);
     setOpenModal(false);
     setNewCategory("");
     setSelectedDays([]);
@@ -89,6 +88,10 @@ const ActivityCreation: React.FC = () => {
         const selectedCategory = categories.find(
           (category) => category.id === Number(values.category)
         );
+        if (timeData.length === 0) {
+          alert("Please select at least one time slot");
+          return;
+        }
 
         if (!selectedCategory) {
           console.error("No category found with id:", values.category);
