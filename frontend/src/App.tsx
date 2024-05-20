@@ -26,6 +26,11 @@ const App: React.FC = () => {
             <Route path="/booking-engine" element ={<BookingEngine />} />
             <Route path="/personal-info" element ={<PersonalInfoForm />} />
             <Route path='/login' element={<Login />} />
+            <Route path="/successful-booking" element={<SuccessfulBooking/>} />
+            <Route
+                path="/activity-creation"
+                element={<ActivityCreation />}
+              ></Route>
           </Routes>
           
         </Router>
