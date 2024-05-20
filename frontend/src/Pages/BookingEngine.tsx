@@ -1,15 +1,13 @@
-import React, { useContext, useDebugValue, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ActivityOptionInfo from "../Components/ActivityOptionInfo";
 import FilterComponents from "../Components/FilterCriteria";
-import instance from "../AxiosConfig";
-import { ActivityOption, OptionToBeRendered, TimeSlotsResponse, UserInputArgs, } from "../InterfacesAndTypes/Interfaces";
+import {createAxiosInstance} from "../AxiosConfig";
+import { ActivityOption, OptionToBeRendered, TimeSlotsResponse, } from "../InterfacesAndTypes/Interfaces";
 import { Button } from "flowbite-react";
 import ActivityContext from "../ActivityContext";
 import BookingEngineList from "../Components/BookingEngineList";
 
 
-//για καποιο λογο καλειτε 2 φορεσ το component
 const BookingEngine: React.FC = () => {
     //#region states
     const [availableOptionsList, setAvailableOptionsList] = useState<ActivityOption[]>([]);
@@ -25,21 +23,25 @@ const BookingEngine: React.FC = () => {
         navigate('/personal-info');
     };
 
+    const instance = createAxiosInstance(navigate);
     useEffect(() => {
-        instance.get('/activity-option/of-admin?adminId=1')
-        instance.get('/activity-option/of-admin?adminId=1')
-            .then(response => {
-                //  console.log(response.data);
-                setAvailableOptionsList(response.data);                
-            })
-            .catch( error => {
-                console.error('There was an error retrieving the activities array' + error);
-            })
-    },[]); 
+        if(instance !== null) {
+            instance.get('/activity-option/of-admin?adminId=1')
+                .then(response => {
+                    //  console.log(response.data);
+                    setAvailableOptionsList(response.data);                
+                })
+                .catch( error => {
+                    console.error('There was an error retrieving the activities array' + error);
+                })
+            } else {
+                console.error('Axios instance is null in BookingEngine.');
+            }
+        },[instance]); 
 
     const createActivityInfoComponents = (availableOptionsList: ActivityOption[], setOptionsToBeRendered:React.Dispatch<React.SetStateAction<OptionToBeRendered[]>>) => {
         
-        let newOptions = [];
+        const newOptions = [];
         
         for (let i = 0; i < availableOptionsList.length; i++) {
             for(let j = 0; j< timeSlotsResponseList.length; j++) {

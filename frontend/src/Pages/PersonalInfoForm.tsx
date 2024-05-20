@@ -1,16 +1,19 @@
 import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import { Button, Label, TextInput, CustomFlowbiteTheme, Flowbite } from 'flowbite-react';
-import instance from '../AxiosConfig';
+import {createAxiosInstance} from '../AxiosConfig';
 import * as Yup from 'yup';
 import ActivityContext from '../ActivityContext';
 import { ActivityOption, ExtendedUserInputArgs } from '../InterfacesAndTypes/Interfaces';
 import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const PersonalInfoForm = () => {
     const activityContext = useContext(ActivityContext);
+    const navigate = useNavigate();
+    const instance = createAxiosInstance(navigate);
     console.log(activityContext.selectedOption  , activityContext.selectedInfoFinal);
 
     const formik = useFormik({
@@ -30,27 +33,31 @@ const PersonalInfoForm = () => {
         const uuid = uuidv4();
         if (selectedInfoFinal && activity) {
             console.log("Info: "+ selectedInfoFinal.selectedTime, selectedInfoFinal.price, selectedInfoFinal.selectedPerson, selectedInfoFinal.selectedDate);
-            instance.post('/booking/save', {
-                uuid: uuid,
-                name: formik.values.firstname,
-                surname: formik.values.surname,
-                email: formik.values.email,
-                phone: formik.values.phone,
-                activityAdmin: {id: activity.activity.admin.id},
-                activityOption:{
-                    id: activity.id,
-                },
-                date: selectedInfoFinal.selectedDate,
-                startTime: selectedInfoFinal.selectedDate+"T"+selectedInfoFinal.selectedTime,
-                persons: selectedInfoFinal.selectedPerson,
-                totalPrice: selectedInfoFinal.price,
-            })
-            .then(response => {
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.error('Submit Booking Error:', error);
-            });
+            if(instance !== null) {
+                instance.post('/booking/save', {
+                    uuid: uuid,
+                    name: formik.values.firstname,
+                    surname: formik.values.surname,
+                    email: formik.values.email,
+                    phone: formik.values.phone,
+                    activityAdmin: {id: activity.activity.admin.id},
+                    activityOption:{
+                        id: activity.id,
+                    },
+                    date: selectedInfoFinal.selectedDate,
+                    startTime: selectedInfoFinal.selectedDate+"T"+selectedInfoFinal.selectedTime,
+                    persons: selectedInfoFinal.selectedPerson,
+                    totalPrice: selectedInfoFinal.price,
+                })
+                .then(response => {
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.error('Submit Booking Error:', error);
+                });
+            } else {
+                console.error('Axios instance is null in PersonalInfoForm.');
+            }
         }
     }
     

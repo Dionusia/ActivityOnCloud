@@ -1,68 +1,80 @@
 import React, { useEffect, useState } from "react";
-import BookingsTable from "../Components/BookingsTable";
 import { Booking } from "../InterfacesAndTypes/Types";
 import { Option } from "../InterfacesAndTypes/Types";
-import instance from "../AxiosConfig";
+import { createAxiosInstance } from "../AxiosConfig";
 import ActivityOptionTable from "../Components/ActivityOptionTable";
 import SearchByName from "../Components/SearchByName";
+import { useNavigate } from "react-router-dom";
 
 const adminId = 1;
 
 const Dashboard: React.FC = () => {
   const [bookingsList, setBookingsList] = useState<Booking[]>([]);
   const [activityOptions, setActivityOptions] = useState<Option[]>([]);
+  const navigate = useNavigate();
+  const instance = createAxiosInstance(navigate);
 
   useEffect(() => {
-    instance
-      .get("/booking/of-admin?adminId="+adminId)
-      .then((response) => {
-        const formattedBookings: Booking[] = response.data.map(
-          (bookingData: any) => ({
-            id: bookingData.uuid,
-            customerName: bookingData.name + " " + bookingData.surname,
-            contact: bookingData.email + " | " + bookingData.phone,
-            activityName: bookingData.activityOption.name,
-            participantsNum: bookingData.persons,
-            timeframe: bookingData.startTime,
-            pricePayed: bookingData.totalPrice,
-          })
-        );
-        setBookingsList(formattedBookings);
-      })
-      .catch((error) => {
-        console.error("Error fetching bookings:", error);
-      });
-  }, []);
+    if(instance !== null) {
+      instance
+        .get("/booking/of-admin?adminId="+adminId)
+        .then((response) => {
+          const formattedBookings: Booking[] = response.data.map(
+            (bookingData: any) => ({
+              id: bookingData.uuid,
+              customerName: bookingData.name + " " + bookingData.surname,
+              contact: bookingData.email + " | " + bookingData.phone,
+              activityName: bookingData.activityOption.name,
+              participantsNum: bookingData.persons,
+              timeframe: bookingData.startTime,
+              pricePayed: bookingData.totalPrice,
+            })
+          );
+          setBookingsList(formattedBookings);
+        })
+        .catch((error) => {
+          console.error("Error fetching bookings:", error);
+        });
+      } else {
+        console.error('Axios instance is null in Dashboard/bookings.');
+      
+      }
+  },[instance]);
 
-  useEffect(() => {
-    instance
-      .get("/activity-option/of-admin?adminId="+adminId)
-      .then((response) => {
-        const activityOptions: Option[] = response.data.map(
-          (activityData: any) => ({
-            activityName: activityData.name,
-            activityDescription: activityData.description,
-            activityDuration: activityData.duration,
-            activityCapacity: activityData.capacity,
-            activityImageUrl: activityData.imageUrl,
+    useEffect(() => {
+      if(instance !== null){
+        instance
+          .get("/activity-option/of-admin?adminId="+adminId)
+          .then((response) => {
+            const activityOptions: Option[] = response.data.map(
+              (activityData: any) => ({
+                activityName: activityData.name,
+                activityDescription: activityData.description,
+                activityDuration: activityData.duration,
+                activityCapacity: activityData.capacity,
+                activityImageUrl: activityData.imageUrl,
+              })
+            );
+            setActivityOptions(activityOptions);
           })
-        );
-        setActivityOptions(activityOptions);
-      })
-      .catch((error) => {
-        console.error("Error fetching activity options:", error);
-      });
-  }, []);
+          .catch((error) => {
+            console.error("Error fetching activity options:", error);
+          });
+      }
+      else {
+        console.error('Axios instance is null in Dashboard/activity-option.');
+      }
+    }, [instance]);
   // Function to format date and time
-  const formatDateTime = (dateTimeString: string): string => {
-    const dateTime = new Date(dateTimeString);
-    const formattedDate = dateTime.toLocaleDateString("en-GB");
-    const formattedTime = dateTime.toLocaleTimeString("en-GB", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-    return `Date: ${formattedDate} Time: ${formattedTime}`;
-  };
+  // const formatDateTime = (dateTimeString: string): string => {
+  //   const dateTime = new Date(dateTimeString);
+  //   const formattedDate = dateTime.toLocaleDateString("en-GB");
+  //   const formattedTime = dateTime.toLocaleTimeString("en-GB", {
+  //     hour: "2-digit",
+  //     minute: "2-digit",
+  //   });
+  //   return `Date: ${formattedDate} Time: ${formattedTime}`;
+  // };
 
   return (
     <div className="flex flex-col ">
