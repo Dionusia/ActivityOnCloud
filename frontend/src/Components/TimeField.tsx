@@ -44,7 +44,6 @@ const TimePicker: React.FC<TimeFieldProps> = ({
 
         <label className="block m-2">Pick The Day</label>
         <div className="">
-         
           {daysOfWeek.map((day) => (
             <button
               type="button"
@@ -64,14 +63,12 @@ const TimePicker: React.FC<TimeFieldProps> = ({
             name="startTime"
             type="time"
             className=" mt-2 p-2 border border-gray-300 rounded-lg"
-            required
           />
           <label className="m-4 ">to time </label>
           <Field
             name="endTime"
             type="time"
             className=" mt-2 p-2 border border-gray-300 rounded-lg"
-            required
           />
           <button
             type="button"

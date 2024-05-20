@@ -18,12 +18,17 @@ const ActivityCreation: React.FC = () => {
   >([]);
 
   const handleTimeChange = (startTime: string, endTime: string) => {
-    // setTimeData({ days: selectedDays, startTime, endTime });
     setTimeData((prevData) => [
       ...prevData,
       { days: selectedDays, startTime, endTime },
     ]);
-    console.log(selectedDays, startTime, endTime);
+  };
+  const resetStates = () => {
+    setCategories([]);
+    setOpenModal(false);
+    setNewCategory("");
+    setSelectedDays([]);
+    setTimeData([]);
   };
 
   const handleSave = () => {
@@ -80,7 +85,7 @@ const ActivityCreation: React.FC = () => {
         startTime: "",
         endTime: "",
       }}
-      onSubmit={(values, { setSubmitting }) => {
+      onSubmit={(values, { setSubmitting, resetForm }) => {
         const selectedCategory = categories.find(
           (category) => category.id === Number(values.category)
         );
@@ -92,25 +97,32 @@ const ActivityCreation: React.FC = () => {
 
         const data = {
           name: values.title,
-          description: values.description,
           duration: values.duration,
-          capacity: values.capacity,
-          activity: {
-            id: selectedCategory.id,
-            name: selectedCategory.name,
-            admin: {
-              id: selectedCategory.adminId,
-            },
-          },
+          description: values.description,
           pricePerPerson: values.price,
-          imageUrl: null,
+          capacity: values.capacity,
+          imageURL: null,
+          activityName: selectedCategory.name,
+          activityId: selectedCategory.id,
+          adminId: 1,
+          availabilityList: timeData.flatMap((item) =>
+            item.days.map((day) => ({
+              day,
+              startTime: item.startTime,
+              endTime: item.endTime,
+            }))
+          ),
         };
 
+        console.log("availabilityList state variable:", timeData);
+        console.log("data object:", data);
         instance
-          .post("/activity-option/save", data)
+          .post("/activity-option/new", data)
           .then((response) => {
             console.log("Data submitted successfully: ", response);
             alert("Data submitted successfully");
+            resetForm();
+            resetStates();
             setSubmitting(false);
           })
           .catch((error) => {
@@ -165,8 +177,7 @@ const ActivityCreation: React.FC = () => {
               onTimeChange={handleTimeChange}
             />
             <div className="flex flex-col">
-              {
-              timeData.map((data, index) => (
+              {timeData.map((data, index) => (
                 <div
                   key={index}
                   className="  bg-white rounded-lg p-6 shadow-lg mb-4"
@@ -184,7 +195,6 @@ const ActivityCreation: React.FC = () => {
                     <span className="font-normal">{data.endTime}</span>
                   </p>
                 </div>
-                
               ))}
             </div>
           </div>
