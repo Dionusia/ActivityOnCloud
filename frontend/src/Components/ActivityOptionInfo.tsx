@@ -19,7 +19,7 @@ import { date } from "yup";
 
 const ActivityOptionTitle: React.FC<ActivityOptionTitleProp> = ({ text }) => {
     return (
-        <h1 className={' text-2xl font-helvetica text-black'}>
+        <h1 className={' text-2xl font-roboto-slab  text-black'}>
             {text}
         </h1>
     )
@@ -28,7 +28,7 @@ const ActivityOptionTitle: React.FC<ActivityOptionTitleProp> = ({ text }) => {
 const ActivityOptionDescription: React.FC<ActivityOptionDescriptionProp> = ({ text, price, numberOfPeople }) => {
     return (
         <div className="max-w-3/5 items-center ">
-            <p className={'text-black text-lg  max-h-40 break-words overflow-auto'}>
+            <p className={'font-roboto-slab-thin text-lg  max-h-40 break-words overflow-auto'}>
                 {text}
             </p>
             <br/>
@@ -43,8 +43,11 @@ const ActivityOptionDescription: React.FC<ActivityOptionDescriptionProp> = ({ te
     )
 }
 
-const TimePicker: React.FC<TimePickerProp> = ({ timeList, selectedTime, setSelectedTime }) => {
+const TimePicker: React.FC<TimePickerProp> = ({selectedPersons, timeCapacity, timeList, selectedTime, setSelectedTime }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
+
+    // Convert the values to numbers
+    const capacity = timeCapacity.map(value => parseInt(value));
     const handlePrev = () => {
         if(currentIndex > 0){
             setCurrentIndex(currentIndex - 1);
@@ -59,21 +62,24 @@ const TimePicker: React.FC<TimePickerProp> = ({ timeList, selectedTime, setSelec
     }
     return(
         <div className="flex max-w-4/5 space-x-2 ">
-            <button onClick={handlePrev} className="rounded hover:bg-black-400">
+            <button onClick={handlePrev} className={`rounded ${currentIndex > 0 ? 'text-black' : 'text-gray-200'}`}>
                 <FontAwesomeIcon icon={faChevronLeft} />
             </button>
             <div className="flex space-x-2">
-                {timeList.slice(currentIndex, currentIndex + 3).map((time, index) => (
+            {timeList.slice(currentIndex, currentIndex + 3).map((time, index) => {
+                const isDisabled = capacity[index] < selectedPersons;
+                return (
                     <Card 
                         key={index} 
-                        className={`p-1 rounded-xl hover:cursor-pointer ${time === selectedTime ? 'border-2 border-black rounded-xl' : ''}`}
-                        onClick={() => setSelectedTime(time)}
+                        className={` n d p-1 rounded-xl hover:cursor-pointer ${time === selectedTime && !isDisabled ? 'border-2 border-black rounded-xl' : ''} ${isDisabled ? 'bg-gray-300 text-white' : ''}`}
+                        onClick={isDisabled ? undefined : () => setSelectedTime(time)}
                     >
                         {time}
                     </Card>
-                ))} 
-            </div>
-            <button onClick={handleNext} className="rounded">
+                );
+            })} 
+        </div>
+            <button onClick={handleNext} className={`rounded ${currentIndex < (timeList.length - 3) ? 'text-black' : 'text-gray-200'}`}>
                 <FontAwesomeIcon icon={faChevronRight} />
             </button>
         </div>
@@ -83,11 +89,14 @@ const TimePicker: React.FC<TimePickerProp> = ({ timeList, selectedTime, setSelec
 
 const ActivityOptionInfo: React.FC<ActivityOptionInfoParentProps> = ({activity, timeSlot, userInputArgs, pricePerPerson}) => {
     const startTimes: string[] = [];
+    //console.log("Option TimeSlot: ", timeSlot[0].remainingCapacity)
+    const timeCapacity: string[] = [];
 
     for(let i = 0; i < timeSlot.length; i++){
         const dateTimeParts = timeSlot[i].start.split('T');
         const timeParts = dateTimeParts[1].split(":");
         startTimes.push(`${timeParts[0]}:${timeParts[1]}`);
+        timeCapacity.push(timeSlot[i].remainingCapacity);
     }
 
     
@@ -107,14 +116,12 @@ const ActivityOptionInfo: React.FC<ActivityOptionInfoParentProps> = ({activity, 
     },[selectedTime, userInputArgs.selectedPerson, userInputArgs.selectedDate, pricePerPerson]);
     return (
         <Card 
-        className="hover:shadow-lg"
-        //imgAlt="Meaningful alt text for an image that is not purely decorative"
-        //imgSrc= {"../Photos/MountainBike.jpeg"}
+        className="hover:shadow-lg w-[300px]"
         >  
             <img
                 className="object-cover rounded-t-lg w-full h-[150px]"
-                src={activity.imageUrl}
-                alt={activity.imageUrl}
+                src={`Photos/${activity.imageUrl}`}
+                alt={`Photos/${activity.imageUrl}`}
             />   
             <div className="items-center space-y-4 bg-white-100 p-4 rounded-lg inline-block w-full">
                 <div className={'flex items-center space-x-2'}>
@@ -126,7 +133,7 @@ const ActivityOptionInfo: React.FC<ActivityOptionInfoParentProps> = ({activity, 
                             numberOfPeople={userInputArgs.selectedPerson} />
                         <div className="w-full flex flex-col items-center">
                             <h1 className=" font-roboto-slub-extra-light text-lg text-center">Available Times</h1>
-                            <TimePicker timeList={startTimes} selectedTime={selectedTime} setSelectedTime={setSelectedTime} />
+                            <TimePicker selectedPersons={userInputArgs.selectedPerson}  timeList={startTimes} timeCapacity={timeCapacity} selectedTime={selectedTime} setSelectedTime={setSelectedTime} />
                         </div>
                     </div>
                 </div>
