@@ -1,19 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext} from 'react';
 import { useFormik } from 'formik';
-import { Button, Label, TextInput, CustomFlowbiteTheme, Flowbite } from 'flowbite-react';
-import {createAxiosInstance} from '../AxiosConfig';
+import { Button, Label, TextInput} from 'flowbite-react';
 import * as Yup from 'yup';
 import ActivityContext from '../ActivityContext';
 import { ActivityOption, ExtendedUserInputArgs } from '../InterfacesAndTypes/Interfaces';
 import { v4 as uuidv4 } from 'uuid';
-import { useNavigate } from 'react-router-dom';
 
 
 
 const PersonalInfoForm = () => {
     const activityContext = useContext(ActivityContext);
-    const navigate = useNavigate();
-    const instance = createAxiosInstance(navigate);
+    const instance = activityContext.instance;
     console.log(activityContext.selectedOption  , activityContext.selectedInfoFinal);
 
     const formik = useFormik({

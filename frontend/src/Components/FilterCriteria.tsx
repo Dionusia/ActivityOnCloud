@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import DatePicker from "./DatePick";
 import PersonPicker from "./PersonPicker";
 import SearchButton from "./SearchButton";
-import {createAxiosInstance} from "../AxiosConfig";
 import { FilterComponentsProps } from "../InterfacesAndTypes/Interfaces";
-import { useNavigate } from "react-router-dom";
+import ActivityContext from "../ActivityContext";
 
 const FilterComponents: React.FC<FilterComponentsProps> = ({
   setTimeSlotsResponse,
@@ -15,9 +14,9 @@ const FilterComponents: React.FC<FilterComponentsProps> = ({
 }) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
-  const navigate = useNavigate();
   let formattedTempDate = "test";
-  const instance = createAxiosInstance(navigate);
+  const activityContext = React.useContext(ActivityContext);
+  const instance = activityContext.instance;
   
 
   const handleDateChange = (date: Date | null) => {

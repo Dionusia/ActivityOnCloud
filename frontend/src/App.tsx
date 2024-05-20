@@ -7,6 +7,8 @@ import Login from './Pages/Login';
 import {ActivityOption, ExtendedUserInputArgs} from './InterfacesAndTypes/Interfaces';
 import ActivityContext from './ActivityContext';
 import ActivityCreation from "./Pages/ActivityCreation";
+import { createAxiosInstance } from './AxiosConfig';
+import { useNavigate } from 'react-router-dom';
 
 
 const App: React.FC = () => {
@@ -15,23 +17,23 @@ const App: React.FC = () => {
   );
   const [selectedInfoFinal, setSelectedInfoFinal] =
     useState<ExtendedUserInputArgs | null>(null);
+
+  const navigate = useNavigate();
+  //use state to create only one axios instance
+  const [instance, setInstance] = useState(() => createAxiosInstance(navigate));
   return (
-    <ActivityContext.Provider value={{selectedOption, setSelectedOption, selectedInfoFinal, setSelectedInfoFinal}}> {/*TODO: Future edit remove Dashboard from Context */}
+    <ActivityContext.Provider value={{selectedOption, setSelectedOption, selectedInfoFinal, setSelectedInfoFinal, instance}}> {/*TODO: Future edit remove Dashboard from Context */}
       {
         <div>
+
           <Routes>
             <Route path='/login' element={<Login />} />
             <Route path="/dashboard" element ={<Dashboard />} />
             <Route path="/booking-engine" element ={<BookingEngine />} />
             <Route path="/personal-info" element ={<PersonalInfoForm />} />
             <Route path='/login' element={<Login />} />
-            <Route
-                path="/activity-creation"
-                element={<ActivityCreation />}
-              ></Route>
+            <Route path="/activity-creation" element={<ActivityCreation />} />
           </Routes>
-          
-        </Router>
         </div> 
       }
     </ActivityContext.Provider>

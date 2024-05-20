@@ -21,7 +21,7 @@ const responsive = {
 };
 
 const ActivityOptionCards: React.FC<ActivityOptionProps> = ({activityOption}) => {
-  const photo = [activityOption];
+  // const photo = [activityOption];
   console.log(activityOption);
   
   return (

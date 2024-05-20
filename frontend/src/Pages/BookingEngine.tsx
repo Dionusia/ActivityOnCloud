@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import FilterComponents from "../Components/FilterCriteria";
-import {createAxiosInstance} from "../AxiosConfig";
 import { ActivityOption, OptionToBeRendered, TimeSlotsResponse, } from "../InterfacesAndTypes/Interfaces";
 import { Button } from "flowbite-react";
 import ActivityContext from "../ActivityContext";
 import BookingEngineList from "../Components/BookingEngineList";
+import { useNavigate } from "react-router-dom";
 
 
 const BookingEngine: React.FC = () => {
@@ -16,14 +15,14 @@ const BookingEngine: React.FC = () => {
     const [selectedPerson, setSelectedPerson] = useState<number | null>(null);
     const [formattedDate, setFormattedDate] = useState<string>("");
     const [optionsToBeRendered, setOptionsToBeRendered] = useState<OptionToBeRendered[]>([]);
-    //#endregion
-    const activityContext = useContext(ActivityContext);
     const navigate = useNavigate();
+    const activityContext = React.useContext(ActivityContext);
+    const instance = activityContext.instance;
+    //#endregion
     const RedirectOnPersonalInfoPage = () => {
         navigate('/personal-info');
     };
-
-    const instance = createAxiosInstance(navigate);
+    
     useEffect(() => {
         if(instance !== null) {
             instance.get('/activity-option/of-admin?adminId=1')
