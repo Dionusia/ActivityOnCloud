@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import '../index.css';
-import instance from "../AxiosConfig";
 import {   
-        ActivityOption,
         ExtendedUserInputArgs,  
         ActivityOptionTitleProp,
         ActivityOptionDescriptionProp,
@@ -12,7 +10,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { Card } from "flowbite-react";
 import ActivityContext from "../ActivityContext";
-import { date } from "yup";
 
 
 //#region child components
