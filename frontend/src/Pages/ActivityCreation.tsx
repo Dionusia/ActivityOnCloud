@@ -151,7 +151,9 @@ const ActivityCreation: React.FC = () => {
             <CategorySelect
               handleChange={handleChange}
               categories={categories}
-              onAddCategory={() => setOpenModal(true)}
+              onAddCategory={() => {
+                setOpenModal(true);
+              }}
             />
             <div>
               <Button
