@@ -6,11 +6,15 @@ import PersonalInfoForm from './Pages/PersonalInfoForm';
 import Login from './Pages/Login';
 import {ActivityOption, ExtendedUserInputArgs} from './InterfacesAndTypes/Interfaces';
 import ActivityContext from './ActivityContext';
+import ActivityCreation from "./Pages/ActivityCreation";
 
 
 const App: React.FC = () => {
-  const [selectedOption, setSelectedOption] = useState<ActivityOption | null>(null);  
-  const [selectedInfoFinal, setSelectedInfoFinal] = useState<ExtendedUserInputArgs | null>(null);
+  const [selectedOption, setSelectedOption] = useState<ActivityOption | null>(
+    null
+  );
+  const [selectedInfoFinal, setSelectedInfoFinal] =
+    useState<ExtendedUserInputArgs | null>(null);
   return (
     <ActivityContext.Provider value={{selectedOption, setSelectedOption, selectedInfoFinal, setSelectedInfoFinal}}> {/*TODO: Future edit remove Dashboard from Context */}
       {
@@ -20,7 +24,14 @@ const App: React.FC = () => {
             <Route path="/dashboard" element ={<Dashboard />} />
             <Route path="/booking-engine" element ={<BookingEngine />} />
             <Route path="/personal-info" element ={<PersonalInfoForm />} />
+            <Route path='/login' element={<Login />} />
+            <Route
+                path="/activity-creation"
+                element={<ActivityCreation />}
+              ></Route>
           </Routes>
+          
+        </Router>
         </div> 
       }
     </ActivityContext.Provider>

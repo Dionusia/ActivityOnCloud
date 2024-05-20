@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 
@@ -84,7 +83,6 @@ public class AvailabilityService {
 
 	@Transactional(readOnly = true)
 	public List<AvailabileTimeSlotsMapHelper> findAvailableOptionsWithSlots(LocalDate date, long activityId) {
-		List<AvailabilityDTO> availableOptionsByDayList = new ArrayList<AvailabilityDTO>();
 		List<AvailabileTimeSlotsMapHelper> activityTimeslots = new ArrayList<AvailabileTimeSlotsMapHelper>();
 		List<BookingDTO> bookingsList = new ArrayList<>();
 		if (holidayService.isDateHolidayForActivityId(date, activityId)) {
@@ -100,7 +98,8 @@ public class AvailabilityService {
 		for (AvailabilityDTO available : availableActivityOptionsOfDay) {
 			BigDecimal price = this.calculatePriceForOption(available.getOption(), date);
 			List<TimeSlotDTO> timeslotsForOption = this.calculateTimeSlotsForOption(available, bookingsList, date);
-			activityTimeslots.add(new AvailabileTimeSlotsMapHelper(available.getOption().getId(), new AvailabilityInfoDTO(price, timeslotsForOption)));
+			activityTimeslots.add(new AvailabileTimeSlotsMapHelper(available.getOption().getId(),
+					new AvailabilityInfoDTO(price, timeslotsForOption)));
 		}
 		return activityTimeslots;
 	}
@@ -136,5 +135,11 @@ public class AvailabilityService {
 			}
 		}
 		return pricePerPerson;
+	}
+
+	public List<AvailabilityDTO> saveAvailabilityList(List<AvailabilityDTO> availabilityDTOList) {
+		List<Availability> availabilities = availabilityMapper.toEntityList(availabilityDTOList);
+		availabilityRepository.saveAll(availabilities);
+		return availabilityMapper.toDTOList(availabilities);
 	}
 }

@@ -34,8 +34,7 @@ public class ActivityService {
 
 	public ActivityDTO saveActivity(ActivityDTO activityDTO) {
 		Activity activity = activityMapper.toEntity(activityDTO);
-		activityRepository.save(activity);
-		return activityMapper.toDTO(activity);
+		return activityMapper.toDTO(activityRepository.save(activity));
 	}
 
 	public ActivityDTO updateActivity(ActivityDTO activityDTO) {

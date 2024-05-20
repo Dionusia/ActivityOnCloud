@@ -1,55 +1,54 @@
-import { AvailabilityInfoList, TimeSlot} from "./Types";
+import {Category, AvailabilityInfoList, TimeSlot } from "./Types";
 
 interface Activity {
-    id: number;
-    name: string;
-    admin: {id:number};
+  id: number;
+  name: string;
+  admin: { id: number };
 }
 
 export interface ActivityOption {
-    id: number;
-    name: string;
-    description: string;
-    duration: string;
-    capacity: number;
-    activity: Activity;
-    pricePerPerson: number;
-    imageUrl: string;
+  id: number;
+  name: string;
+  description: string;
+  duration: string;
+  capacity: number;
+  activity: Activity;
+  pricePerPerson: number;
+  imageUrl: string;
 }
 
 // μπορει να μπορουν να γινουν 1 interface (1)
 export interface ActivityOptionTitleProp {
-    text: string;
-
+  text: string;
 }
 // μπορει να μπορουν να γινουν 1 interface (2)
 export interface ActivityOptionDescriptionProp {
-    text: string;
-    price: number;
-    numberOfPeople: number;
+  text: string;
+  price: number;
+  numberOfPeople: number;
 }
 
-export interface TimePickerProp{
-    timeList: string[];
-    selectedTime: string;
-    setSelectedTime: (time: string) => void;
+export interface TimePickerProp {
+  timeList: string[];
+  selectedTime: string;
+  setSelectedTime: (time: string) => void;
 }
 
 export interface UserInputArgs {
-    selectedPerson: number;
-    selectedDate: string;
+  selectedPerson: number;
+  selectedDate: string;
 }
 
 export interface ExtendedUserInputArgs extends UserInputArgs {
-    selectedTime: string;
-    price: number;
+  selectedTime: string;
+  price: number;
 }
 
 export interface ActivityOptionInfoParentProps {
-   activity: ActivityOption;
-   timeSlot: TimeSlot[];
-   userInputArgs: UserInputArgs;
-   pricePerPerson: number; 
+  activity: ActivityOption;
+  timeSlot: TimeSlot[];
+  userInputArgs: UserInputArgs;
+  pricePerPerson: number;
 }
 
 export interface TimeSlotsResponse {
@@ -84,14 +83,35 @@ export interface PersonPickerProps {
 }
 
 export interface SearchButtonProps {
-    onSearch: () => void;
+  onSearch: () => void;
 }
 
 export interface ActivityContextProps {
-    selectedOption: ActivityOption | null;
-    setSelectedOption: (option: ActivityOption | null) => void;
-    selectedInfoFinal: ExtendedUserInputArgs | null;
-    setSelectedInfoFinal: (info: ExtendedUserInputArgs | null) => void;
+  selectedOption: ActivityOption | null;
+  setSelectedOption: (option: ActivityOption | null) => void;
+  selectedInfoFinal: ExtendedUserInputArgs | null;
+  setSelectedInfoFinal: (info: ExtendedUserInputArgs | null) => void;
+}
+
+export interface AddCategoryModalProps {
+  show: boolean;
+  onClose: () => void;
+  handleSave: () => void;
+  newCategory: string;
+  setNewCategory: (value: string) => void;
+}
+
+export interface CategorySelectProps {
+  categories: Category[];
+  onAddCategory: () => void;
+  handleChange: (e: any) => void;
+}
+
+export interface TimeFieldProps {
+  selectedDays: string[];
+  setSelectedDays: (days: string[]) => void;
+  handleDayClick: (day: string) => void;
+  onTimeChange: (startTime: string, endTime: string) => void;
 }
 
 export interface BookingEngineListProps {
