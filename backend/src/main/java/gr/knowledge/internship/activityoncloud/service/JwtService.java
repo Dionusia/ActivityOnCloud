@@ -25,7 +25,11 @@ public class JwtService {
 	private long jwtExpiration;
 
 	public String extractUsername(String token) {
-		return extractClaim(token, Claims::getSubject);
+		try {
+			return extractClaim(token, Claims::getSubject);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
@@ -34,8 +38,11 @@ public class JwtService {
 	}
 
 	public String generateToken(UserDetails userDetails) {
-		Map<String, Object> claims = new HashMap<>();
-		return buildToken(claims, userDetails, jwtExpiration);
+		return generateToken(new HashMap<>(), userDetails);
+	}
+
+	public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+		return buildToken(extraClaims, userDetails, jwtExpiration);
 	}
 
 	public Long getExpirationTime() {
@@ -43,11 +50,12 @@ public class JwtService {
 	}
 
 	public boolean isTokenValid(String token, UserDetails userDetails) {
-		final String username = extractUsername(token);
-		if (isTokenExpired(token)) {
-			throw new IllegalArgumentException("Token is expired");
+		try {
+			final String username = extractUsername(token);
+			return (username != null) && !isTokenExpired(token);
+		} catch (Exception e) {
+			return false;
 		}
-		return (username.equals(userDetails.getUsername()));
 	}
 
 	private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails, long expiration) {

@@ -44,20 +44,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		// Check if token is expired
 		if (jwtService.isTokenExpired(jwt)) {
 			response.setStatus(HttpStatus.UNAUTHORIZED.value());
+			response.getWriter().write("Token has expired");
 			return;
 		}
 
-		try {
-			// Authenticate user if token is valid
-			UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-			if (jwtService.isTokenValid(jwt, userDetails)) {
-				Authentication authToken = new UsernamePasswordAuthenticationToken(userDetails,
-						null, userDetails.getAuthorities());
-				SecurityContextHolder.getContext().setAuthentication(authToken);
-			}
-		} catch (Exception e) {
-			response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+		// Check if token is valid
+		UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+		if (!jwtService.isTokenValid(jwt, userDetails)){
+			response.setStatus(HttpStatus.UNAUTHORIZED.value());
+			response.getWriter().write("Invalid token");
 			return;
+		}
+
+		// Authenticate user if token is valid
+		if (jwtService.isTokenValid(jwt, userDetails)) {
+			Authentication authToken = new UsernamePasswordAuthenticationToken(userDetails,
+					null, userDetails.getAuthorities());
+			SecurityContextHolder.getContext().setAuthentication(authToken);
 		}
 
 		filterChain.doFilter(request, response);
