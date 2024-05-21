@@ -1,17 +1,16 @@
 import React from "react";
-import {createAxiosInstance} from "../AxiosConfig";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
+import ActivityContext from "../ActivityContext";
+import { useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {
     // const [user, setUser] = useState<User | null>(null);
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const activityContext = React.useContext(ActivityContext);
+    const instance = activityContext.instance;
     const navigate = useNavigate();
-    const instance = createAxiosInstance(navigate);
-    // console.log('Login instance:', instance);
-    
     
 
     const handleLogin = (event: React.FormEvent) => {
@@ -33,12 +32,17 @@ const Login: React.FC = () => {
                     //set the cookies with the user data
                     Cookies.set('token', newUser.token);
                     Cookies.set('expiresIn', newUser.expiresIn);
+                    Cookies.set('adminId', newUser.adminId);
+                    console.log('Cookies:', Cookies.get('token'), Cookies.get('expiresIn'), Cookies.get('adminId'));
+                    
                     //set the axios header with the token in order to be included in the requests by default
                     instance.defaults.headers.common['Authorization'] = 'Bearer ' + newUser.token;
+                    // console.log('Axios headers:', instance.defaults.headers.common);
+                    
                     //check role of user to direct him to the correct page
                     navigate('/dashboard');
                 } else 
-                    console.error('User is null.');
+                    console.error('newUser is null in Login.');
             })
             .catch(error => {
                 //TODO add error message popup maybe
@@ -50,14 +54,14 @@ const Login: React.FC = () => {
     }
 
     return (
-        <div className="flex flex-col justify-center items-center h-screen w-screen">
-            <h1 className="mb-10 text-xl"> Welcome </h1>
-            <form onSubmit={handleLogin}>
-                <div className="flex flex-col justify-center items-center space-y-3 w-11/12 max-w-2xl">
+        <div className="flex flex-col justify-center items-center h-screen w-screen text-center">
+            <form onSubmit={handleLogin} className="w-11/12 max-w-sm">
+            <h1 className="mb-10 text-xl"> Welcome to Activity On Cloud</h1>
+                <div className="flex flex-col justify-center items-center space-y-3 w-full">
                     <div className="flex flex-col space-y-2 text-center p-1 w-full">
                         <label htmlFor="Email">Username</label>
                         <input 
-                            type="email" 
+                            type="text" 
                             placeholder="Enter Email" 
                             className="rounded-lg text-center"
                             value={email}
