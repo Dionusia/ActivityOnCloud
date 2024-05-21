@@ -1,5 +1,6 @@
 package gr.knowledge.internship.activityoncloud.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,7 +36,19 @@ public class AuthenticationController {
 	public ResponseEntity<LoginResponseDTO> authenticate(@RequestBody LoginUserDTO loginUserDTO) {
 		User authenticatedUser = authenticationService.authenticate(loginUserDTO);
 		String jwtToken = jwtService.generateToken(authenticatedUser);
-		LoginResponseDTO loginResponse = new LoginResponseDTO(jwtToken, jwtService.getExpirationTime());
+		Long expiresIn = jwtService.getExpirationTime();
+
+		// Check if token has expired
+		if (jwtService.isTokenExpired(jwtToken)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); // Return 401 Unauthorized
+		}
+
+		Long adminId = null;
+		if (authenticatedUser.getAdmin() != null) {
+			adminId = authenticatedUser.getAdmin().getId();
+		}
+
+		LoginResponseDTO loginResponse = new LoginResponseDTO(jwtToken, expiresIn, adminId);
 		return ResponseEntity.ok(loginResponse);
 	}
 }

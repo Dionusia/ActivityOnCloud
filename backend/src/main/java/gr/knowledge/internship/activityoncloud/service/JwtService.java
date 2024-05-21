@@ -13,11 +13,11 @@ import org.springframework.stereotype.Service;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
 @Service
 public class JwtService {
+
 	@Value("${security.jwt.secret-key}")
 	private String secretKey;
 
@@ -45,6 +45,14 @@ public class JwtService {
 		return jwtExpiration;
 	}
 
+	public boolean isTokenValid(String token, UserDetails userDetails) {
+		final String username = extractUsername(token);
+		if (isTokenExpired(token)) {
+			throw new IllegalArgumentException("Token is expired");
+		}
+		return (username.equals(userDetails.getUsername()));
+	}
+
 	private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails, long expiration) {
 		Claims claims = Jwts.claims().setSubject(userDetails.getUsername());
 		claims.putAll(extraClaims);
@@ -54,12 +62,7 @@ public class JwtService {
 				.signWith(getSignInKey(), SignatureAlgorithm.HS256).compact();
 	}
 
-	public boolean isTokenValid(String token, UserDetails userDetails) {
-		final String username = extractUsername(token);
-		return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
-	}
-
-	private boolean isTokenExpired(String token) {
+	public boolean isTokenExpired(String token) {
 		return extractExpiration(token).before(new Date());
 	}
 
@@ -72,7 +75,7 @@ public class JwtService {
 	}
 
 	private Key getSignInKey() {
-		byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+		byte[] keyBytes = secretKey.getBytes();
 		return Keys.hmacShaKeyFor(keyBytes);
 	}
 }
