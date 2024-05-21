@@ -13,6 +13,7 @@ import gr.knowledge.internship.activityoncloud.dto.RegisterUserDTO;
 import gr.knowledge.internship.activityoncloud.entity.User;
 import gr.knowledge.internship.activityoncloud.service.AuthenticationService;
 import gr.knowledge.internship.activityoncloud.service.JwtService;
+import io.jsonwebtoken.JwtException;
 
 @RequestMapping(value = "/auth")
 @RestController
@@ -32,23 +33,27 @@ public class AuthenticationController {
 		return ResponseEntity.ok(registeredUser);
 	}
 
+	// AuthenticationController.java
+
 	@PostMapping("/login")
 	public ResponseEntity<LoginResponseDTO> authenticate(@RequestBody LoginUserDTO loginUserDTO) {
-		User authenticatedUser = authenticationService.authenticate(loginUserDTO);
-		String jwtToken = jwtService.generateToken(authenticatedUser);
-		Long expiresIn = jwtService.getExpirationTime();
+		try {
+			User authenticatedUser = authenticationService.authenticate(loginUserDTO);
+			String jwtToken = jwtService.generateToken(authenticatedUser);
+			Long expiresIn = jwtService.getExpirationTime();
 
-		// Check if token has expired
-		if (jwtService.isTokenExpired(jwtToken)) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); // Return 401 Unauthorized
+			Long adminId = null;
+			if (authenticatedUser.getAdmin() != null) {
+				adminId = authenticatedUser.getAdmin().getId();
+			}
+
+			LoginResponseDTO loginResponse = new LoginResponseDTO(jwtToken, expiresIn, adminId);
+			return ResponseEntity.ok(loginResponse);
+
+		} catch (IllegalArgumentException ie) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
-
-		Long adminId = null;
-		if (authenticatedUser.getAdmin() != null) {
-			adminId = authenticatedUser.getAdmin().getId();
-		}
-
-		LoginResponseDTO loginResponse = new LoginResponseDTO(jwtToken, expiresIn, adminId);
-		return ResponseEntity.ok(loginResponse);
 	}
 }

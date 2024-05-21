@@ -47,12 +47,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			return;
 		}
 
-		// Authenticate user if token is valid
-		UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-		if (jwtService.isTokenValid(jwt, userDetails)) {
-			Authentication authToken = new UsernamePasswordAuthenticationToken(userDetails,
-					null, userDetails.getAuthorities());
-			SecurityContextHolder.getContext().setAuthentication(authToken);
+		try {
+			// Authenticate user if token is valid
+			UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+			if (jwtService.isTokenValid(jwt, userDetails)) {
+				Authentication authToken = new UsernamePasswordAuthenticationToken(userDetails,
+						null, userDetails.getAuthorities());
+				SecurityContextHolder.getContext().setAuthentication(authToken);
+			}
+		} catch (Exception e) {
+			response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+			return;
 		}
 
 		filterChain.doFilter(request, response);
