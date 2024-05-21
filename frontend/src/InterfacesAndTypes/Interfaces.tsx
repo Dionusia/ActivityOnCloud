@@ -29,10 +29,12 @@ export interface ActivityOptionDescriptionProp {
   numberOfPeople: number;
 }
 
-export interface TimePickerProp {
-  timeList: string[];
-  selectedTime: string;
-  setSelectedTime: (time: string) => void;
+export interface TimePickerProp{
+    timeList: string[];
+    selectedTime: string;
+    setSelectedTime: (time: string) => void;
+    timeCapacity: string[];
+    selectedPersons: number;
 }
 
 export interface UserInputArgs {

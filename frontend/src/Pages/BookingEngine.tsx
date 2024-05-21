@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useDebugValue, useEffect, useState } from "react";
 import FilterComponents from "../Components/FilterCriteria";
+import ActivityOptionInfo from "../Components/ActivityOptionInfo";
 import { ActivityOption, OptionToBeRendered, TimeSlotsResponse, } from "../InterfacesAndTypes/Interfaces";
 import { Button } from "flowbite-react";
 import ActivityContext from "../ActivityContext";
@@ -53,6 +54,7 @@ const BookingEngine: React.FC = () => {
     }
 
     useEffect(() => {
+        console.log("optionsToBeRendered: ", optionsToBeRendered);
         createActivityInfoComponents(availableOptionsList,setOptionsToBeRendered);
     }, [timeSlotsResponseList]);
 
@@ -67,7 +69,7 @@ const BookingEngine: React.FC = () => {
 
     return (
         <div className=" flex flex-col items-center w-screen h-screen">
-            <div className="fixed flex justify-center h-1/20 shadow-md pb-2 w-screen">
+            <div className="fixed flex justify-center h-1/20 shadow-md pb-2 w-screen bg-white">
                 <FilterComponents
                     setTimeSlotsResponse={setTimeSlotsResponseList} 
                     selectedPerson={selectedPerson} 
@@ -83,9 +85,14 @@ const BookingEngine: React.FC = () => {
                 formattedDate={formattedDate} 
             /> 
 
-            <div className=' flex mb-0 w-screen shadow-md justify-center fixed bottom-0'
+            <div className=' flex mb-0 w-screen shadow-md justify-center fixed bottom-0 bg-white'
             style={{boxShadow: '0 -4px 6px -1px rgba(0, 0, 0, 0.1), 0 -2px 4px -1px rgba(0, 0, 0, 0.06)'}}>
-                <Button type="submit" className="bg-customGreen text-white my-4 " onClick={RedirectOnPersonalInfoPage}>Checkout</Button>
+                <Button 
+                type="submit" 
+                className={selectedCard === null ? "bg-gray-400 text-white my-4" : "bg-customGreen text-white my-4"}
+                onClick={RedirectOnPersonalInfoPage}
+                disabled={selectedCard === null}>
+                    Checkout</Button>
             </div>
                 
 

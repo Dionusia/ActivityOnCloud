@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
+import BookingsTable from "../Components/BookingsTable";
 import { Booking } from "../InterfacesAndTypes/Types";
 import { Option } from "../InterfacesAndTypes/Types";
 import ActivityOptionTable from "../Components/ActivityOptionTable";
 import SearchByName from "../Components/SearchByName";
 import ActivityContext from "../ActivityContext";
 import Cookies from "js-cookie";
+import { Button } from "flowbite-react";
 
 
 const Dashboard: React.FC = () => {
+  const navigate = useNavigate();
   const [bookingsList, setBookingsList] = useState<Booking[]>([]);
   const [activityOptions, setActivityOptions] = useState<Option[]>([]);
   const activityContext = React.useContext(ActivityContext);
@@ -77,10 +80,15 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="flex flex-col ">
-      <h1 className="flex-grow text-center my-6 py-2 px-4 shadow-md rounded">
-        Dashboard
-      </h1>
-      <div className="flex flex-col justify-center text-center ">
+      <div className="fixed top-0 left-0 right-0 flex justify-between items-center mb-6 py-4 px-2 shadow-md bg-white">
+        <h1 className="mt-4">Dashboard</h1>
+        <Button 
+          className="bg-customGreen text-white rounded-full mt-4"
+          onClick={() => navigate('/activity-creation')}>
+          Import new Activity
+        </Button>
+      </div>
+      <div className=" mt-24 flex flex-col justify-center text-center">
         Bookings
         <SearchByName booking={bookingsList} />
         <br />
@@ -88,6 +96,7 @@ const Dashboard: React.FC = () => {
         <div className="mt-4">
           <ActivityOptionTable activityOption={activityOptions} />
         </div>
+        
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ const BookingEngineList: React.FC<BookingEngineListProps> = ({ optionsToBeRender
           <div
             key={index}
             onClick={() => setSelectedCard(index)}
-            className={index == selectedCard ? 'rounded-lg border-[3px] border-customGreen' : ''}
+            className={index == selectedCard ? 'rounded-lg border-[3px] border-gray-700' : ''}
           >
             <ActivityOptionInfo
               activity={option.activityOption}
