@@ -44,8 +44,9 @@ HELP.md
 
 # Mac OSX
 ######################
-.DS_Store
+**/.DS_Store
 .svn
 
 # Custom ignores
 *.txt
+frontend/src/.DS_Store

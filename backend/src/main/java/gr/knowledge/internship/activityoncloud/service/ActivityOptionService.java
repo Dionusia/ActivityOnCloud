@@ -6,8 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import gr.knowledge.internship.activityoncloud.dto.ActivityDTO;
+import gr.knowledge.internship.activityoncloud.dto.ActivityOptionCreateDTO;
 import gr.knowledge.internship.activityoncloud.dto.ActivityOptionDTO;
+import gr.knowledge.internship.activityoncloud.dto.AvailabilityDTO;
 import gr.knowledge.internship.activityoncloud.entity.ActivityOption;
+import gr.knowledge.internship.activityoncloud.mapper.ActivityMapper;
 import gr.knowledge.internship.activityoncloud.mapper.ActivityOptionMapper;
 import gr.knowledge.internship.activityoncloud.repository.ActivityOptionRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -19,6 +23,12 @@ public class ActivityOptionService {
 	private ActivityOptionRepository activityOptionRepository;
 	@Autowired
 	private ActivityOptionMapper activityOptionMapper;
+	@Autowired
+	private AvailabilityService availabilityService;
+	@Autowired
+	private ActivityService activityService;
+	@Autowired
+	private ActivityMapper activityMapper;
 
 	@Transactional(readOnly = true)
 	public ActivityOptionDTO getActivityOptionById(Long id) {
@@ -61,5 +71,18 @@ public class ActivityOptionService {
 
 	public List<ActivityOptionDTO> getActivityOptionsOfAdmin(Long adminId) {
 		return activityOptionMapper.toDTOList(activityOptionRepository.findByActivityAdminId(adminId));
+	}
+
+	public ActivityOptionCreateDTO createNewActivityOption(ActivityOptionCreateDTO activityOptionCreateDTO) {
+		ActivityOptionDTO activityOptionDTO = activityOptionCreateDTO.extractActivityOption();
+		ActivityDTO activityDTO = activityOptionDTO.getActivity();
+		List<AvailabilityDTO> availabilityList = activityOptionCreateDTO.getAvailabilityList();
+		activityDTO = activityService.saveActivity(activityDTO);
+		ActivityOption activityOption = activityOptionMapper.toEntity(activityOptionDTO);
+		activityOption.setActivity(activityMapper.toEntity(activityDTO));
+		final ActivityOption savedActivityOption = activityOptionRepository.save(activityOption);
+		availabilityList.forEach(avail -> avail.setOption(activityOptionMapper.toDTO(savedActivityOption)));
+		availabilityService.saveAvailabilityList(availabilityList);
+		return activityOptionCreateDTO;
 	}
 }

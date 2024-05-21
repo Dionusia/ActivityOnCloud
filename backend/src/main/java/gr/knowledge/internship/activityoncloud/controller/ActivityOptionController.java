@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import gr.knowledge.internship.activityoncloud.dto.ActivityOptionCreateDTO;
 import gr.knowledge.internship.activityoncloud.dto.ActivityOptionDTO;
 import gr.knowledge.internship.activityoncloud.service.ActivityOptionService;
 
@@ -51,5 +52,10 @@ public class ActivityOptionController {
 	@DeleteMapping("/delete/{id}")
 	public void deleteActivityOption(@PathVariable Long id) {
 		activityOptionService.deleteActivityOptionById(id);
+	}
+	
+	@PostMapping("/new")
+	public void createNewActivityOption(@RequestBody ActivityOptionCreateDTO activityOptionCreateDTO) {
+		activityOptionService.createNewActivityOption(activityOptionCreateDTO);
 	}
 }
