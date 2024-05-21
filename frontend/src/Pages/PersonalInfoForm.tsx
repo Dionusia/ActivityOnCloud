@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 const PersonalInfoForm = () => {
     const activityContext = useContext(ActivityContext);
     const instance = activityContext.instance;
+    const navigate = useNavigate();
     console.log(activityContext.selectedOption  , activityContext.selectedInfoFinal);
 
     const formik = useFormik({

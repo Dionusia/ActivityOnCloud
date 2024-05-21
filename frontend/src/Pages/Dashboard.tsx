@@ -7,6 +7,8 @@ import SearchByName from "../Components/SearchByName";
 import ActivityContext from "../ActivityContext";
 import Cookies from "js-cookie";
 import { Button } from "flowbite-react";
+import { useNavigate } from "react-router-dom";
+import { BookingDataInterface } from "../InterfacesAndTypes/Interfaces";
 
 
 const Dashboard: React.FC = () => {
@@ -25,6 +27,8 @@ const Dashboard: React.FC = () => {
         instance
           .get("/booking/of-admin?adminId="+adminId)
           .then((response) => {
+            console.log('Response:', response.data);
+            
             const formattedBookings: Booking[] = response.data.map(
               (bookingData: any) => ({
                 id: bookingData.uuid,
