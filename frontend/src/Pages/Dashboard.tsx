@@ -1,44 +1,53 @@
 import React, { useEffect, useState } from "react";
 import { Booking } from "../InterfacesAndTypes/Types";
 import { Option } from "../InterfacesAndTypes/Types";
-import { createAxiosInstance } from "../AxiosConfig";
 import ActivityOptionTable from "../Components/ActivityOptionTable";
 import SearchByName from "../Components/SearchByName";
-import { useNavigate } from "react-router-dom";
+import ActivityContext from "../ActivityContext";
+import Cookies from "js-cookie";
 
-const adminId = 1;
 
 const Dashboard: React.FC = () => {
   const [bookingsList, setBookingsList] = useState<Booking[]>([]);
   const [activityOptions, setActivityOptions] = useState<Option[]>([]);
-  const navigate = useNavigate();
-  const instance = createAxiosInstance(navigate);
+  const activityContext = React.useContext(ActivityContext);
+  const instance = activityContext.instance;
+  const adminId = Cookies.get("adminId");
+  console.log('AdminId:', adminId);
+  
 
   useEffect(() => {
-    if(instance !== null) {
-      instance
-        .get("/booking/of-admin?adminId="+adminId)
-        .then((response) => {
-          const formattedBookings: Booking[] = response.data.map(
-            (bookingData: any) => ({
-              id: bookingData.uuid,
-              customerName: bookingData.name + " " + bookingData.surname,
-              contact: bookingData.email + " | " + bookingData.phone,
-              activityName: bookingData.activityOption.name,
-              participantsNum: bookingData.persons,
-              timeframe: bookingData.startTime,
-              pricePayed: bookingData.totalPrice,
-            })
-          );
-          setBookingsList(formattedBookings);
-        })
-        .catch((error) => {
-          console.error("Error fetching bookings:", error);
-        });
-      } else {
-        console.error('Axios instance is null in Dashboard/bookings.');
-      
-      }
+    const fetchBookings = async () => {
+      if(instance !== null) {
+        instance
+          .get("/booking/of-admin?adminId="+adminId)
+          .then((response) => {
+            const formattedBookings: Booking[] = response.data.map(
+              (bookingData: any) => ({
+                id: bookingData.uuid,
+                customerName: bookingData.name + " " + bookingData.surname,
+                contact: bookingData.email + " | " + bookingData.phone,
+                activityName: bookingData.activityOption.name,
+                participantsNum: bookingData.persons,
+                timeframe: bookingData.startTime,
+                pricePayed: bookingData.totalPrice,
+              })
+            );
+            setBookingsList(formattedBookings);
+          })
+          .catch((error) => {
+            console.error("Error fetching bookings:", error);
+          });
+        } else {
+          console.error('Axios instance is null in Dashboard/bookings.');
+        }
+      };
+
+      fetchBookings();
+
+      const interval = setInterval(fetchBookings, 10000);
+      //clear the interval when the component is unmounted
+      return () => clearInterval(interval);
   },[instance]);
 
     useEffect(() => {
@@ -65,16 +74,6 @@ const Dashboard: React.FC = () => {
         console.error('Axios instance is null in Dashboard/activity-option.');
       }
     }, [instance]);
-  // Function to format date and time
-  // const formatDateTime = (dateTimeString: string): string => {
-  //   const dateTime = new Date(dateTimeString);
-  //   const formattedDate = dateTime.toLocaleDateString("en-GB");
-  //   const formattedTime = dateTime.toLocaleTimeString("en-GB", {
-  //     hour: "2-digit",
-  //     minute: "2-digit",
-  //   });
-  //   return `Date: ${formattedDate} Time: ${formattedTime}`;
-  // };
 
   return (
     <div className="flex flex-col ">
@@ -89,9 +88,6 @@ const Dashboard: React.FC = () => {
         <div className="mt-4">
           <ActivityOptionTable activityOption={activityOptions} />
         </div>
-          
-  
-        
       </div>
     </div>
   );
