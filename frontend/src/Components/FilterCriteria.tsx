@@ -56,7 +56,7 @@ const FilterComponents: React.FC<FilterComponentsProps> = ({
     }
 
     instance
-      .get("/availability/available/1", {
+      .get("/availability/available/1", { //TODO: Change the ActivityId to the actual activityId (In Database as well μονο για εμενα)
         params: {
           date: formattedTempDate,
         },

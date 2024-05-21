@@ -11,7 +11,9 @@ module.exports = {
       fontFamily: {
         'roboto-slab': ['Roboto Slab', 'serif'],
         'roboto-slab-extra-light': ['Roboto Slab', 'serif'],
+        'roboto-slab-thin': ['Roboto Slab Thin', 'serif'],
         'helvetica': ['Helvetica', 'sans-serif'],
+        'varela-round': ['Varela Round', 'sans-serif'],
       },
       colors: {
         'customGreen': '#04B1A7',
