@@ -73,11 +73,11 @@ const Dashboard: React.FC = () => {
         <h1 className="mt-4">Dashboard</h1>
         <Button 
           className="bg-customGreen text-white rounded-full mt-4"
-          onClick={() => navigate('/dashboard')}>
+          onClick={() => navigate('/activity-creation')}>
           Import new Activity
         </Button>
       </div>
-      <div className=" mt-24 flex flex-col justify-center text-center ">
+      <div className=" mt-24 flex flex-col justify-center text-center">
         Bookings
         <SearchByName booking={bookingsList} />
         <br />
