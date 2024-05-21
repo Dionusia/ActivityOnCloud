@@ -28,7 +28,7 @@ const ActivityOptionTitle: React.FC<ActivityOptionTitleProp> = ({ text }) => {
 const ActivityOptionDescription: React.FC<ActivityOptionDescriptionProp> = ({ text, price, numberOfPeople }) => {
     return (
         <div className="max-w-3/5 items-center ">
-            <p className={'font-roboto-slab-thin text-lg  max-h-40 break-words overflow-auto'}>
+            <p className={'font-roboto-slab-thin text-lg  max-h-20 break-words overflow-auto'}>
                 {text}
             </p>
             <br/>
@@ -65,17 +65,17 @@ const TimePicker: React.FC<TimePickerProp> = ({selectedPersons, timeCapacity, ti
             <button onClick={handlePrev} className={`rounded ${currentIndex > 0 ? 'text-black' : 'text-gray-200'}`}>
                 <FontAwesomeIcon icon={faChevronLeft} />
             </button>
-            <div className="flex space-x-2">
+            <div className="flex justify-center space-x-1">
             {timeList.slice(currentIndex, currentIndex + 3).map((time, index) => {
                 const isDisabled = capacity[index] < selectedPersons;
                 return (
-                    <Card 
+                    <div
                         key={index} 
-                        className={` n d p-1 rounded-xl hover:cursor-pointer ${time === selectedTime && !isDisabled ? 'border-2 border-black rounded-xl' : ''} ${isDisabled ? 'bg-gray-300 text-white' : ''}`}
+                        className={` p-1 shadow-md rounded-xl hover:cursor-pointer ${time === selectedTime && !isDisabled ? 'border-2 border-black rounded-xl' : ''} ${isDisabled ? 'bg-gray-300 text-white' : ''}`}
                         onClick={isDisabled ? undefined : () => setSelectedTime(time)}
                     >
                         {time}
-                    </Card>
+                    </div>
                 );
             })} 
         </div>
@@ -115,17 +115,17 @@ const ActivityOptionInfo: React.FC<ActivityOptionInfoParentProps> = ({activity, 
         
     },[selectedTime, userInputArgs.selectedPerson, userInputArgs.selectedDate, pricePerPerson]);
     return (
-        <Card 
-        className="hover:shadow-lg w-[300px]"
+        <div 
+        className=" shadow-md border-s rounded-lg hover:shadow-lg w-[300px]"
         >  
             <img
-                className="object-cover rounded-t-lg w-full h-[150px]"
+                className=" content-centerer object-cover rounded-t-lg w-full h-[150px]"
                 src={`Photos/${activity.imageUrl}`}
                 alt={`Photos/${activity.imageUrl}`}
             />   
             <div className="items-center space-y-4 bg-white-100 p-4 rounded-lg inline-block w-full">
                 <div className={'flex items-center space-x-2'}>
-                    <div className={'flex flex-col space-y-2 w-full items-center'}>
+                    <div className={'flex flex-col space-y-1 w-full items-center'}>
                         <ActivityOptionTitle text={activity.name} />
                         <ActivityOptionDescription
                             text= {activity.description} 
@@ -138,7 +138,7 @@ const ActivityOptionInfo: React.FC<ActivityOptionInfoParentProps> = ({activity, 
                     </div>
                 </div>
             </div>
-        </Card>
+        </div>
     )
 }
 

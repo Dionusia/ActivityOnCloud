@@ -11,7 +11,7 @@ const SearchByName: React.FC<Props> = ({booking}) => {
   );
 
   return (
-    <div className="flex flex-col items-center overflow-x-auto bg-white ">
+    <div className="flex flex-col items-center overflow-auto bg-white ">
         <TextInput
           type="text"
           placeholder="Search by Customer"
