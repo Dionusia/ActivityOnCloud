@@ -56,7 +56,7 @@ const FilterComponents: React.FC<FilterComponentsProps> = ({
     }
 
     instance
-      .get("/availability/available/1", {
+      .get("/availability/available/1", { //TODO: Change the ActivityId to the actual activityId (In Database as well μονο για εμενα)
         params: {
           date: formattedTempDate,
         },
@@ -71,7 +71,7 @@ const FilterComponents: React.FC<FilterComponentsProps> = ({
 
   };
   return (
-    <form className="flex flex-col items-center justify-center  mt-8">
+    <form className="flex flex-col items-center justify-center ">
       <div className="flex space-x-4 items-center mx-5">
         <DatePicker
           selectedDate={selectedDate}

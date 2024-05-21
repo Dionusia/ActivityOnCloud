@@ -9,7 +9,7 @@ import ActivityContext from "../ActivityContext";
 import BookingEngineList from "../Components/BookingEngineList";
 
 
-//για καποιο λογο καλειτε 2 φορεσ το component
+
 const BookingEngine: React.FC = () => {
     //#region states
     const [availableOptionsList, setAvailableOptionsList] = useState<ActivityOption[]>([]);
@@ -29,7 +29,7 @@ const BookingEngine: React.FC = () => {
         instance.get('/activity-option/of-admin?adminId=1')
         instance.get('/activity-option/of-admin?adminId=1')
             .then(response => {
-                //  console.log(response.data);
+                console.log("response from Options GET: ",response.data);
                 setAvailableOptionsList(response.data);                
             })
             .catch( error => {
@@ -52,6 +52,7 @@ const BookingEngine: React.FC = () => {
     }
 
     useEffect(() => {
+        console.log("optionsToBeRendered: ", optionsToBeRendered);
         createActivityInfoComponents(availableOptionsList,setOptionsToBeRendered);
     }, [timeSlotsResponseList]);
 
@@ -65,15 +66,16 @@ const BookingEngine: React.FC = () => {
 
 
     return (
-        <div className=" flex flex-col items-center w-screen h-screen">
-            <div className="fixed flex justify-center h-1/20 shadow-md pb-2 w-screen">
+        <div className=" flex flex-col w-screen h-screen space-y-4">
+            <div className=" flex justify-center h-1/10 shadow-md w-screen bg-white ">
                 <FilterComponents
                     setTimeSlotsResponse={setTimeSlotsResponseList} 
                     selectedPerson={selectedPerson} 
                     setSelectedPerson={setSelectedPerson} 
                     setFormattedDate={setFormattedDate} 
                     />
-            </div>
+            </div >
+            <div className="h-8/10 overflow-y-auto">
             <BookingEngineList 
                 optionsToBeRendered={optionsToBeRendered} 
                 selectedCard={selectedCard} 
@@ -81,10 +83,15 @@ const BookingEngine: React.FC = () => {
                 selectedPerson={selectedPerson as number} 
                 formattedDate={formattedDate} 
             /> 
-
-            <div className=' flex mb-0 w-screen shadow-md justify-center fixed bottom-0'
+            </div>
+            <div className=' flex mb-0 w-screen shadow-md justify-center bottom-0 bg-white h-1/10'
             style={{boxShadow: '0 -4px 6px -1px rgba(0, 0, 0, 0.1), 0 -2px 4px -1px rgba(0, 0, 0, 0.06)'}}>
-                <Button type="submit" className="bg-customGreen text-white my-4 " onClick={RedirectOnPersonalInfoPage}>Checkout</Button>
+                <Button 
+                type="submit" 
+                className={selectedCard === null ? "bg-gray-400 text-white my-4" : "bg-customGreen text-white my-4"}
+                onClick={RedirectOnPersonalInfoPage}
+                disabled={selectedCard === null}>
+                    Checkout</Button>
             </div>
                 
 

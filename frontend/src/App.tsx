@@ -6,6 +6,7 @@ import PersonalInfoForm from './Pages/PersonalInfoForm';
 import Login from './Pages/Login';
 import {ActivityOption, ExtendedUserInputArgs} from './InterfacesAndTypes/Interfaces';
 import ActivityContext from './ActivityContext';
+import SuccessfulBooking from './Components/SuccessfulBooking';
 import ActivityCreation from "./Pages/ActivityCreation";
 
 
@@ -25,6 +26,7 @@ const App: React.FC = () => {
             <Route path="/booking-engine" element ={<BookingEngine />} />
             <Route path="/personal-info" element ={<PersonalInfoForm />} />
             <Route path='/login' element={<Login />} />
+            <Route path="/successful-booking" element={<SuccessfulBooking/>} />
             <Route
                 path="/activity-creation"
                 element={<ActivityCreation />}

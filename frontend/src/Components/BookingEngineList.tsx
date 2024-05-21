@@ -8,13 +8,13 @@ import {  OptionToBeRendered,BookingEngineListProps } from '../InterfacesAndType
 const BookingEngineList: React.FC<BookingEngineListProps> = ({ optionsToBeRendered, selectedCard, setSelectedCard, selectedPerson, formattedDate }) => {
     
     return (
-    <div className="flex flex-col items-center space-y-6 my-24 w-screen overflow-y-auto px-6">
+    <div className="flex flex-col items-center space-y-6 w-screen px-6 py-1 ">
       {optionsToBeRendered.map((option, index) => {
         return (
           <div
             key={index}
             onClick={() => setSelectedCard(index)}
-            className={index == selectedCard ? 'rounded-lg border-[3px] border-customGreen' : ''}
+            className={index == selectedCard ? 'rounded-lg border-[3px] border-gray-700 ' : ''}
           >
             <ActivityOptionInfo
               activity={option.activityOption}
