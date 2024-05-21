@@ -1,3 +1,4 @@
+import { Axios, AxiosInstance } from "axios";
 import {Category, AvailabilityInfoList, TimeSlot } from "./Types";
 
 interface Activity {
@@ -93,6 +94,7 @@ export interface ActivityContextProps {
   setSelectedOption: (option: ActivityOption | null) => void;
   selectedInfoFinal: ExtendedUserInputArgs | null;
   setSelectedInfoFinal: (info: ExtendedUserInputArgs | null) => void;
+  instance: AxiosInstance | null;
 }
 
 export interface AddCategoryModalProps {

@@ -6,5 +6,6 @@ const ActivityContext = React.createContext<ActivityContextProps>({
   setSelectedOption: (option: ActivityOption | null) => {},
   selectedInfoFinal: null,
   setSelectedInfoFinal: (info: ExtendedUserInputArgs | null) => {},
+  instance: null,
 });
 export default ActivityContext;

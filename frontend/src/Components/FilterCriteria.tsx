@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import DatePicker from "./DatePick";
 import PersonPicker from "./PersonPicker";
 import SearchButton from "./SearchButton";
-import instance from "../AxiosConfig";
 import { FilterComponentsProps } from "../InterfacesAndTypes/Interfaces";
-
+import ActivityContext from "../ActivityContext";
 
 const FilterComponents: React.FC<FilterComponentsProps> = ({
   setTimeSlotsResponse,
@@ -16,6 +15,8 @@ const FilterComponents: React.FC<FilterComponentsProps> = ({
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
   let formattedTempDate = "test";
+  const activityContext = React.useContext(ActivityContext);
+  const instance = activityContext.instance;
   
 
   const handleDateChange = (date: Date | null) => {
@@ -48,26 +49,30 @@ const FilterComponents: React.FC<FilterComponentsProps> = ({
       console.log("Please select date and enter number of people");
       return;
     } else {
-      let offset = selectedDate.getTimezoneOffset();
-      let adjustedDate = new Date(selectedDate.getTime() - offset * 60 * 1000);
+      const offset = selectedDate.getTimezoneOffset();
+      const adjustedDate = new Date(selectedDate.getTime() - offset * 60 * 1000);
       setFormattedDate(adjustedDate.toISOString().split("T")[0]);
       formattedTempDate = adjustedDate.toISOString().split("T")[0];
       console.log("Formatted Date:", formattedTempDate);
     }
 
-    instance
-      .get("/availability/available/1", { //TODO: Change the ActivityId to the actual activityId (In Database as well μονο για εμενα)
-        params: {
-          date: formattedTempDate,
-        },
-      })
-      .then((response) => {
-        console.log("Request response for TimeSlots:", response.data);
-        setTimeSlotsResponse(response.data);
-      })
-      .catch((error) => {
-        console.log(error + ": Get time slots error");
-      });
+    if(instance !== null){
+      instance
+        .get("/availability/available/1", {
+          params: {
+            date: formattedTempDate,
+          },
+        })
+        .then((response) => {
+          console.log("Request response for TimeSlots:", response.data);
+          setTimeSlotsResponse(response.data);
+        })
+        .catch((error) => {
+          console.log(error + ": Get time slots error");
+        });
+    } else {
+      console.error('Axios instance is null in FilterComponents.');
+    }
 
   };
   return (

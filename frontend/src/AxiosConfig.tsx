@@ -1,11 +1,26 @@
-import axios from "axios";
+import axios, { AxiosInstance } from 'axios';
+import { NavigateFunction } from 'react-router-dom';
 
-const instance = axios.create({
-  baseURL: 'http://10.20.0.193:8081',
-  headers: {
-    'Content-Type': 'application/json',
-    // 'Authorization': 'Bearer your_token_here' 
-  }
-});
-
-export default instance;
+export function createAxiosInstance(navigate: NavigateFunction): AxiosInstance {
+  const axiosInstance = axios.create({
+    baseURL: 'http://localhost:8081',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
+  axiosInstance.interceptors.response.use(  
+    response => response,
+    error => {
+      console.log('Error in AxiosConfig:', error.response);
+      // console.log(error.response.status === 403);
+      
+      if(error.response.status === 403){
+        console.log('Redirecting to login');
+        window.location.href = '/login';
+        // navigate('/login');
+      }
+      return Promise.reject(error);
+    }
+  );
+  return axiosInstance;
+}
