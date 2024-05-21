@@ -2,6 +2,7 @@ package gr.knowledge.internship.activityoncloud.configs;
 
 import java.io.IOException;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,6 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
+@Log4j2
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 	private final JwtService jwtService;
@@ -43,16 +45,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 		// Check if token is expired
 		if (jwtService.isTokenExpired(jwt)) {
-			response.setStatus(HttpStatus.UNAUTHORIZED.value());
-			response.getWriter().write("Token has expired");
+			int statusCode = HttpStatus.UNAUTHORIZED.value();
+			response.setStatus(statusCode);
+			log.debug("Token has expired. Sending status code: {}", statusCode);
 			return;
 		}
 
 		// Check if token is valid
 		UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-		if (!jwtService.isTokenValid(jwt, userDetails)){
-			response.setStatus(HttpStatus.UNAUTHORIZED.value());
-			response.getWriter().write("Invalid token");
+		if (!jwtService.isTokenValid(jwt, userDetails)) {
+			int statusCode = HttpStatus.UNAUTHORIZED.value();
+			response.setStatus(statusCode);
+			log.debug("Invalid token. Sending status code: {}", statusCode);
 			return;
 		}
 
@@ -65,4 +69,5 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 		filterChain.doFilter(request, response);
 	}
+
 }

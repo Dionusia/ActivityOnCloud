@@ -50,10 +50,8 @@ public class AuthenticationController {
 			LoginResponseDTO loginResponse = new LoginResponseDTO(jwtToken, expiresIn, adminId);
 			return ResponseEntity.ok(loginResponse);
 
-		} catch (IllegalArgumentException ie) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 	}
 }
