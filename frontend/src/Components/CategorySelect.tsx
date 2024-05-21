@@ -15,8 +15,12 @@ const CategorySelect: React.FC<CategorySelectProps> = ({
       handleChange(e);
       if (e.target.value === "Add category") {
         handleChange({
-          target: { name: "category", value: "Categories" },
+          target: {
+            name: "category",
+            value: categories[categories.length - 1],
+          },
         });
+        console.log(categories[categories.length - 1]);
         onAddCategory();
       }
     }}

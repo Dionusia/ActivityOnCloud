@@ -37,8 +37,8 @@ const TimePicker: React.FC<TimeFieldProps> = ({
   };
   return (
     <>
-      <div className="flex flex-col   p-1 w-2/3 ">
-        <h2 className="text-2xl font-semibold text-gray-900">
+      <div className="flex flex-col   p-1 w-1/2 ">
+        <h2 className="text-2xl m-2 font-semibold text-gray-900">
           Schedule Your Opening Hours
         </h2>
 

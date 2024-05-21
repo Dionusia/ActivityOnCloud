@@ -39,8 +39,8 @@ const ActivityCreation: React.FC = () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
         setCategories((prevCategories) => [...prevCategories, response.data]);
+
         setOpenModal(false);
       })
       .catch((error) => {
@@ -69,6 +69,11 @@ const ActivityCreation: React.FC = () => {
     } else {
       setSelectedDays([...selectedDays, day]);
     }
+  };
+  const handleDelete = (index: number) => {
+    let newDataArray = [...timeData];
+    newDataArray.splice(index, 1);
+    setTimeData(newDataArray);
   };
 
   return (
@@ -139,7 +144,14 @@ const ActivityCreation: React.FC = () => {
     >
       {({ isSubmitting, handleChange }) => (
         <Form className="">
-          <div className="flex  w-full  m-2 p-1">
+          <AddCategoryModal
+            show={openModal}
+            onClose={() => setOpenModal(false)}
+            newCategory={newCategory}
+            setNewCategory={setNewCategory}
+            handleSave={handleSave}
+          />
+          <div className="flex  w-2/3  m-2 p-1">
             <Field
               className="flex-1 m-2  rounded-lg focus:ring-customGreen focus:border-customGreen"
               type="text"
@@ -163,14 +175,6 @@ const ActivityCreation: React.FC = () => {
                 Submit
               </Button>
             </div>
-
-            <AddCategoryModal
-              show={openModal}
-              onClose={() => setOpenModal(false)}
-              newCategory={newCategory}
-              setNewCategory={setNewCategory}
-              handleSave={handleSave}
-            />
           </div>
 
           <ActivityDetails />
@@ -181,11 +185,11 @@ const ActivityCreation: React.FC = () => {
               handleDayClick={handleDayClick}
               onTimeChange={handleTimeChange}
             />
-            <div className="flex flex-col">
+            <div className="flex flex-col max-h-[640px] overflow-y-auto max-w-96">
               {timeData.map((data, index) => (
                 <div
                   key={index}
-                  className="  bg-white rounded-lg p-6 shadow-lg mb-4"
+                  className="relative bg-white rounded-lg p-6 shadow-lg mb-4"
                 >
                   <p className="text-lg font-semibold mb-2">
                     Selected Days:
@@ -199,6 +203,12 @@ const ActivityCreation: React.FC = () => {
                     End Time:{" "}
                     <span className="font-normal">{data.endTime}</span>
                   </p>
+                  <button
+                    className="mt-auto self-end p-2  bg-red-500  text-white rounded-lg hover:bg-customGreen-dark"
+                    onClick={() => handleDelete(index)}
+                  >
+                    Delete
+                  </button>
                 </div>
               ))}
             </div>
