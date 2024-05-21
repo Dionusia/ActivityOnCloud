@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
+import { NavigateFunction } from 'react-router-dom';
 
-export function createAxiosInstance(navigate: Function): AxiosInstance {
+export function createAxiosInstance(navigate: NavigateFunction): AxiosInstance {
   const axiosInstance = axios.create({
     baseURL: 'http://localhost:8081',
     headers: {
@@ -10,8 +11,13 @@ export function createAxiosInstance(navigate: Function): AxiosInstance {
   axiosInstance.interceptors.response.use(  
     response => response,
     error => {
-      if(error.response && error.response.status === 401){
-        navigate('/login');
+      console.log('Error in AxiosConfig:', error.response);
+      // console.log(error.response.status === 403);
+      
+      if(error.response.status === 403){
+        console.log('Redirecting to login');
+        window.location.href = '/login';
+        // navigate('/login');
       }
       return Promise.reject(error);
     }
