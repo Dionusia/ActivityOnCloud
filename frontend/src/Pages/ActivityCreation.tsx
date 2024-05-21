@@ -151,9 +151,10 @@ const ActivityCreation: React.FC = () => {
             setNewCategory={setNewCategory}
             handleSave={handleSave}
           />
-          <div className="flex  w-2/3  m-2 p-1">
+
+          <div className="flex w-full  m-2 p-1">
             <Field
-              className="flex-1 m-2  rounded-lg focus:ring-customGreen focus:border-customGreen"
+              className="w-1/2 flex-1 m-2 rounded-lg focus:ring-customGreen focus:border-customGreen"
               type="text"
               name="title"
               placeholder="Title"
@@ -167,25 +168,24 @@ const ActivityCreation: React.FC = () => {
                 setOpenModal(true);
               }}
             />
-            <div>
-              <Button
-                className="w-3/4  md:w-auto flex-1 m-2  bg-customGreen text-white rounded-lg hover:bg-customGreen-dark"
-                type="submit"
-              >
-                Submit
-              </Button>
-            </div>
+
+            <Button
+              className="m-2  justify-end bg-customGreen text-white rounded-lg hover:bg-customGreen-dark"
+              type="submit"
+            >
+              Submit
+            </Button>
           </div>
 
           <ActivityDetails />
-          <div className="flex">
+          <div className="flex m-2">
             <TimePicker
               selectedDays={selectedDays}
               setSelectedDays={setSelectedDays}
               handleDayClick={handleDayClick}
               onTimeChange={handleTimeChange}
             />
-            <div className="flex flex-col max-h-[640px] overflow-y-auto max-w-96">
+            <div className="flex flex-col max-h-[640px] overflow-y-auto mr-2 w-1/4">
               {timeData.map((data, index) => (
                 <div
                   key={index}

@@ -10,7 +10,7 @@ const CategorySelect: React.FC<CategorySelectProps> = ({
   <Field
     as="select"
     name="category"
-    className="flex-1 m-2 rounded-lg focus:ring-customGreen focus:border-customGreen"
+    className=" w-1/3 m-2 rounded-lg focus:ring-customGreen focus:border-customGreen"
     onChange={(e: any) => {
       handleChange(e);
       if (e.target.value === "Add category") {

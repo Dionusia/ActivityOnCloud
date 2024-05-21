@@ -34,7 +34,7 @@ const ActivityDetails: React.FC = () => (
         className=" w-2/3  m-2 rounded-lg bg-white  h-1/4 focus:ring-customGreen focus:border-customGreen"
       />
     </div>
-    <div className="flex w-1/3 items-center">
+    <div className="flex w-1/3 items-center justify-end">
       <Field
         type="file"
         name="photo"
