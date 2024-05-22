@@ -1,3 +1,4 @@
+import { AxiosInstance } from "axios";
 import {Category, AvailabilityInfoList, TimeSlot } from "./Types";
 
 interface Activity {
@@ -93,6 +94,7 @@ export interface ActivityContextProps {
   setSelectedOption: (option: ActivityOption | null) => void;
   selectedInfoFinal: ExtendedUserInputArgs | null;
   setSelectedInfoFinal: (info: ExtendedUserInputArgs | null) => void;
+  instance: AxiosInstance | null;
 }
 
 export interface AddCategoryModalProps {
@@ -122,4 +124,10 @@ export interface BookingEngineListProps {
     setSelectedCard: (index: number) => void;
     selectedPerson: number;
     formattedDate: string;
+}
+
+export interface User {
+  token: string;
+  expiresIn: string;
+  adminId: string;
 }

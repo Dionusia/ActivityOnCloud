@@ -1,7 +1,7 @@
 import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { ActivityOptionProps, Props } from "../InterfacesAndTypes/Types";
+import { ActivityOptionProps} from "../InterfacesAndTypes/Types";
 import { Card } from "flowbite-react";
 
 
@@ -21,7 +21,7 @@ const responsive = {
 };
 
 const ActivityOptionCards: React.FC<ActivityOptionProps> = ({activityOption}) => {
-  const photo = [activityOption];
+  // const photo = [activityOption];
   console.log(activityOption);
   
   return (
