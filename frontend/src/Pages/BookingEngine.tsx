@@ -27,7 +27,7 @@ const BookingEngine: React.FC = () => {
     
     useEffect(() => {
         if(instance !== null) {
-            instance.get('/activity-option/of-admin?adminId=1')
+            instance.get('/activity-option/of-admin?adminId=52') //CAREFULL hardcoded adminId
                 .then(response => {
                     //  console.log(response.data);
                     setAvailableOptionsList(response.data);                
@@ -84,7 +84,8 @@ const BookingEngine: React.FC = () => {
 
 
     return (
-        <div className=" flex flex-col w-screen h-screen space-y-4">
+        <div className=" flex flex-col w-screen  space-y-4"
+        style={{height: `${window.innerHeight}px`}}>
             <div className=" flex justify-center h-1/10 shadow-md w-screen bg-white ">
                 <FilterComponents
                     setTimeSlotsResponse={setTimeSlotsResponseList} 
@@ -102,7 +103,7 @@ const BookingEngine: React.FC = () => {
                 formattedDate={formattedDate} 
             /> 
             </div>
-            <div className=' flex mb-0 w-screen shadow-md justify-center bottom-0 bg-white h-1/10'
+            <div className=' flex mb-0 w-screen shadow-md justify-center bottom-0 bg-white h-1/10' 
             style={{boxShadow: '0 -4px 6px -1px rgba(0, 0, 0, 0.1), 0 -2px 4px -1px rgba(0, 0, 0, 0.06)'}}>
                 <Button 
                 type="submit" 

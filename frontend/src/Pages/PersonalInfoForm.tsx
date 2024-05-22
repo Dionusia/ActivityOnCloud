@@ -66,7 +66,8 @@ const PersonalInfoForm = () => {
     
         
     return (
-        <div>
+        <div
+        style={{height: `${window.innerHeight}px`}}>
         <h1 className="text-center mb-5 shadow-md">Personal Information</h1>
                 <form onSubmit={formik.handleSubmit} className="px-4 flex-col items-center">
                     <div className="mb-2 block">

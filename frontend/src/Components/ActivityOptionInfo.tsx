@@ -5,11 +5,9 @@ import {
         ActivityOptionTitleProp,
         ActivityOptionDescriptionProp,
         TimePickerProp,
-        ActivityOptionInfoParentProps } from "../InterfacesAndTypes/Interfaces";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { Card } from "flowbite-react";
+        ActivityOptionInfoParentProps } from "../InterfacesAndTypes/Interfaces";;
 import ActivityContext from "../ActivityContext";
+import Carousel from "react-multi-carousel";
 
 
 //#region child components
@@ -42,43 +40,46 @@ const ActivityOptionDescription: React.FC<ActivityOptionDescriptionProp> = ({ te
 
 const TimePicker: React.FC<TimePickerProp> = ({selectedPersons, timeCapacity, timeList, selectedTime, setSelectedTime }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
+    //setSelectedTime(null);
+
+    const responsive = {
+        desktop: {
+          breakpoint: { max: 3000, min: 1024 },
+          items: 3,
+        },
+        tablet: {
+          breakpoint: { max: 1024, min: 464 },
+          items: 3,
+        },
+        mobile: {
+          breakpoint: { max: 464, min: 0 },
+          items: 3,
+        },
+      };
+
 
     // Convert the values to numbers
     const capacity = timeCapacity.map(value => parseInt(value));
-    const handlePrev = () => {
-        if(currentIndex > 0){
-            setCurrentIndex(currentIndex - 1);
-            // setSelectedTime(timeList[currentIndex - 1]);
-        }
-    }
-    const handleNext = () => {
-        if(currentIndex < timeList.length - 3){
-            setCurrentIndex(currentIndex + 1);
-            // setSelectedTime(timeList[currentIndex + 1]);
-        }
-    }
+  
     return(
-        <div className="flex max-w-4/5 space-x-2 ">
-            <button onClick={handlePrev} className={`rounded ${currentIndex > 0 ? 'text-black' : 'text-gray-200'}`}>
-                <FontAwesomeIcon icon={faChevronLeft} />
-            </button>
-            <div className="flex justify-center space-x-1">
-            {timeList.slice(currentIndex, currentIndex + 3).map((time, index) => {
+        <div className=" relative p-2 overflow-hidden w-[270px] h-[85px] pb-4" >
+            <Carousel responsive={responsive} className="py-2 items-center" showDots={true} arrows={false} renderDotsOutside={true} >
+            {timeList.map((time, index) => {
                 const isDisabled = capacity[index] < selectedPersons;
                 return (
                     <div
                         key={index} 
-                        className={` p-1 shadow-md rounded-xl hover:cursor-pointer ${time === selectedTime && !isDisabled ? 'border-2 border-black rounded-xl' : ''} ${isDisabled ? 'bg-gray-300 text-white' : ''}`}
+                        className={`h-[40px] mx-1 p-1 shadow-md rounded-xl hover:cursor-pointer ${time === selectedTime && !isDisabled ? 'border-2 border-black rounded-xl' : ''} ${isDisabled ? 'bg-gray-300 text-white' : ''}`}
                         onClick={isDisabled ? undefined : () => setSelectedTime(time)}
                     >
-                        {time}
+                        <div className="justify-center text-center">
+                            {time}
+                        </div>
+                        
                     </div>
                 );
             })} 
-        </div>
-            <button onClick={handleNext} className={`rounded ${currentIndex < (timeList.length - 3) ? 'text-black' : 'text-gray-200'}`}>
-                <FontAwesomeIcon icon={faChevronRight} />
-            </button>
+            </Carousel>
         </div>
     )
 }
@@ -97,7 +98,7 @@ const ActivityOptionInfo: React.FC<ActivityOptionInfoParentProps> = ({activity, 
     }
 
     
-    const [selectedTime, setSelectedTime] = useState(startTimes[0]);
+    const [selectedTime, setSelectedTime] = useState("");
     const activityContext = React.useContext(ActivityContext);
     
     useEffect(() => {

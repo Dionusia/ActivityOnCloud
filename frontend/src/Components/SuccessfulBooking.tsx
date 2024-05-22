@@ -44,7 +44,8 @@ const SuccessfulBooking = () => {
     }
 
     return (
-        <div>
+        <div
+        style={{height: `${window.innerHeight}px`}}>
             <h1 className='mt-10 text-center text-4xl font-roboto-slab font-bold text-customGreen'>Successful Booking!</h1>
             <div className='flex justify-center'>
                 <img 
