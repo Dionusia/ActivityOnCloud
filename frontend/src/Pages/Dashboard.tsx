@@ -84,15 +84,15 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="flex flex-col ">
-      <div className="fixed top-0 left-0 right-0 flex justify-between items-center mb-6 py-4 px-2 shadow-md bg-white">
-        <h1 className="mt-4">Dashboard</h1>
+      <div className="fixed w-screen flex justify-between items-cente z-10 mb-6 py-4 px-2 shadow-md bg-white">
+        <h1 className="mt-6">Dashboard</h1>
         <Button 
-          className="bg-customGreen text-white rounded-full mt-4"
+          className="bg-customGreen text-white rounded-full mt-6 mr-4"
           onClick={() => navigate('/activity-creation')}>
           Import new Activity
         </Button>
       </div>
-      <div className=" mt-24 flex flex-col justify-center text-center">
+      <div className="z-0 mt-24 flex flex-col justify-center text-center overflow-y-auto">
         Bookings
         <SearchByName booking={bookingsList} />
         <br />

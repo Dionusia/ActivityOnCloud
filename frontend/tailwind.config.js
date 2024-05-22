@@ -22,6 +22,13 @@ module.exports = {
       fontWeight: {
         'extra-light': 200,
       },
+      width: {
+        '99': '99%',
+      },
+      height: {
+        '1/10': '10%',
+        '8/10': '80%',
+      },
     },
   },
 

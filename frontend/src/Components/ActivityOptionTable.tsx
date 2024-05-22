@@ -35,22 +35,22 @@ const ActivityOptionCards: React.FC<ActivityOptionProps> = ({activityOption}) =>
           
           return(
             <div className="ml-[52px] max-w-[384px] min-w-[384px]" key={index}>
-              <Card className="relative w-[360px] h-[480px] mb-6"> 
+              <div className="relative w-[360px] h-[480px] mb-6 bg-white shadow-md rounded-md"> 
                   <img
-                    className="object-cover rounded-t-lg w-[360px] mt-0"
+                    className="object-cover rounded-t-lg w-full mt-0"
                     style={{ height: '200px' }}
                     src={`Photos/${activityItem.activityImageUrl}`}
                     alt={`${activityItem.activityImageUrl}`}
                   />
-                  <div className="bottom-2 font-roboto-slub mt-4 mx-2">
+                  <div className=" flex flex-col justify-center bottom-2 font-roboto-slub mt-4 mx-2 items-center">
                     <h2 className=" font-medium text-lg italic mb-2">{activityItem.activityName}</h2>
-                    <p className="italic mx-2 mb-2">{activityItem.activityDescription}</p>
-                    <div className="absolute bottom-2 items-centered w-full">
-                      <p className=" bottom-2 pb-2 ">Duration: {activityItem.activityDuration}</p>
-                      <p className=" bottom-2 pb-2">Capacity: {activityItem.activityCapacity}</p>
+                    <p className="italic mx-2 mb-1">{activityItem.activityDescription}</p>
+                    <div className="absolute bottom-2 items-centered ">
+                      <p className="text-center bottom-2 pb-2 ">Duration: {activityItem.activityDuration}</p>
+                      <p className="text-center bottom-2 pb-2">Capacity: {activityItem.activityCapacity}</p>
                     </div>
                   </div>
-              </Card>
+              </div>
             </div>)
         }
       )}
