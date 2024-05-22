@@ -10,12 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
-//@Order(Ordered.HIGHEST_PRECEDENCE)
-//@ControllerAdvice
+@Order(Ordered.HIGHEST_PRECEDENCE)
+@ControllerAdvice
 public class GlobalExceptionHandler {
 
 	@ExceptionHandler(IllegalArgumentException.class)
@@ -40,5 +41,13 @@ public class GlobalExceptionHandler {
 		body.put(enf.getMessage(), enf.getCause());
 		log.error(enf.getMessage());
 		return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@ExceptionHandler(ExpiredJwtException.class)
+	public ResponseEntity<Object> handleExpiredJwtException(ExpiredJwtException eje) {
+		Map<String, Object> body = new HashMap<>();
+		body.put(eje.getMessage(), eje.getCause());
+		log.error(eje.getMessage());
+		return new ResponseEntity<>(body, HttpStatus.UNAUTHORIZED);
 	}
 }
