@@ -69,8 +69,8 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="flex flex-col ">
-      <div className="fixed w-screen flex justify-between items-cente z-10 mb-6 py-4 px-2 shadow-md bg-white">
-        <h1 className="mt-6">Dashboard</h1>
+      <div className="fixed w-screen flex justify-between items-cente z-10 mb-6 py-2 px-2 shadow-md bg-white">
+        <h1 className="justify-center mt-8">Dashboard</h1>
         <Button 
           className="bg-customGreen text-white rounded-full mt-6 mr-4"
           onClick={() => navigate('/activity-creation')}>

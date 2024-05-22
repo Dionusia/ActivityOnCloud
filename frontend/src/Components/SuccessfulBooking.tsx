@@ -63,7 +63,7 @@ const SuccessfulBooking = () => {
                 <p className='text-center font-roboto-slab '>{data.time}</p>
                 </div>
             </div>
-            <div className='fixed inset-x-0 bottom-8 flex justify-center'>
+            <div className='my-5 inset-x-0 bottom-8 flex justify-center'>
                 <Button 
                 className="bg-customGreen text-white px-10 py-2 "
                 onClick={() => navigate('/booking-engine')}>Book another Activity</Button>

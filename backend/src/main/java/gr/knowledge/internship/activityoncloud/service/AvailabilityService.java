@@ -10,6 +10,7 @@ import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 
 import gr.knowledge.internship.activityoncloud.helper.AvailabileTimeSlotsMapHelper;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,7 @@ import jakarta.persistence.EntityNotFoundException;
 
 @Service
 @Transactional
+@Log4j2
 public class AvailabilityService {
 	@Autowired
 	private AvailabilityRepository availabilityRepository;
@@ -113,14 +115,16 @@ public class AvailabilityService {
 	private List<TimeSlotDTO> calculateTimeSlotsForOption(AvailabilityDTO available, List<BookingDTO> bookingsList,
 			LocalDate date) {
 		ActivityOptionDTO option = available.getOption();
-		LocalTime currentSlotStart = available.getStartTime();
+		LocalDateTime currentSlotStart = LocalDateTime.of(date, available.getStartTime());
 		List<TimeSlotDTO> timeslots = new ArrayList<>();
-		while (currentSlotStart.isBefore(available.getEndTime())) {
-			LocalDateTime currentDatetime = LocalDateTime.of(date, currentSlotStart);
-			List<BookingDTO> bookingsOfCurrentOptionAndDate = this.getBookingsForCurrent(bookingsList, currentDatetime,
+		while (currentSlotStart.isBefore(LocalDateTime.of(date, available.getEndTime()))) {
+			log.debug(currentSlotStart);
+			log.debug(available.getEndTime());
+			log.debug(option.getDuration());
+			List<BookingDTO> bookingsOfCurrentOptionAndDate = this.getBookingsForCurrent(bookingsList, currentSlotStart,
 					option.getId());
 			timeslots.add(
-					TimeSlotDTO.from(option, LocalDateTime.of(date, currentSlotStart), bookingsOfCurrentOptionAndDate));
+					TimeSlotDTO.from(option, currentSlotStart, bookingsOfCurrentOptionAndDate));
 			currentSlotStart = currentSlotStart.plus(option.getDuration());
 		}
 		return timeslots;

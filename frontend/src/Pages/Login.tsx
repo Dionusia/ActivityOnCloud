@@ -26,7 +26,7 @@ const Login: React.FC = () => {
     return (
         <div className="flex flex-col justify-center items-center h-screen w-screen">
             <h1 className="mb-10 text-xl" >Welcome</h1>
-            <div className="flex flex-col justify-center items-center space-y-3 w-11/12 max-w-2xl">
+            <div className="flex flex-col justify-center items-center space-y-3 w-11/12 max-w-sm">
                 <div className="flex flex-col space-y-2 text-center p-1 w-full">
                     <label htmlFor="Email">Username</label>
                     <input 
