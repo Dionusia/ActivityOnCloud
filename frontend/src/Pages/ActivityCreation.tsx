@@ -13,6 +13,7 @@ const ActivityCreation: React.FC = () => {
   const [openModal, setOpenModal] = useState(false);
   const [newCategory, setNewCategory] = useState("");
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
+  const [photo, setPhoto] = useState<string>("");
   const [timeData, setTimeData] = useState<
     Array<{ days: string[]; startTime: string; endTime: string }>
   >([]);
@@ -120,7 +121,7 @@ const ActivityCreation: React.FC = () => {
           description: values.description,
           pricePerPerson: values.price,
           capacity: values.capacity,
-          imageURL: null,
+          imageURL: photo,
           activityName: selectedCategory.name,
           activityId: selectedCategory.id,
           adminId: 1,
@@ -187,7 +188,9 @@ const ActivityCreation: React.FC = () => {
             </Button>
           </div>
 
-          <ActivityDetails />
+          <ActivityDetails
+          setPhoto={setPhoto} 
+          />
           <div className="flex m-2">
             <TimePicker
               selectedDays={selectedDays}
