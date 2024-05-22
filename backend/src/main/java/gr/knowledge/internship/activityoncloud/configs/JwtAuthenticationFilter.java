@@ -41,13 +41,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		}
 		final String jwt = authHeader.substring(7);
 		final String userEmail = jwtService.extractUsername(jwt);
-		try {
-			jwtService.isTokenExpired(jwt);
-
-		} catch (ExpiredJwtException e) {
-			response.setStatus(HttpStatus.UNAUTHORIZED.value());
-			return;
-		}
 		UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
 		if (jwtService.isTokenValid(jwt, userDetails)) {
 			Authentication authToken = new UsernamePasswordAuthenticationToken(userDetails, null,
