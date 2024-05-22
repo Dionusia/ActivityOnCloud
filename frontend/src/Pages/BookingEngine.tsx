@@ -4,6 +4,8 @@ import { ActivityOption, OptionToBeRendered, TimeSlotsResponse, } from "../Inter
 import { Button } from "flowbite-react";
 import ActivityContext from "../ActivityContext";
 import BookingEngineList from "../Components/BookingEngineList";
+import { AvailabilityInfoList } from "../InterfacesAndTypes/Types";
+
 import { useNavigate } from "react-router-dom";
 
 
@@ -40,15 +42,30 @@ const BookingEngine: React.FC = () => {
 
     const createActivityInfoComponents = (availableOptionsList: ActivityOption[], setOptionsToBeRendered:React.Dispatch<React.SetStateAction<OptionToBeRendered[]>>) => {
         
-        const newOptions = [];
+        interface NewOption{
+            activityOption: ActivityOption;
+            availabilityInfoList: AvailabilityInfoList;
+        }
+
+        let newOptions: NewOption[] = [];
+
         
         for (let i = 0; i < availableOptionsList.length; i++) {
             for(let j = 0; j< timeSlotsResponseList.length; j++) {
                 if( availableOptionsList[i].id == timeSlotsResponseList[j].optionId) {
-                    newOptions.push({activityOption: availableOptionsList[i], availabilityInfoList: timeSlotsResponseList[j].availabilityInfoList});
+                    //check for dubliacte options
+                    let existingOption = newOptions.find(option => option.activityOption.id === availableOptionsList[i].id);
+                    if(existingOption){
+                        existingOption.availabilityInfoList.timeslots.push(...timeSlotsResponseList[j].availabilityInfoList.timeslots);
+                    }
+                    else{
+                        newOptions.push({activityOption: availableOptionsList[i], availabilityInfoList: timeSlotsResponseList[j].availabilityInfoList});
+                    }
+
                 }
             }
         }
+        console.log("newOptions: ", newOptions);
         setOptionsToBeRendered(newOptions);
     }
 
@@ -89,7 +106,7 @@ const BookingEngine: React.FC = () => {
             style={{boxShadow: '0 -4px 6px -1px rgba(0, 0, 0, 0.1), 0 -2px 4px -1px rgba(0, 0, 0, 0.06)'}}>
                 <Button 
                 type="submit" 
-                className={selectedCard === null ? "bg-gray-400 text-white my-4" : "bg-customGreen text-white my-4"}
+                className={`flex items-center justify-center ${selectedCard === null ? "bg-gray-400 text-white my-4 px-4 py-4" : "bg-customGreen text-white my-4 px-4 py-4"}`}
                 onClick={RedirectOnPersonalInfoPage}
                 disabled={selectedCard === null}>
                     Checkout</Button>
