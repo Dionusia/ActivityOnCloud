@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import BookingsTable from "../Components/BookingsTable";
 import { Booking } from "../InterfacesAndTypes/Types";
 import { Option } from "../InterfacesAndTypes/Types";
 import ActivityOptionTable from "../Components/ActivityOptionTable";
@@ -8,7 +7,6 @@ import ActivityContext from "../ActivityContext";
 import Cookies from "js-cookie";
 import { Button } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
-import { BookingDataInterface } from "../InterfacesAndTypes/Interfaces";
 
 
 const Dashboard: React.FC = () => {
@@ -18,14 +16,12 @@ const Dashboard: React.FC = () => {
   const activityContext = React.useContext(ActivityContext);
   const instance = activityContext.instance;
   const adminId = Cookies.get("adminId");
-  console.log('AdminId:', adminId);
   
 
   useEffect(() => {
     const fetchBookings = async () => {
       if(instance !== null) {
-        instance
-          .get("/booking/of-admin?adminId="+adminId)
+        instance.get("/booking/of-admin?adminId="+adminId)
           .then((response) => {
             console.log('Response:', response.data);
             
