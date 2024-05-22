@@ -45,6 +45,6 @@ public class AuthenticationService {
 	public User authenticate(LoginUserDTO input) {
 		authenticationManager
 				.authenticate(new UsernamePasswordAuthenticationToken(input.getEmail(), input.getPassword()));
-		return userRepository.findByEmail(input.getEmail()).orElseThrow();
+		return userRepository.findByEmail(input.getEmail()).orElseThrow(); //TODO throw UserNotFound or similar
 	}
 }

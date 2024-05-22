@@ -1,14 +1,12 @@
-import React, { useContext, useDebugValue, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import ActivityOptionInfo from "../Components/ActivityOptionInfo";
+import React, { useEffect, useState } from "react";
 import FilterComponents from "../Components/FilterCriteria";
-import instance from "../AxiosConfig";
-import { ActivityOption, OptionToBeRendered, TimeSlotsResponse, UserInputArgs, } from "../InterfacesAndTypes/Interfaces";
+import { ActivityOption, OptionToBeRendered, TimeSlotsResponse, } from "../InterfacesAndTypes/Interfaces";
 import { Button } from "flowbite-react";
 import ActivityContext from "../ActivityContext";
 import BookingEngineList from "../Components/BookingEngineList";
 import { AvailabilityInfoList } from "../InterfacesAndTypes/Types";
 
+import { useNavigate } from "react-router-dom";
 
 
 const BookingEngine: React.FC = () => {
@@ -19,24 +17,28 @@ const BookingEngine: React.FC = () => {
     const [selectedPerson, setSelectedPerson] = useState<number | null>(null);
     const [formattedDate, setFormattedDate] = useState<string>("");
     const [optionsToBeRendered, setOptionsToBeRendered] = useState<OptionToBeRendered[]>([]);
-    //#endregion
-    const activityContext = useContext(ActivityContext);
     const navigate = useNavigate();
+    const activityContext = React.useContext(ActivityContext);
+    const instance = activityContext.instance;
+    //#endregion
     const RedirectOnPersonalInfoPage = () => {
         navigate('/personal-info');
     };
-
+    
     useEffect(() => {
-        instance.get('/activity-option/of-admin?adminId=1')
-        instance.get('/activity-option/of-admin?adminId=1')
-            .then(response => {
-                console.log("response from Options GET: ",response.data);
-                setAvailableOptionsList(response.data);                
-            })
-            .catch( error => {
-                console.error('There was an error retrieving the activities array' + error);
-            })
-    },[]); 
+        if(instance !== null) {
+            instance.get('/activity-option/of-admin?adminId=1')
+                .then(response => {
+                    //  console.log(response.data);
+                    setAvailableOptionsList(response.data);                
+                })
+                .catch( error => {
+                    console.error('There was an error retrieving the activities array' + error);
+                })
+            } else {
+                console.error('Axios instance is null in BookingEngine.');
+            }
+        },[instance]); 
 
     const createActivityInfoComponents = (availableOptionsList: ActivityOption[], setOptionsToBeRendered:React.Dispatch<React.SetStateAction<OptionToBeRendered[]>>) => {
         
