@@ -39,6 +39,6 @@ public class LoggingAspect {
 	private void afterServiceMethod(JoinPoint joinPoint, Object result) {
 		String joinMethod = joinPoint.getSignature().getName();
 		String joinClass = joinPoint.getSignature().getDeclaringType().getSimpleName();
-		log.debug("Exited " + joinMethod + " in " + joinClass + " with return statement " + result.toString());
+		log.debug("Exited " + joinMethod + " in " + joinClass + " with return statement " + result);
 	}
 }

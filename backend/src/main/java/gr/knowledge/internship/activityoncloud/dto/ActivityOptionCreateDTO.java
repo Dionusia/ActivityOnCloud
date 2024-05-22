@@ -27,7 +27,6 @@ public class ActivityOptionCreateDTO {
 	private BigDecimal pricePerPerson;
 	private int capacity;
 	private String imageURL;
-	private String activityName;
 	private Long activityId;
 	private Long adminId;
 	private List<AvailabilityDTO> availabilityList;
@@ -35,11 +34,7 @@ public class ActivityOptionCreateDTO {
 	public ActivityOptionDTO extractActivityOption() {
 		ActivityOptionDTO activityOption = new ActivityOptionDTO();
 		ActivityDTO activity = new ActivityDTO();
-		ActivityAdminDTO admin = new ActivityAdminDTO();
-		admin.setId(this.getAdminId());
-		activity.setAdmin(admin);
 		activity.setId(this.getActivityId());
-		activity.setName(this.getActivityName());
 		activityOption.setActivity(activity);
 		activityOption.setCapacity(this.getCapacity());
 		activityOption.setDescription(this.getDescription());

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Formik, Form, Field, useFormikContext } from "formik";
-import { Button, Modal } from "flowbite-react";
-import instance from "../AxiosConfig";
+import { Formik, Form, Field } from "formik";
+import { Button} from "flowbite-react";
 import { Category } from "../InterfacesAndTypes/Types";
 import AddCategoryModal from "../Components/AddCategoryModal";
 import CategorySelect from "../Components/CategorySelect";
 import ActivityDetails from "../Components/ActivityDetails";
 import TimePicker from "../Components/TimeField";
+import ActivityContext from "../ActivityContext";
 
 const ActivityCreation: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -16,7 +16,8 @@ const ActivityCreation: React.FC = () => {
   const [timeData, setTimeData] = useState<
     Array<{ days: string[]; startTime: string; endTime: string }>
   >([]);
-
+  const activityContext = React.useContext(ActivityContext);
+  const instance = activityContext.instance;
   const handleTimeChange = (startTime: string, endTime: string) => {
     // setTimeData({ days: selectedDays, startTime, endTime });
     setTimeData((prevData) => [
@@ -27,35 +28,45 @@ const ActivityCreation: React.FC = () => {
   };
 
   const handleSave = () => {
-    instance
-      .post("/activity/save", {
-        name: newCategory,
-        admin: {
-          id: 1,
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-        setCategories((prevCategories) => [...prevCategories, response.data]);
-        setOpenModal(false);
-      })
-      .catch((error) => {
-        console.error("There was an error saving the category: ", error);
-      });
+    if(instance !== null){
+      instance
+        .post("/activity/save", {
+          name: newCategory,
+          admin: {
+            id: 1,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          setCategories((prevCategories) => [...prevCategories, response.data]);
+          setOpenModal(false);
+        })
+        .catch((error) => {
+          console.error("There was an error saving the category: ", error);
+        });
+    } else {
+      console.error('Axios instance is null in ActivityCreation in activity/save.');
+    }
+      
   };
 
   useEffect(() => {
-    instance
-      .get("/activity")
-      .then((response) => {
-        setCategories(response.data);
-      })
-      .catch((error) => {
-        console.error(
-          "There was an error retrieving the activities array" + error
-        );
-      });
-  }, []);
+    if(instance !== null){
+      instance
+        .get("/activity")
+        .then((response) => {
+          setCategories(response.data);
+        })
+        .catch((error) => {
+          console.error(
+            "There was an error retrieving the activities array" + error
+          );
+        });
+      } else {
+        console.error('Axios instance is null in ActivityCreation get activity.');
+      }
+    }, []);
+
 
   const handleDayClick = (day: string) => {
     if (selectedDays.includes(day)) {
@@ -105,21 +116,24 @@ const ActivityCreation: React.FC = () => {
           pricePerPerson: values.price,
           imageUrl: null,
         };
-
-        instance
-          .post("/activity-option/save", data)
-          .then((response) => {
-            console.log("Data submitted successfully: ", response);
-            alert("Data submitted successfully");
-            setSubmitting(false);
-          })
-          .catch((error) => {
-            console.error(
-              "There was an error submitting the form: ",
-              error.response ? error.response.data : error
-            );
-            setSubmitting(false);
-          });
+        if(instance !== null){
+          instance
+            .post("/activity-option/save", data)
+            .then((response) => {
+              console.log("Data submitted successfully: ", response);
+              alert("Data submitted successfully");
+              setSubmitting(false);
+            })
+            .catch((error) => {
+              console.error(
+                "There was an error submitting the form: ",
+                error.response ? error.response.data : error
+              );
+              setSubmitting(false);
+            });
+        } else {
+          console.error('Axios instance is null in ActivityCreation.');
+        }
       }}
     >
       {({ isSubmitting, handleChange }) => (
