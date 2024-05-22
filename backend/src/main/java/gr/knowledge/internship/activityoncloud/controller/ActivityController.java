@@ -45,4 +45,5 @@ public class ActivityController {
 	public void deleteActivity(@RequestBody ActivityDTO activity) {
 		activityService.deleteActivity(activity);
 	}
+
 }

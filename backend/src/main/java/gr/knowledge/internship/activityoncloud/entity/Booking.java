@@ -1,7 +1,9 @@
 package gr.knowledge.internship.activityoncloud.entity;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,6 +15,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,19 +33,41 @@ public class Booking implements Serializable {
 	@NotNull
 	@GeneratedValue(generator = "booking_seq", strategy = GenerationType.SEQUENCE)
 	@SequenceGenerator(name = "booking_seq", sequenceName = "booking_seq")
-	private long id;
+	private Long id;
+	@Column(name = "uuid")
+	@NotNull
+	private UUID uuid;
+	@Column(name = "name")
+	@Size(max = 32)
+	@NotNull
+	private String name;
+	@Column(name = "surname")
+	@Size(max = 48)
+	@NotNull
+	private String surname;
+	@Column(name = "phone")
+	@Size(max = 13)
+	@NotNull
+	private String phone;
+	@Column(name = "email")
+	@Size(max = 48)
+	@NotNull
+	private String email;
+	@ManyToOne
+	@JoinColumn(name = "option_id")
+	@NotNull
+	private ActivityOption activityOption;
+	@ManyToOne
 	@JoinColumn(name = "admin_id")
-	@ManyToOne
 	@NotNull
-	private Admin admin;
-	@JoinColumn(name = "activity_id")
-	@ManyToOne
-	@NotNull
-	private Activity activity;
+	private ActivityAdmin activityAdmin;
 	@Column(name = "start_time")
 	@NotNull
-	private Timestamp startTime;
-	@Column(name = "end_time")
+	private LocalDateTime startTime;
+	@Column(name = "persons")
 	@NotNull
-	private Timestamp endTime;
+	private Integer persons;
+	@Column(name = "total_price", precision = 10, scale = 2)
+	@NotNull
+	private BigDecimal totalPrice;
 }

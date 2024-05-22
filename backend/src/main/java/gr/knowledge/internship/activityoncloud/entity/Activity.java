@@ -12,6 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,11 +28,15 @@ public class Activity implements Serializable {
 	@Id
 	@Column(name = "id")
 	@NotNull
-	@GeneratedValue(generator = "admin_seq", strategy = GenerationType.SEQUENCE)
-	@SequenceGenerator(name = "admin_seq", sequenceName = "admin_seq")
-	private long id;
+	@GeneratedValue(generator = "activity_seq", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "activity_seq", sequenceName = "activity_seq")
+	private Long id;
+	@Column(name = "name")
+	@Size(max = 64)
+	@NotNull
+	private String name;
 	@JoinColumn(name = "admin_id")
 	@NotNull
 	@ManyToOne
-	private Admin admin;
+	private ActivityAdmin admin;
 }

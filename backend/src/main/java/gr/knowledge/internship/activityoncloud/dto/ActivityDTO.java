@@ -12,6 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ActivityDTO implements Serializable {
-	private long id;
-	private AdminDTO admin;
+	private Long id;
+	private String name;
+	private ActivityAdminDTO admin;
 }

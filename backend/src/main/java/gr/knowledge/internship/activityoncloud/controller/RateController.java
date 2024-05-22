@@ -12,37 +12,37 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import gr.knowledge.internship.activityoncloud.dto.AdminDTO;
-import gr.knowledge.internship.activityoncloud.service.AdminService;
+import gr.knowledge.internship.activityoncloud.dto.RateDTO;
+import gr.knowledge.internship.activityoncloud.service.RateService;
 
 @RestController
-@RequestMapping(value = "/admin")
-public class AdminController {
+@RequestMapping(value = "/rate")
+public class RateController {
 	@Autowired
-	private AdminService adminService;
+	private RateService rateService;
 
 	@GetMapping
-	public List<AdminDTO> getAllAdmins() {
-		return adminService.getAllAdmins();
+	public List<RateDTO> getAllRates() {
+		return rateService.getAllRates();
 	}
 
 	@GetMapping("/{id}")
-	public AdminDTO getAdminById(@PathVariable Long id) {
-		return adminService.getAdminById(id);
+	public RateDTO getRateById(@PathVariable Long id) {
+		return rateService.getRateById(id);
 	}
 
 	@PostMapping("/save")
-	public AdminDTO saveAdmin(@RequestBody AdminDTO admin) {
-		return adminService.saveAdmin(admin);
+	public RateDTO saveRate(@RequestBody RateDTO rate) {
+		return rateService.saveRate(rate);
 	}
 
 	@PutMapping("/update")
-	public AdminDTO updateAdmin(@RequestBody AdminDTO admin) {
-		return adminService.updateAdmin(admin);
+	public RateDTO updateRate(@RequestBody RateDTO rate) {
+		return rateService.updateRate(rate);
 	}
 
 	@DeleteMapping("/delete")
-	public void deleteAdmin(@RequestBody AdminDTO admin) {
-		adminService.deleteAdmin(admin);
+	public void deleteRate(@RequestBody RateDTO rate) {
+		rateService.deleteRate(rate);
 	}
 }

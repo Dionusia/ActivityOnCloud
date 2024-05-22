@@ -10,13 +10,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import gr.knowledge.internship.activityoncloud.dto.BookingDTO;
 import gr.knowledge.internship.activityoncloud.service.BookingService;
 
 @RestController
-@RequestMapping(value = "booking")
+@RequestMapping(value = "/booking")
 public class BookingController {
 	@Autowired
 	private BookingService bookingService;
@@ -44,5 +45,10 @@ public class BookingController {
 	@DeleteMapping("/delete")
 	public void deleteBooking(@RequestBody BookingDTO booking) {
 		bookingService.deleteBooking(booking);
+	}
+
+	@GetMapping("/of-admin")
+	public List<BookingDTO> getBookingsOfAdmin(@RequestParam("adminId") Long adminId) {
+		return bookingService.getBookingsOfAdmin(adminId);
 	}
 }
