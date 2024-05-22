@@ -21,7 +21,7 @@ const App: React.FC = () => {
 
   const navigate = useNavigate();
   //use state to create only one axios instance
-  const [instance, setInstance] = useState(() => createAxiosInstance(navigate));
+  const [instance, setInstance] = useState(() => createAxiosInstance());
   return (
     <ActivityContext.Provider value={{selectedOption, setSelectedOption, selectedInfoFinal, setSelectedInfoFinal, instance}}> {/*TODO: Future edit remove Dashboard from Context */}
       {

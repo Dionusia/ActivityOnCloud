@@ -3,6 +3,7 @@ import { useState } from "react";
 import Cookies from 'js-cookie';
 import ActivityContext from "../ActivityContext";
 import { useNavigate } from "react-router-dom";
+import {User} from "../InterfacesAndTypes/Interfaces";
 
 const Login: React.FC = () => {
     // const [user, setUser] = useState<User | null>(null);
@@ -23,26 +24,26 @@ const Login: React.FC = () => {
             .then(response => {
                 console.log(response.data);
                 // setUser(response.data);  
-                const newUser = response.data;
-                console.log('User:', newUser);
+                const user: User = response.data;
+                console.log('User:', user);
                 
-                if(newUser !== null && newUser !== undefined) {
-                    console.log('login successful', newUser);
+                if(user !== null && user !== undefined) {
+                    console.log('login successful', user);
                     
                     //set the cookies with the user data
-                    Cookies.set('token', newUser.token);
-                    Cookies.set('expiresIn', newUser.expiresIn);
-                    Cookies.set('adminId', newUser.adminId);
+                    Cookies.set('token', user.token);
+                    Cookies.set('expiresIn', user.expiresIn);
+                    Cookies.set('adminId', user.adminId);
                     console.log('Cookies:', Cookies.get('token'), Cookies.get('expiresIn'), Cookies.get('adminId'));
                     
                     //set the axios header with the token in order to be included in the requests by default
-                    instance.defaults.headers.common['Authorization'] = 'Bearer ' + newUser.token;
+                    instance.defaults.headers.common['Authorization'] = 'Bearer ' + user.token;
                     // console.log('Axios headers:', instance.defaults.headers.common);
                     
                     //check role of user to direct him to the correct page
                     navigate('/dashboard');
                 } else 
-                    console.error('newUser is null in Login.');
+                    console.error('user is null in Login.');
             })
             .catch(error => {
                 //TODO add error message popup maybe

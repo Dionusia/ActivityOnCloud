@@ -1,6 +1,5 @@
-import React, { useContext, useDebugValue, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import FilterComponents from "../Components/FilterCriteria";
-import ActivityOptionInfo from "../Components/ActivityOptionInfo";
 import { ActivityOption, OptionToBeRendered, TimeSlotsResponse, } from "../InterfacesAndTypes/Interfaces";
 import { Button } from "flowbite-react";
 import ActivityContext from "../ActivityContext";
