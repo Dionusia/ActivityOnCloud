@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -34,8 +35,10 @@ public class SecurityConfiguration {
         http.csrf(csrf -> csrf
                         .disable())
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/auth/**")
-                        .permitAll()
+                        .requestMatchers(HttpMethod.POST ,"/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/activity-option/of-admin").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/booking/save").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/availability/available/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(management -> management
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
