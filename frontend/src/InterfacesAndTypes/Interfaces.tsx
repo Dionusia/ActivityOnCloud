@@ -1,4 +1,4 @@
-import { Axios, AxiosInstance } from "axios";
+import { AxiosInstance } from "axios";
 import {Category, AvailabilityInfoList, TimeSlot } from "./Types";
 
 interface Activity {
@@ -124,4 +124,10 @@ export interface BookingEngineListProps {
     setSelectedCard: (index: number) => void;
     selectedPerson: number;
     formattedDate: string;
+}
+
+export interface User {
+  token: string;
+  expiresIn: string;
+  adminId: string;
 }
