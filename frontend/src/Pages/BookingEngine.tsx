@@ -84,9 +84,9 @@ const BookingEngine: React.FC = () => {
 
 
     return (
-        <div className=" flex flex-col w-screen  space-y-4"
-        style={{height: `${window.innerHeight}px`}}>
-            <div className=" flex justify-center h-1/10 shadow-md w-screen bg-white ">
+        <div className=" flex flex-col overflow-x-hidden space-y-4"
+        style={{height: `${window.innerHeight}px`,width: `${window.innerWidth}px`}}>
+            <div className=" flex justify-center h-1/10 shadow-md w-full bg-white ">
                 <FilterComponents
                     setTimeSlotsResponse={setTimeSlotsResponseList} 
                     selectedPerson={selectedPerson} 
@@ -103,7 +103,7 @@ const BookingEngine: React.FC = () => {
                 formattedDate={formattedDate} 
             /> 
             </div>
-            <div className=' flex mb-0 w-screen shadow-md justify-center bottom-0 bg-white h-1/10' 
+            <div className=' flex mb-0 w-full shadow-md justify-center bottom-0 bg-white h-1/10' 
             style={{boxShadow: '0 -4px 6px -1px rgba(0, 0, 0, 0.1), 0 -2px 4px -1px rgba(0, 0, 0, 0.06)'}}>
                 <Button 
                 type="submit" 

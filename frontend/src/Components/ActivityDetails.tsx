@@ -1,7 +1,13 @@
 import React from "react";
 import { Field } from "formik";
 
-const ActivityDetails: React.FC = () => (
+interface ActivityDetailsProps {
+  setPhoto: (photo: string) => void;
+  setFormData: (formData: FormData) => void;
+}
+
+const ActivityDetails: React.FC<ActivityDetailsProps> = ({ setPhoto, setFormData }) => (
+ 
   <div className="flex  m-2 p-1  ">
     <Field
       as="textarea"
@@ -39,6 +45,13 @@ const ActivityDetails: React.FC = () => (
         type="file"
         name="photo"
         className="  justify-end  m-2 rounded-lg bg-white"
+        onChange={(event: any) => {
+          const file = event.target.files[0];
+          setPhoto(file.name);
+          const newFormData = new FormData();
+          newFormData.append('image', file);
+          setFormData(newFormData);
+        }}
       />
     </div>
   </div>

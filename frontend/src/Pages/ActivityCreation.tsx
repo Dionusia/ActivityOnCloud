@@ -11,8 +11,10 @@ import ActivityContext from "../ActivityContext";
 const ActivityCreation: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [openModal, setOpenModal] = useState(false);
+  const [formData, setFormData] = useState(new FormData());
   const [newCategory, setNewCategory] = useState("");
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
+  const [photo, setPhoto] = useState<string>("");
   const [timeData, setTimeData] = useState<
     Array<{ days: string[]; startTime: string; endTime: string }>
   >([]);
@@ -120,7 +122,7 @@ const ActivityCreation: React.FC = () => {
           description: values.description,
           pricePerPerson: values.price,
           capacity: values.capacity,
-          imageURL: null,
+          imageURL: photo,
           activityName: selectedCategory.name,
           activityId: selectedCategory.id,
           adminId: 1,
@@ -146,6 +148,19 @@ const ActivityCreation: React.FC = () => {
                 error.response ? error.response.data : error
               );
               setSubmitting(false);
+            });
+
+            instance.post('/image/upload', formData, {
+              headers: {
+                
+                'Content-Type': 'multipart/form-data'
+              }
+            })
+            .then(response => {
+              console.log('File uploaded successfully: ', response);
+            })
+            .catch(error => {
+              console.error('There was an error uploading the file: ', error);
             });
         } else {
           console.error('Axios instance is null in ActivityCreation.');
@@ -187,7 +202,10 @@ const ActivityCreation: React.FC = () => {
             </Button>
           </div>
 
-          <ActivityDetails />
+          <ActivityDetails
+          setPhoto={setPhoto} 
+          setFormData={setFormData}
+          />
           <div className="flex m-2">
             <TimePicker
               selectedDays={selectedDays}

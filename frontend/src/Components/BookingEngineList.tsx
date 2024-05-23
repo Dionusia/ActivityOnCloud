@@ -8,7 +8,7 @@ import {  BookingEngineListProps } from '../InterfacesAndTypes/Interfaces';
 const BookingEngineList: React.FC<BookingEngineListProps> = ({ optionsToBeRendered, selectedCard, setSelectedCard, selectedPerson, formattedDate }) => {
     
     return (
-    <div className="flex flex-col items-center space-y-6 w-screen px-6 py-1 ">
+    <div className="flex flex-col items-center space-y-6 w-full px-6 py-1 ">
       {optionsToBeRendered.map((option, index) => {
         return (
           <div
