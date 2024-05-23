@@ -22,7 +22,7 @@ public class ImageController {
 	public void uploadImage(@RequestParam("image") MultipartFile image) {
 		try {
 			byte[] bytes = image.getBytes();
-			Path path = Paths.get("../frontend/public/Photos", image.getOriginalFilename()).toAbsolutePath();
+			Path path = Paths.get("frontend/public/Photos", image.getOriginalFilename()).toAbsolutePath();
 			log.debug(path);
 			Files.write(path, bytes);
 		} catch (IOException e) {

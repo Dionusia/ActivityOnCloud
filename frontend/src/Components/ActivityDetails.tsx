@@ -3,9 +3,10 @@ import { Field } from "formik";
 
 interface ActivityDetailsProps {
   setPhoto: (photo: string) => void;
+  setFormData: (formData: FormData) => void;
 }
 
-const ActivityDetails: React.FC<ActivityDetailsProps> = ({ setPhoto }) => (
+const ActivityDetails: React.FC<ActivityDetailsProps> = ({ setPhoto, setFormData }) => (
  
   <div className="flex  m-2 p-1  ">
     <Field
@@ -47,6 +48,9 @@ const ActivityDetails: React.FC<ActivityDetailsProps> = ({ setPhoto }) => (
         onChange={(event: any) => {
           const file = event.target.files[0];
           setPhoto(file.name);
+          const newFormData = new FormData();
+          newFormData.append('image', file);
+          setFormData(newFormData);
         }}
       />
     </div>
